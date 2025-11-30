@@ -1,0 +1,182 @@
+{
+  "id": "A1_S1_L1",
+  "title": "Greetings & Introductions",
+  "titleKurdish": "سڵاوکردن و ناساندن",
+  "description": "Learn basic greetings",
+  "descriptionKurdish": "",
+  "vocabulary": [
+    {
+      "english": "Hello",
+      "kurdish": "سڵاو",
+      "example": "Hello my friend",
+      "exampleKurdish": "سڵاو هاوڕێم"
+    },
+    {
+      "english": "Good morning ",
+      "kurdish": " بەیانی باش",
+      "example": "Good morning teacher",
+      "exampleKurdish": "بەیانی باش مامۆستا"
+    },
+    {
+      "english": "Good afternoon",
+      "kurdish": "ئێوارەباش",
+      "example": "Good afternoon everyone",
+      "exampleKurdish": "ئێوارەباش هەمووان"
+    },
+    {
+      "english": "Good evening",
+      "kurdish": "ئێوارە باش",
+      "example": "Good evening sir",
+      "exampleKurdish": "ئێوارە باش بەڕێز"
+    },
+    {
+      "english": "Good night ",
+      "kurdish": "شەو باش",
+      "example": "Good night everyone",
+      "exampleKurdish": "هەمووان شەوتان باش"
+    },
+    {
+      "english": "Goodbye ",
+      "kurdish": "خوات لەگەڵ",
+      "example": "Goodbye see you tomorrow",
+      "exampleKurdish": "خوا حافیز سبەی دەتبینمەوە"
+    },
+    {
+      "english": "See you later",
+      "kurdish": "دواتر دەتبینمەوە",
+      "example": "See you later friend",
+      "exampleKurdish": "دواتر دەتبینمەوە هاوڕێ"
+    },
+    {
+      "english": "How are you ",
+      "kurdish": "چۆنیت",
+      "example": "How are you today",
+      "exampleKurdish": "ئەمڕۆ چۆنیت"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "type": "multiple_choice",
+      "question": "What is \"Hello\" in Kurdish?",
+      "questionKurdish": "\"Hello\" بە کوردی چییە؟",
+      "correctAnswer": "سڵاو",
+      "options": [
+        "ئێوارە باش",
+        " بەیانی باش",
+        "سڵاو",
+        "ئێوارەباش"
+      ],
+      "points": 10
+    },
+    {
+      "id": "ex2",
+      "type": "multiple_choice",
+      "question": "What is \"Good morning \" in Kurdish?",
+      "questionKurdish": "\"Good morning \" بە کوردی چییە؟",
+      "correctAnswer": " بەیانی باش",
+      "options": [
+        "ئێوارە باش",
+        "ئێوارەباش",
+        " بەیانی باش",
+        "سڵاو"
+      ],
+      "points": 10
+    },
+    {
+      "id": "ex3",
+      "type": "multiple_choice",
+      "question": "What is \"Good afternoon\" in Kurdish?",
+      "questionKurdish": "\"Good afternoon\" بە کوردی چییە؟",
+      "correctAnswer": "ئێوارەباش",
+      "options": [
+        "سڵاو",
+        "ئێوارە باش",
+        " بەیانی باش",
+        "ئێوارەباش"
+      ],
+      "points": 10
+    },
+    {
+      "id": "ex4",
+      "type": "fill_blank",
+      "question": "Fill in the blank: ____ my friend",
+      "questionKurdish": "سڵاو هاوڕێم",
+      "correctAnswer": "hello",
+      "hint": "سڵاو",
+      "points": 15
+    },
+    {
+      "id": "ex5",
+      "type": "fill_blank",
+      "question": "Fill in the blank: ____teacher",
+      "questionKurdish": "بەیانی باش مامۆستا",
+      "correctAnswer": "good morning ",
+      "hint": " بەیانی باش",
+      "points": 15
+    },
+    {
+      "id": "ex6",
+      "type": "fill_blank",
+      "question": "Fill in the blank: ____ everyone",
+      "questionKurdish": "ئێوارەباش هەمووان",
+      "correctAnswer": "good afternoon",
+      "hint": "ئێوارەباش",
+      "points": 15
+    },
+    {
+      "id": "ex7",
+      "type": "translation",
+      "question": "Translate to English: سڵاو",
+      "questionKurdish": "وەرگێڕە بۆ ئینگلیزی: سڵاو",
+      "correctAnswer": "hello",
+      "acceptableAnswers": [
+        "hello"
+      ],
+      "points": 15
+    },
+    {
+      "id": "ex8",
+      "type": "translation",
+      "question": "Translate to English:  بەیانی باش",
+      "questionKurdish": "وەرگێڕە بۆ ئینگلیزی:  بەیانی باش",
+      "correctAnswer": "good morning ",
+      "acceptableAnswers": [
+        "good morning "
+      ],
+      "points": 15
+    },
+    {
+      "id": "ex9",
+      "type": "listening",
+      "question": "Listen and select the correct word",
+      "questionKurdish": "گوێبگرە و وشەی دروست هەڵبژێرە",
+      "audioFile": "audio/a1_s1_l1_hello.mp3",
+      "correctAnswer": "Hello",
+      "options": [
+        "Hello",
+        "Good evening",
+        "Good morning ",
+        "Good afternoon"
+      ],
+      "points": 10
+    },
+    {
+      "id": "ex10",
+      "type": "listening",
+      "question": "Listen and select the correct word",
+      "questionKurdish": "گوێبگرە و وشەی دروست هەڵبژێرە",
+      "audioFile": "audio/a1_s1_l1_good_morning_.mp3",
+      "correctAnswer": "Good morning ",
+      "options": [
+        "Good afternoon",
+        "Hello",
+        "Good morning ",
+        "Good evening"
+      ],
+      "points": 10
+    }
+  ],
+  "totalExercises": 10,
+  "estimatedTime": 15
+}
