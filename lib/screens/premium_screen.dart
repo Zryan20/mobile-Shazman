@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../providers/hearts_provider.dart';
+import '../services/payment_service.dart';
 import '../utils/app_colors.dart';
 
 class PremiumScreen extends StatelessWidget {
@@ -34,7 +36,7 @@ class PremiumScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              
+
               // Premium badge
               Container(
                 width: 120,
@@ -60,9 +62,9 @@ class PremiumScreen extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              
+
               const SizedBox(height: 24),
-              
+
               // Title
               const Text(
                 'بەرزبکەرەوە بۆ Shazman+',
@@ -71,9 +73,9 @@ class PremiumScreen extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              
+
               const SizedBox(height: 8),
-              
+
               // Subtitle
               Text(
                 'فێربوونی بێسنوور بەبێ سنوورەکان',
@@ -82,9 +84,9 @@ class PremiumScreen extends StatelessWidget {
                   color: AppColors.textSecondary,
                 ),
               ),
-              
+
               const SizedBox(height: 32),
-              
+
               // Features list
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -96,35 +98,31 @@ class PremiumScreen extends StatelessWidget {
                       description: 'هەرگیز دڵ لەدەست مەدە و بێ وەستان فێرببە',
                       color: Colors.red,
                     ),
-                    
                     _buildFeature(
                       icon: Icons.block_rounded,
                       title: 'بێ ڕێکلام',
                       description: 'ژینگەیەکی پاک بەبێ ڕێکلامەکان',
                       color: Colors.green,
                     ),
-                    
                     _buildFeature(
                       icon: Icons.speed_rounded,
                       title: 'دەستڕاگەیشتنی پێشوەختە',
-                      description: 'دەستڕاگەیشتن بە تایبەتمەندییەکانی نوێ پێش کەسانی تر',
+                      description:
+                          'دەستڕاگەیشتن بە تایبەتمەندییەکانی نوێ پێش کەسانی تر',
                       color: Colors.blue,
                     ),
-                    
                     _buildFeature(
                       icon: Icons.trending_up_rounded,
                       title: 'ئامارەکانی پێشکەوتوو',
                       description: 'شیکاری قووڵ لە پێشکەوتنەکەت',
                       color: Colors.purple,
                     ),
-                    
                     _buildFeature(
                       icon: Icons.download_rounded,
                       title: 'دابەزاندنی دەرسەکان',
                       description: 'فێربوون بەبێ ئینتەرنێت',
                       color: Colors.orange,
                     ),
-                    
                     _buildFeature(
                       icon: Icons.support_agent_rounded,
                       title: 'پشتگیری تایبەت',
@@ -134,9 +132,9 @@ class PremiumScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              
+
               const SizedBox(height: 32),
-              
+
               // Pricing cards
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -150,9 +148,7 @@ class PremiumScreen extends StatelessWidget {
                       savings: null,
                       isPopular: false,
                     ),
-                    
                     const SizedBox(height: 12),
-                    
                     _buildPricingCard(
                       context,
                       title: 'ساڵانە',
@@ -164,9 +160,9 @@ class PremiumScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              
+
               const SizedBox(height: 24),
-              
+
               // Trial info
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 24),
@@ -192,9 +188,9 @@ class PremiumScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              
+
               const SizedBox(height: 16),
-              
+
               // Legal text
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -207,7 +203,7 @@ class PremiumScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              
+
               const SizedBox(height: 32),
             ],
           ),
@@ -215,7 +211,7 @@ class PremiumScreen extends StatelessWidget {
       ),
     );
   }
-  
+
   Widget _buildFeature({
     required IconData icon,
     required String title,
@@ -236,9 +232,7 @@ class PremiumScreen extends StatelessWidget {
             ),
             child: Icon(icon, color: color, size: 24),
           ),
-          
           const SizedBox(width: 16),
-          
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -265,7 +259,7 @@ class PremiumScreen extends StatelessWidget {
       ),
     );
   }
-  
+
   Widget _buildPricingCard(
     BuildContext context, {
     required String title,
@@ -330,9 +324,7 @@ class PremiumScreen extends StatelessWidget {
                   ),
               ],
             ),
-            
             const SizedBox(height: 12),
-            
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -357,7 +349,6 @@ class PremiumScreen extends StatelessWidget {
                 ),
               ],
             ),
-            
             Text(
               'بۆ $period',
               style: TextStyle(
@@ -365,7 +356,6 @@ class PremiumScreen extends StatelessWidget {
                 color: AppColors.textSecondary,
               ),
             ),
-            
             if (savings != null) ...[
               const SizedBox(height: 8),
               Container(
@@ -392,49 +382,181 @@ class PremiumScreen extends StatelessWidget {
       ),
     );
   }
-  
-  void _selectPlan(BuildContext context, String plan, String price) {
-    showDialog(
+
+  void _selectPlan(BuildContext context, String plan, String price) async {
+    // Show payment gateway selection dialog
+    final gateway = await showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('خەریکی $plan'),
-        content: Text('دڵنیای کە دەتەوێت Shazman+ بکڕیت بە $price دینار؟'),
+        title: const Text(
+          'هەڵبژاردنی ڕێگای پارەدان',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('دڵنیای کە دەتەوێت Shazman+ بکڕیت بە $price دینار؟'),
+            const SizedBox(height: 20),
+            const Text(
+              'ڕێگەی پارەدان هەڵبژێرە:',
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+          ],
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: const Text('پاشگەزبوونەوە'),
           ),
-          TextButton(
-            onPressed: () async {
-              Navigator.pop(context); // Close dialog
-              
-              // Activate premium
-              await context.read<HeartsProvider>().purchasePremium();
-              
-              // Show success
-              if (!context.mounted) return;
-              Navigator.pop(context); // Close premium screen
-              
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: const Row(
-                    children: [
-                      Icon(Icons.check_circle, color: Colors.white),
-                      SizedBox(width: 12),
-                      Expanded(
-                        child: Text('Shazman+ چالاککرا! دڵی بێسنوورت هەیە! 💎'),
-                      ),
-                    ],
-                  ),
-                  backgroundColor: Colors.green,
-                  duration: const Duration(seconds: 3),
-                ),
-              );
-            },
-            child: const Text('کڕین'),
+          TextButton.icon(
+            onPressed: () => Navigator.pop(context, 'fib'),
+            icon: const Icon(Icons.account_balance),
+            label: const Text('FIB'),
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.blue,
+            ),
+          ),
+          TextButton.icon(
+            onPressed: () => Navigator.pop(context, 'fastpay'),
+            icon: const Icon(Icons.payment),
+            label: const Text('FastPay'),
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.green,
+            ),
           ),
         ],
       ),
     );
+
+    if (gateway == null || !context.mounted) return;
+
+    // Show processing dialog
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const AlertDialog(
+        content: Row(
+          children: [
+            CircularProgressIndicator(),
+            SizedBox(width: 20),
+            Expanded(child: Text('پەیوەندیکردن بە دروازەی پارەدان...')),
+          ],
+        ),
+      ),
+    );
+
+    try {
+      final paymentService = PaymentService();
+      final userId = FirebaseAuth.instance.currentUser?.uid ?? 'test_user';
+      final planType = plan == 'مانگانە' ? 'monthly' : 'yearly';
+      final planModel =
+          planType == 'monthly' ? PremiumPlan.monthly : PremiumPlan.yearly;
+
+      // Initiate payment based on selected gateway
+      Map<String, dynamic> paymentResult;
+
+      if (gateway == 'fib') {
+        paymentResult = await paymentService.initiateFIBPayment(
+          userId: userId,
+          plan: planModel,
+        );
+      } else {
+        paymentResult = await paymentService.initiateFastPayPayment(
+          userId: userId,
+          plan: planModel,
+        );
+      }
+
+      if (!context.mounted) return;
+      Navigator.pop(context); // Close processing dialog
+
+      if (paymentResult['success'] == true) {
+        // TODO: Open payment URL in browser/webview
+        // For now, simulate successful payment for testing
+        final transactionId = paymentResult['transactionId'] ??
+            'TEST_${DateTime.now().millisecondsSinceEpoch}';
+
+        // Show payment confirmation dialog
+        final confirmed = await showDialog<bool>(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('تەواوکردنی پارەدان'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('لە دروازەی پارەداندا پارەدانەکە تەواو بکە.'),
+                const SizedBox(height: 16),
+                Text('کۆدی مامەڵە: $transactionId'),
+                const SizedBox(height: 16),
+                const Text(
+                  'پاش تەواوکردنی پارەدان، دەستبکە بەسەر دوگمەی "تەواوبوو".',
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text('پاشگەزبوونەوە'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: const Text('تەواوبوو'),
+              ),
+            ],
+          ),
+        );
+
+        if (confirmed == true && context.mounted) {
+          // Activate premium with transaction details
+          await context.read<HeartsProvider>().purchasePremium(
+                planType: planType,
+                transactionId: transactionId,
+                paymentGateway: gateway,
+              );
+
+          if (!context.mounted) return;
+          Navigator.pop(context); // Close premium screen
+
+          // Show success message
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Row(
+                children: [
+                  Icon(Icons.check_circle, color: Colors.white),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Text('Shazman+ چالاککرا! دڵی بێسنوورت هەیە! 💎'),
+                  ),
+                ],
+              ),
+              backgroundColor: Colors.green,
+              duration: const Duration(seconds: 3),
+            ),
+          );
+        }
+      } else {
+        // Payment initiation failed
+        if (!context.mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+                'هەڵە: ${paymentResult['error'] ?? 'تکایە دووبارە هەوڵبدەرەوە'}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      if (!context.mounted) return;
+      Navigator.pop(context); // Close processing dialog if still open
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('هەڵە: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 }

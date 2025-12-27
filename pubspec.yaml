@@ -1,6 +1,6 @@
 name: shazman
 description: A new Flutter project
-publish_to: 'none'
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
@@ -18,9 +18,19 @@ dependencies:
   http: ^1.2.0
   connectivity_plus: ^7.0.0
 
+  # Firebase backend
+  firebase_core: ^3.3.0
+  cloud_firestore: ^5.4.0
+  cloud_functions: ^5.1.0
+  firebase_analytics: ^11.3.0
+
+  # Better HTTP client for payment APIs
+  dio: ^5.7.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^4.0.0
   flutter_launcher_icons: ^0.13.1
 
 flutter:
@@ -32,7 +42,6 @@ flutter:
     - assets/images/
     - assets/images/shazman_logo.png
     - assets/data/lesson_a1_s1_l1.json
-
 
 flutter_launcher_icons:
   android: true

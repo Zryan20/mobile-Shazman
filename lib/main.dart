@@ -1,7 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+// Firebase options
+import 'firebase_options.dart';
 
 // Import providers
 import 'providers/user_provider.dart';
@@ -12,6 +17,7 @@ import 'providers/hearts_provider.dart';
 
 // Import services
 import 'services/auth_service.dart';
+import 'services/backend_service.dart';
 
 // Import utils
 import 'utils/app_colors.dart';
@@ -30,6 +36,11 @@ import 'screens/premium_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Initialize Firebase
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -44,16 +55,42 @@ void main() async {
     ),
   );
 
-  // Create and load HeartsProvider before app starts
+  // Create backend service and hearts provider
+  final backendService = BackendService();
   final heartsProvider = HeartsProvider();
+
+  // Set backend service for hearts provider
+  heartsProvider.setBackendService(backendService);
+
+  // Load hearts from local storage first
   await heartsProvider.loadHearts();
 
-  runApp(ShazmanApp(heartsProvider: heartsProvider));
+  // Sync with backend (if user is logged in)
+  try {
+    final firebaseUser = FirebaseAuth.instance.currentUser;
+    if (firebaseUser != null) {
+      await backendService.syncHearts();
+      // Hearts will be synced automatically
+    }
+  } catch (e) {
+    print('Firebase sync skipped: $e');
+  }
+
+  runApp(ShazmanApp(
+    heartsProvider: heartsProvider,
+    backendService: backendService,
+  ));
 }
 
 class ShazmanApp extends StatelessWidget {
   final HeartsProvider heartsProvider;
-  const ShazmanApp({super.key, required this.heartsProvider});
+  final BackendService backendService;
+
+  const ShazmanApp({
+    super.key,
+    required this.heartsProvider,
+    required this.backendService,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -65,25 +102,22 @@ class ShazmanApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ProgressProvider()),
         ChangeNotifierProvider(create: (_) => SettingsProvider()),
         Provider(create: (_) => AuthService()),
+        Provider<BackendService>.value(value: backendService),
       ],
       child: MaterialApp(
         title: 'شازمان - فێربوونی ئینگلیزی',
         debugShowCheckedModeBanner: false,
-        
         theme: ThemeData(
           useMaterial3: true,
-          
           textTheme: GoogleFonts.ibmPlexSansArabicTextTheme(
             Theme.of(context).textTheme,
           ),
-          
           colorScheme: ColorScheme.fromSeed(
             seedColor: AppColors.primary600,
             primary: AppColors.primary600,
             secondary: AppColors.primary700,
             brightness: Brightness.light,
           ),
-          
           appBarTheme: AppBarTheme(
             backgroundColor: AppColors.primary600,
             foregroundColor: Colors.white,
@@ -96,7 +130,6 @@ class ShazmanApp extends StatelessWidget {
             ),
             iconTheme: const IconThemeData(color: Colors.white),
           ),
-          
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary600,
@@ -115,7 +148,6 @@ class ShazmanApp extends StatelessWidget {
               ),
             ),
           ),
-          
           cardTheme: CardThemeData(
             elevation: 4,
             shape: RoundedRectangleBorder(
@@ -126,7 +158,6 @@ class ShazmanApp extends StatelessWidget {
               vertical: 8,
             ),
           ),
-          
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
             fillColor: Colors.grey[50],
@@ -155,7 +186,6 @@ class ShazmanApp extends StatelessWidget {
               vertical: 16,
             ),
           ),
-          
           bottomNavigationBarTheme: BottomNavigationBarThemeData(
             backgroundColor: Colors.white,
             selectedItemColor: AppColors.primary600,
@@ -171,19 +201,16 @@ class ShazmanApp extends StatelessWidget {
               fontSize: 12,
             ),
           ),
-          
           progressIndicatorTheme: ProgressIndicatorThemeData(
             color: AppColors.primary600,
             linearTrackColor: Colors.grey[200],
           ),
-          
           floatingActionButtonTheme: FloatingActionButtonThemeData(
             backgroundColor: AppColors.primary600,
             foregroundColor: Colors.white,
             elevation: 6,
           ),
         ),
-        
         initialRoute: AppRoutes.splash,
         routes: {
           AppRoutes.splash: (context) => const SplashScreen(),
@@ -194,9 +221,8 @@ class ShazmanApp extends StatelessWidget {
           AppRoutes.lesson: (context) => const LessonScreen(),
           AppRoutes.profile: (context) => const ProfileScreen(),
           AppRoutes.settings: (context) => const SettingsScreen(),
-          AppRoutes.premium: (context) => const PremiumScreen(), // ADD THIS
+          AppRoutes.premium: (context) => const PremiumScreen(),
         },
-        
         onUnknownRoute: (settings) {
           return MaterialPageRoute(
             builder: (context) => const HomeScreen(),
@@ -224,12 +250,12 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    
+
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 2000),
       vsync: this,
     );
-    
+
     _fadeAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
@@ -237,7 +263,7 @@ class _SplashScreenState extends State<SplashScreen>
       parent: _animationController,
       curve: const Interval(0.0, 0.6, curve: Curves.easeOut),
     ));
-    
+
     _scaleAnimation = Tween<double>(
       begin: 0.8,
       end: 1.0,
@@ -245,38 +271,40 @@ class _SplashScreenState extends State<SplashScreen>
       parent: _animationController,
       curve: const Interval(0.2, 0.8, curve: Curves.elasticOut),
     ));
-    
+
     _animationController.forward();
-    
+
     _initializeApp();
   }
-  
+
   Future<void> _initializeApp() async {
     // Load settings first
-    final settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
+    final settingsProvider =
+        Provider.of<SettingsProvider>(context, listen: false);
     await settingsProvider.loadSettings();
-    
+
     // ADD THIS: Load hearts system
     final heartsProvider = Provider.of<HeartsProvider>(context, listen: false);
     await heartsProvider.loadHearts();
-    
+
     // Wait for splash animation
     await Future.delayed(const Duration(milliseconds: 3000));
-    
+
     if (mounted) {
       final authService = Provider.of<AuthService>(context, listen: false);
       final isLoggedIn = await authService.isUserLoggedIn();
-      
+
       if (isLoggedIn) {
         final userProvider = Provider.of<UserProvider>(context, listen: false);
-        final progressProvider = Provider.of<ProgressProvider>(context, listen: false);
-        
+        final progressProvider =
+            Provider.of<ProgressProvider>(context, listen: false);
+
         await Future.wait([
           userProvider.loadUser(),
           progressProvider.loadProgress(),
         ]);
       }
-      
+
       Navigator.of(context).pushReplacementNamed(
         isLoggedIn ? AppRoutes.home : AppRoutes.login,
       );
@@ -328,9 +356,7 @@ class _SplashScreenState extends State<SplashScreen>
                         ),
                       ),
                     ),
-                    
                     const SizedBox(height: 32),
-                    
                     const Text(
                       'شازمان',
                       style: TextStyle(
@@ -340,9 +366,7 @@ class _SplashScreenState extends State<SplashScreen>
                         letterSpacing: 1.2,
                       ),
                     ),
-                    
                     const SizedBox(height: 8),
-                    
                     const Text(
                       'زمانی ئینگلیزی فێرببە بە شێوەیەکی خۆش و چێژبەخش',
                       style: TextStyle(
@@ -352,9 +376,7 @@ class _SplashScreenState extends State<SplashScreen>
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    
                     const SizedBox(height: 60),
-                    
                     const SizedBox(
                       width: 30,
                       height: 30,
