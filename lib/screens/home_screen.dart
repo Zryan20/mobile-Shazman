@@ -197,7 +197,7 @@ class _LearningTab extends StatelessWidget {
                                   padding:
                                       EdgeInsets.all(isSmallScreen ? 6 : 8),
                                   child: Image.asset(
-                                    'assets/images/Hozhan_icon.png',
+                                    'assets/images/Hozhan-icon.png',
                                     width: isSmallScreen ? 36 : 44,
                                     height: isSmallScreen ? 36 : 44,
                                     fit: BoxFit.contain,

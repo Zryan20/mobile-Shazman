@@ -36,7 +36,7 @@ class WelcomeScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: Image.asset(
-                    'assets/images/Hozhan_icon.png',
+                    'assets/images/Hozhan-icon.png',
                     width: 80,
                     height: 80,
                     fit: BoxFit.contain,
