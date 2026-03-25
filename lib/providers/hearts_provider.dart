@@ -13,7 +13,7 @@ class HeartsProvider extends ChangeNotifier {
   // Private fields
   int _currentHearts = MAX_HEARTS;
   DateTime? _lastHeartLossTime;
-  bool _isPremium = false; // Shazman+ status
+  bool _isPremium = false; // Hozhan+ status
   Timer? _heartRecoveryTimer;
   BackendService? _backendService;
 
@@ -338,7 +338,7 @@ class HeartsProvider extends ChangeNotifier {
     }
   }
 
-  /// Purchase Shazman+ (premium) - called after successful payment
+  /// Purchase Hozhan+ (premium) - called after successful payment
   Future<void> purchasePremium({
     required String planType,
     required String transactionId,
@@ -372,7 +372,7 @@ class HeartsProvider extends ChangeNotifier {
     notifyListeners();
 
     if (kDebugMode) {
-      print('💎 Shazman+ activated! Unlimited hearts!');
+      print('💎 Hozhan+ activated! Unlimited hearts!');
     }
   }
 
@@ -384,7 +384,7 @@ class HeartsProvider extends ChangeNotifier {
     notifyListeners();
 
     if (kDebugMode) {
-      print('💔 Shazman+ cancelled');
+      print('💔 Hozhan+ cancelled');
     }
   }
 
@@ -432,7 +432,7 @@ class HeartsProvider extends ChangeNotifier {
   /// Get hearts status message
   String getHeartsStatusMessage() {
     if (_isPremium) {
-      return 'دڵی بێسنوور - Shazman+';
+      return 'دڵی بێسنوور - Hozhan+';
     }
 
     if (_currentHearts >= MAX_HEARTS) {
@@ -489,7 +489,7 @@ class HeartsProvider extends ChangeNotifier {
     }
 
     if (_currentHearts == 0) {
-      return 'هیچ دڵێکت نەماوە! چاوەڕوانی گەڕانەوەیان بکە یان Shazman+ بکڕە.';
+      return 'هیچ دڵێکت نەماوە! چاوەڕوانی گەڕانەوەیان بکە یان Hozhan+ بکڕە.';
     }
 
     if (_currentHearts == 1) {

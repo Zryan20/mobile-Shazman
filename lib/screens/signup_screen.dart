@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/user_provider.dart';
 import '../services/auth_service.dart';
+import '../services/backend_service.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_texts_kurdish.dart';
 import '../utils/app_routes.dart';
@@ -21,7 +22,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  
+
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
   bool _isLoading = false;
@@ -66,12 +67,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
       if (!mounted) return;
 
       if (result.isSuccess) {
+        print('✅ AuthService signup successful');
         final userProvider = context.read<UserProvider>();
+        final backendService = context.read<BackendService>();
+
         await userProvider.signUp(
           _nameController.text.trim(),
           _emailController.text.trim(),
           _passwordController.text,
         );
+        print('✅ UserProvider signup completed');
+
+        // Initialize user in Firestore
+        try {
+          await backendService.initializeUser(
+            email: _emailController.text.trim(),
+            displayName: _nameController.text.trim(),
+          );
+          print('✅ BackendService initialization completed');
+        } catch (e) {
+          print('❌ BackendService initialization failed: $e');
+          // Continue anyway - user is created in Firebase Auth
+        }
 
         Navigator.pushReplacementNamed(context, AppRoutes.home);
 
@@ -82,6 +99,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
         );
       } else {
+        print('❌ AuthService signup failed: ${result.message}');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(result.message),
@@ -91,7 +109,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       }
     } catch (e) {
       if (!mounted) return;
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(AppTextsKurdish.somethingWentWrong),
@@ -125,9 +143,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   padding: EdgeInsets.zero,
                   alignment: Alignment.centerLeft,
                 ),
-                
+
                 const SizedBox(height: 20),
-                
+
                 // Logo/Icon
                 Center(
                   child: Container(
@@ -151,9 +169,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                 ),
-                
+
                 const SizedBox(height: 32),
-                
+
                 // Title
                 Center(
                   child: Column(
@@ -177,9 +195,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ],
                   ),
                 ),
-                
+
                 const SizedBox(height: 40),
-                
+
                 // Name field
                 TextFormField(
                   controller: _nameController,
@@ -203,9 +221,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     return null;
                   },
                 ),
-                
+
                 const SizedBox(height: 20),
-                
+
                 // Email field
                 TextFormField(
                   controller: _emailController,
@@ -223,15 +241,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     if (value == null || value.isEmpty) {
                       return 'تکایە ئیمەیڵەکەت بنووسە';
                     }
-                    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                        .hasMatch(value)) {
                       return AppTextsKurdish.invalidEmail;
                     }
                     return null;
                   },
                 ),
-                
+
                 const SizedBox(height: 20),
-                
+
                 // Password field
                 TextFormField(
                   controller: _passwordController,
@@ -246,8 +265,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     suffixIcon: IconButton(
                       icon: Icon(
-                        _isPasswordVisible 
-                            ? Icons.visibility_rounded 
+                        _isPasswordVisible
+                            ? Icons.visibility_rounded
                             : Icons.visibility_off_rounded,
                         color: AppColors.textSecondary,
                       ),
@@ -268,9 +287,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     return null;
                   },
                 ),
-                
+
                 const SizedBox(height: 20),
-                
+
                 // Confirm Password field
                 TextFormField(
                   controller: _confirmPasswordController,
@@ -286,14 +305,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     suffixIcon: IconButton(
                       icon: Icon(
-                        _isConfirmPasswordVisible 
-                            ? Icons.visibility_rounded 
+                        _isConfirmPasswordVisible
+                            ? Icons.visibility_rounded
                             : Icons.visibility_off_rounded,
                         color: AppColors.textSecondary,
                       ),
                       onPressed: () {
                         setState(() {
-                          _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
+                          _isConfirmPasswordVisible =
+                              !_isConfirmPasswordVisible;
                         });
                       },
                     ),
@@ -308,9 +328,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     return null;
                   },
                 ),
-                
+
                 const SizedBox(height: 20),
-                
+
                 // Terms and conditions checkbox
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -364,9 +384,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ],
                 ),
-                
+
                 const SizedBox(height: 32),
-                
+
                 // Sign up button
                 SizedBox(
                   width: double.infinity,
@@ -377,13 +397,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     icon: Icons.person_add_rounded,
                   ),
                 ),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Divider
                 Row(
                   children: [
-                    Expanded(child: Divider(color: AppColors.border, thickness: 1)),
+                    Expanded(
+                        child: Divider(color: AppColors.border, thickness: 1)),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
@@ -394,12 +415,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                     ),
-                    Expanded(child: Divider(color: AppColors.border, thickness: 1)),
+                    Expanded(
+                        child: Divider(color: AppColors.border, thickness: 1)),
                   ],
                 ),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Google sign up
                 SizedBox(
                   width: double.infinity,
@@ -408,16 +430,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     onPressed: () {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('خۆتۆمارکردن لە ڕێگەی گووگڵ بەم زووانە دێت!'),
+                          content: Text(
+                              'خۆتۆمارکردن لە ڕێگەی گووگڵ بەم زووانە دێت!'),
                         ),
                       );
                     },
                     icon: Icons.g_mobiledata_rounded,
                   ),
                 ),
-                
+
                 const SizedBox(height: 12),
-                
+
                 // Apple sign up
                 SizedBox(
                   width: double.infinity,
@@ -426,16 +449,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     onPressed: () {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('خۆتۆمارکردن لە ڕێگەی ئەپڵ بەم زووانە دێت!'),
+                          content:
+                              Text('خۆتۆمارکردن لە ڕێگەی ئەپڵ بەم زووانە دێت!'),
                         ),
                       );
                     },
                     icon: Icons.apple_rounded,
                   ),
                 ),
-                
+
                 const SizedBox(height: 32),
-                
+
                 // Already have account
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -453,7 +477,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ],
                 ),
-                
+
                 const SizedBox(height: 20),
               ],
             ),

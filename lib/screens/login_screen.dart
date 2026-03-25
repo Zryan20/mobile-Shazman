@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/user_provider.dart';
 import '../services/auth_service.dart';
+import '../services/backend_service.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_texts_kurdish.dart';
 import '../utils/app_routes.dart';
@@ -19,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  
+
   bool _isPasswordVisible = false;
   bool _isLoading = false;
 
@@ -50,9 +51,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (result.isSuccess) {
         final userProvider = context.read<UserProvider>();
+        final backendService = context.read<BackendService>();
+
         await userProvider.signIn(
           _emailController.text.trim(),
           _passwordController.text,
+        );
+
+        // Initialize user in Firestore
+        await backendService.initializeUser(
+          email: _emailController.text.trim(),
         );
 
         Navigator.pushReplacementNamed(context, AppRoutes.home);
@@ -73,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     } catch (e) {
       if (!mounted) return;
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(AppTextsKurdish.somethingWentWrong),
@@ -101,7 +109,6 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                
                 Center(
                   child: Container(
                     width: 100,
@@ -124,9 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                
                 const SizedBox(height: 32),
-                
                 Center(
                   child: Column(
                     children: [
@@ -149,9 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ),
-                
                 const SizedBox(height: 40),
-                
                 TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
@@ -168,15 +171,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (value == null || value.isEmpty) {
                       return 'تکایە ئیمەیڵەکەت بنووسە';
                     }
-                    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                        .hasMatch(value)) {
                       return AppTextsKurdish.invalidEmail;
                     }
                     return null;
                   },
                 ),
-                
                 const SizedBox(height: 20),
-                
                 TextFormField(
                   controller: _passwordController,
                   obscureText: !_isPasswordVisible,
@@ -191,7 +193,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     suffixIcon: IconButton(
                       icon: Icon(
-                        _isPasswordVisible ? Icons.visibility_rounded : Icons.visibility_off_rounded,
+                        _isPasswordVisible
+                            ? Icons.visibility_rounded
+                            : Icons.visibility_off_rounded,
                         color: AppColors.textSecondary,
                       ),
                       onPressed: () {
@@ -211,9 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                
                 const SizedBox(height: 12),
-                
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextCustomButton(
@@ -224,9 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontSize: 14,
                   ),
                 ),
-                
                 const SizedBox(height: 32),
-                
                 SizedBox(
                   width: double.infinity,
                   child: PrimaryButton(
@@ -236,55 +236,53 @@ class _LoginScreenState extends State<LoginScreen> {
                     icon: Icons.login_rounded,
                   ),
                 ),
-                
                 const SizedBox(height: 24),
-                
                 Row(
                   children: [
-                    Expanded(child: Divider(color: AppColors.border, thickness: 1)),
+                    Expanded(
+                        child: Divider(color: AppColors.border, thickness: 1)),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
                         'یان',
-                        style: TextStyle(color: AppColors.textSecondary, fontWeight: FontWeight.w500),
+                        style: TextStyle(
+                            color: AppColors.textSecondary,
+                            fontWeight: FontWeight.w500),
                       ),
                     ),
-                    Expanded(child: Divider(color: AppColors.border, thickness: 1)),
+                    Expanded(
+                        child: Divider(color: AppColors.border, thickness: 1)),
                   ],
                 ),
-                
                 const SizedBox(height: 24),
-                
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedCustomButton(
                     text: AppTextsKurdish.continueWithGoogle,
                     onPressed: () {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('هەژماری گووگڵ بەم زووانە دێت!')),
+                        const SnackBar(
+                            content: Text('هەژماری گووگڵ بەم زووانە دێت!')),
                       );
                     },
                     icon: Icons.g_mobiledata_rounded,
                   ),
                 ),
-                
                 const SizedBox(height: 12),
-                
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedCustomButton(
                     text: AppTextsKurdish.continueWithApple,
                     onPressed: () {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('ئەپڵ ئایدی بەم زووانە دێت!')),
+                        const SnackBar(
+                            content: Text('ئەپڵ ئایدی بەم زووانە دێت!')),
                       );
                     },
                     icon: Icons.apple_rounded,
                   ),
                 ),
-                
                 const SizedBox(height: 32),
-                
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -303,7 +301,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-                
                 const SizedBox(height: 20),
               ],
             ),

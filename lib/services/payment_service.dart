@@ -108,7 +108,7 @@ class PaymentService {
         data: {
           'amount': plan.price,
           'currency': 'IQD',
-          'description': 'Shazman+ ${plan.name} Subscription',
+          'description': 'Hozhan+ ${plan.name} Subscription',
           'callback_url':
               'https://your-app.com/payment/callback', // TODO: Set your callback URL
           'metadata': {
@@ -176,7 +176,7 @@ class PaymentService {
           'ipn_url':
               'https://your-cloud-function.com/webhooks/fastpay', // TODO: Set webhook URL
           'customer_name': userId,
-          'product_description': 'Shazman+ ${plan.name} Subscription',
+          'product_description': 'Hozhan+ ${plan.name} Subscription',
         },
       );
 

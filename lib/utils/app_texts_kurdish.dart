@@ -1,13 +1,15 @@
 class AppTextsKurdish {
   // Private constructor to prevent instantiation
   AppTextsKurdish._();
-  
+
   // App information
-  static const String appName = 'شازمان';
-  static const String appTagline = 'زمانی ئینگلیزی فێرببە بە شێوەیەکی خۆش و چێژبەخش';
-  static const String appDescription = 'شارەزا ببە لە زمانی ئینگلیزی لە ئاستی یەکەم تا شەشەم لەگەڵ وانە کاریگەرەکان';
+  static const String appName = 'هۆژان';
+  static const String appTagline =
+      'زمانی ئینگلیزی فێرببە بە شێوەیەکی خۆش و چێژبەخش';
+  static const String appDescription =
+      'شارەزا ببە لە زمانی ئینگلیزی لە ئاستی یەکەم تا شەشەم لەگەڵ وانە کاریگەرەکان';
   static const String appVersion = '1.0.0';
-  
+
   // Authentication texts
   static const String signIn = 'چوونە ژوورەوە';
   static const String signUp = 'خۆتۆمارکردن';
@@ -23,11 +25,13 @@ class AppTextsKurdish {
   static const String alreadyHaveAccount = 'هەژمارت هەیە؟';
   static const String dontHaveAccount = 'هەژمارت نییە؟';
   static const String welcome = 'بەخێربێیت';
+  static const String welcomeToHozhan = 'بەخێربێیت بۆ هۆژان';
   static const String getStarted = 'دەستپێکردن';
   static const String continueWithEmail = 'بەردەوامبوون لە ڕێگەی ئیمەیڵ';
-  static const String continueWithGoogle = 'بەردەوامبوون لە ڕێگەی هەژماری گووگڵ';
+  static const String continueWithGoogle =
+      'بەردەوامبوون لە ڕێگەی هەژماری گووگڵ';
   static const String continueWithApple = 'بەردەوامبوون لە ڕێگەی ئەپڵ ئایدی';
-  
+
   // Navigation
   static const String home = 'سەرەکی';
   static const String learn = 'فێربوون';
@@ -44,7 +48,7 @@ class AppTextsKurdish {
   static const String edit = 'چاککردن';
   static const String delete = 'سڕیینەوە';
   static const String close = 'داخستن';
-  
+
   // Learning section
   static const String continueLearning = 'بەردەوامبوون لە فێربوون';
   static const String startLearning = 'دەستکردن بە فێربوون';
@@ -60,7 +64,7 @@ class AppTextsKurdish {
   static const String locked = 'قوفڵکراو';
   static const String unlocked = 'کراوەتەوە';
   static const String inProgress = 'لە جێبەجێکردندا';
-  
+
   // CEFR Levels
   static const String levelA1 = 'ئاستی یەکەم';
   static const String levelA2 = 'ئاستی دووەم';
@@ -68,15 +72,17 @@ class AppTextsKurdish {
   static const String levelB2 = 'ئاستی چوارەم';
   static const String levelC1 = 'ئاستی پێنجەم';
   static const String levelC2 = 'ئاستی شەشەم';
-  
+
   // Level descriptions
   static const String levelA1Description = 'وتە بنەڕەتییەکان و دەربڕینی ڕۆژانە';
   static const String levelA2Description = 'گفتوگۆی سادە و دۆخە باوەکان';
-  static const String levelB1Description = 'قسەی ڕوون بە شێوەی ستاندارد سەبارەت بە بابەتە ناسراوەکان';
+  static const String levelB1Description =
+      'قسەی ڕوون بە شێوەی ستاندارد سەبارەت بە بابەتە ناسراوەکان';
   static const String levelB2Description = 'دەقە ئاڵۆزەکان و بابەتە پوختەکان';
   static const String levelC1Description = 'بڕی زۆری دەقە سەختەکان';
-  static const String levelC2Description = 'خۆڕایی و تێگەیشتنی وەک زمانزانی ڕەسەن';
-  
+  static const String levelC2Description =
+      'خۆڕایی و تێگەیشتنی وەک زمانزانی ڕەسەن';
+
   // Progress section
   static const String yourProgress = 'پێشکەوتنی تۆ';
   static const String streak = 'بەردەوامی';
@@ -93,7 +99,7 @@ class AppTextsKurdish {
   static const String dailyGoal = 'ئامانجی ڕۆژانە';
   static const String goalReached = 'گەشتیت بە ئامانجەکەت';
   static const String keepItUp = 'بەردەوام بە';
-  
+
   // Profile section
   static const String editProfile = 'دەستکاریکردنی پرۆفایل';
   static const String accountSettings = 'ڕێکخستنی هەژمار';
@@ -105,7 +111,7 @@ class AppTextsKurdish {
   static const String privacyPolicy = 'سیاسەتی تایبەتمەندی';
   static const String changePassword = 'گۆڕینی تێپەڕەوشە';
   static const String deleteAccount = 'سڕینەوەی هەژمار';
-  
+
   // Settings section
   static const String notificationSettings = 'ڕێکخستنی ئاگادارکردنەوە';
   static const String soundEffects = 'کاریگەری دەنگ';
@@ -116,7 +122,7 @@ class AppTextsKurdish {
   static const String subtitles = 'ژێرنووس';
   static const String dataUsage = 'بەکارهێنانی داتا';
   static const String clearCache = 'پاککردنەوەی کەش';
-  
+
   // Lesson content
   static const String vocabulary = 'وشەسازی';
   static const String grammar = 'ڕێزمان';
@@ -126,7 +132,7 @@ class AppTextsKurdish {
   static const String writing = 'نووسین';
   static const String pronunciation = 'شێوازی خوێندنەوە';
   static const String conversation = 'گفتوگۆ';
-  
+
   // Exercise types
   static const String multipleChoice = 'هەڵبژاردنی زۆر';
   static const String fillInTheBlank = 'بۆشاییەکە پڕبکەرەوە';
@@ -136,7 +142,7 @@ class AppTextsKurdish {
   static const String speakTheSentence = 'ڕستەکە بڵێ';
   static const String translateTheSentence = 'ڕستەکە وەربگێڕە';
   static const String listenAndRepeat = 'گوێ بگرە و دووبارە بکەوە';
-  
+
   // Feedback messages
   static const String correct = 'دروستە!';
   static const String incorrect = 'هەڵەیە';
@@ -149,17 +155,19 @@ class AppTextsKurdish {
   static const String lessonCompleted = 'وانە تەواوبوو!';
   static const String perfectScore = 'نمرەی تەواو!';
   static const String goodAttempt = 'هەوڵێکی باشبوو!';
-  
+
   // Error messages
   static const String somethingWentWrong = 'هەڵەیەک ڕوویدا';
   static const String tryAgainLater = 'تکایە دواتر هەوڵ بدەرەوە';
   static const String noInternetConnection = 'پەیوەندی ئینتەرنێت نییە';
-  static const String checkInternetConnection = 'تکایە پەیوەندی ئینتەرنێت بپشکنە';
+  static const String checkInternetConnection =
+      'تکایە پەیوەندی ئینتەرنێت بپشکنە';
   static const String invalidEmail = 'ناونیشانی ئیمەیڵ دروست نییە';
-  static const String weakPassword = 'تێپەڕەوشە دەبێت بە لایەنی کەمەوە ٦ وشە بێت';
+  static const String weakPassword =
+      'تێپەڕەوشە دەبێت بە لایەنی کەمەوە ٦ وشە بێت';
   static const String passwordsNotMatch = 'تێپەڕەوشەکان هاوشێوە نین';
   static const String fillAllFields = 'تکایە هەموو خانەکان پڕ بکەرەوە';
-  
+
   // Success messages
   static const String signInSuccess = 'بە سەرکەوتوویی چوویتە ژوورەوە!';
   static const String signUpSuccess = 'هەژمار بە سەرکەوتوویی دروستکرا!';
@@ -167,20 +175,22 @@ class AppTextsKurdish {
   static const String profileUpdated = 'پرۆفایل بە سەرکەوتوویی نوێکرایەوە';
   static const String settingsSaved = 'ڕێکخستنەکان پاشەکەوت کران';
   static const String passwordChanged = 'وشەی تێپەڕ بە سەرکەوتوویی گۆڕدرا';
-  
+
   // Confirmation dialogs
   static const String areYouSure = 'دڵنیایت؟';
   static const String confirmSignOut = 'دڵنیایت کە دەتەوێت بچیتە دەرەوە؟';
-  static const String confirmDeleteAccount = 'دڵنیایت کە دەتەوێت هەژمارەکەت بسڕیتەوە؟ ئەم کردارە ناگەڕێتەوە.';
-  static const String confirmExitLesson = 'دڵنیایت کە دەتەوێت دەربچیت؟ پێشکەوتنەکەت لەدەست دەدەیت.';
-  
+  static const String confirmDeleteAccount =
+      'دڵنیایت کە دەتەوێت هەژمارەکەت بسڕیتەوە؟ ئەم کردارە ناگەڕێتەوە.';
+  static const String confirmExitLesson =
+      'دڵنیایت کە دەتەوێت دەربچیت؟ پێشکەوتنەکەت لەدەست دەدەیت.';
+
   // Help and support
   static const String faq = 'پرسیارە دووبارەبووەکان';
   static const String contactUs = 'پەیوەندیمان پێوە بکە';
   static const String reportProblem = 'ڕاپۆرتکردنی کێشەیەک';
   static const String sendFeedback = 'ناردنی ڕای';
   static const String helpCenter = 'ناوەندی یارمەتی';
-  
+
   // Common phrases
   static const String yes = 'بەڵێ';
   static const String no = 'نەخێر';

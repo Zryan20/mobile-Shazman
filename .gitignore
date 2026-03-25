@@ -146,3 +146,11 @@ tmp/
 
 # MacOS files
 .DS_Store
+
+# Extra logs and build artifacts
+logcat_*.txt
+run_crash.log
+*.hprof
+**/build/
+**/android/app/build/
+**/android/.gradle/

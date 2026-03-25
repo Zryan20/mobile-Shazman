@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/foundation.dart';
 
 class AuthService {
@@ -5,189 +6,155 @@ class AuthService {
   static final AuthService _instance = AuthService._internal();
   factory AuthService() => _instance;
   AuthService._internal();
-  
+
+  final firebase_auth.FirebaseAuth _auth = firebase_auth.FirebaseAuth.instance;
+
   // Check if user is currently logged in
   Future<bool> isUserLoggedIn() async {
     try {
-      // TODO: Check SharedPreferences or secure storage for saved user session
-      // For now, returning false to always show login screen first
-      await Future.delayed(const Duration(milliseconds: 500));
-      
-      // Mock check - replace with actual logic
-      // Check if we have stored user credentials or session token
-      return false; // Change this to true if you want to simulate logged in user
-      
+      final user = _auth.currentUser;
+      return user != null;
     } catch (e) {
       debugPrint('Error checking login status: $e');
       return false;
     }
   }
-  
+
   // Sign in with email and password
   Future<AuthResult> signInWithEmail(String email, String password) async {
     try {
-      // TODO: Implement actual authentication with your backend
-      await Future.delayed(const Duration(seconds: 2)); // Simulate network delay
-      
-      // Mock validation
-      if (email.isEmpty || password.isEmpty) {
-        return AuthResult.failure('Email and password are required');
+      final userCredential = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      final user = userCredential.user;
+      if (user == null) {
+        return AuthResult.failure('تکایە دڵنیابەرەوە لە زانیارییەکانت');
       }
-      
-      if (!_isValidEmail(email)) {
-        return AuthResult.failure('Please enter a valid email address');
-      }
-      
-      if (password.length < 6) {
-        return AuthResult.failure('Password must be at least 6 characters');
-      }
-      
-      // Mock successful authentication
-      // In a real app, you'd make an API call here
+
       final userData = {
-        'id': '1',
-        'email': email,
-        'name': _getNameFromEmail(email),
-        'token': 'mock_jwt_token_${DateTime.now().millisecondsSinceEpoch}',
+        'id': user.uid,
+        'email': user.email,
+        'name': user.displayName ?? _getNameFromEmail(user.email ?? ''),
       };
-      
-      // TODO: Save user data to secure storage
-      await _saveUserSession(userData);
-      
-      return AuthResult.success('Sign in successful', userData);
-      
+
+      return AuthResult.success('چوونەژوورەوە سەرکەوتووبوو', userData);
+    } on firebase_auth.FirebaseAuthException catch (e) {
+      String message = 'هەڵەیەک ڕوویدا لە چوونەژوورەوە';
+      if (e.code == 'user-not-found') {
+        message = 'ئەم هەژمارە بوونی نییە';
+      } else if (e.code == 'wrong-password') {
+        message = 'وشەی تێپەڕ هەڵەیە';
+      } else if (e.code == 'invalid-email') {
+        message = 'ئیمەیڵەکە نادروستە';
+      } else if (e.code == 'user-disabled') {
+        message = 'ئەم هەژمارە ڕاگیراوە';
+      }
+      return AuthResult.failure(message);
     } catch (e) {
       debugPrint('Sign in error: $e');
-      return AuthResult.failure('Sign in failed. Please try again.');
+      return AuthResult.failure('هەڵەیەک ڕوویدا، تکایە دووبارە هەوڵ بدەرەوە');
     }
   }
-  
+
   // Sign up with name, email and password
-  Future<AuthResult> signUpWithEmail(String name, String email, String password) async {
+  Future<AuthResult> signUpWithEmail(
+      String name, String email, String password) async {
     try {
-      // TODO: Implement actual user registration with your backend
-      await Future.delayed(const Duration(seconds: 2)); // Simulate network delay
-      
-      // Mock validation
-      if (name.isEmpty || email.isEmpty || password.isEmpty) {
-        return AuthResult.failure('All fields are required');
+      final userCredential = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      final user = userCredential.user;
+      if (user == null) {
+        return AuthResult.failure('هەڵەیەک ڕوویدا لە دروستکردنی هەژمار');
       }
-      
-      if (!_isValidEmail(email)) {
-        return AuthResult.failure('Please enter a valid email address');
-      }
-      
-      if (password.length < 6) {
-        return AuthResult.failure('Password must be at least 6 characters');
-      }
-      
-      if (name.length < 2) {
-        return AuthResult.failure('Name must be at least 2 characters');
-      }
-      
-      // Mock successful registration
-      // In a real app, you'd make an API call here
+
+      // Update display name
+      await user.updateDisplayName(name);
+
       final userData = {
-        'id': DateTime.now().millisecondsSinceEpoch.toString(),
-        'email': email,
+        'id': user.uid,
+        'email': user.email,
         'name': name,
-        'token': 'mock_jwt_token_${DateTime.now().millisecondsSinceEpoch}',
       };
-      
-      // TODO: Save user data to secure storage
-      await _saveUserSession(userData);
-      
-      return AuthResult.success('Account created successfully', userData);
-      
+
+      return AuthResult.success('هەژمارەکەت بە سەرکەوتوویی دروستکرا', userData);
+    } on firebase_auth.FirebaseAuthException catch (e) {
+      String message = 'هەڵەیەک ڕوویدا لە دروستکردنی هەژمار';
+      if (e.code == 'weak-password') {
+        message = 'وشەی تێپەڕەکە لاوازە';
+      } else if (e.code == 'email-already-in-use') {
+        message = 'ئەم ئیمەیڵە پێشتر بەکارهێنراوە';
+      } else if (e.code == 'invalid-email') {
+        message = 'ئیمەیڵەکە نادروستە';
+      }
+      return AuthResult.failure(message);
     } catch (e) {
       debugPrint('Sign up error: $e');
-      return AuthResult.failure('Sign up failed. Please try again.');
+      return AuthResult.failure('هەڵەیەک ڕوویدا، تکایە دووبارە هەوڵ بدەرەوە');
     }
   }
-  
+
   // Sign out current user
   Future<void> signOut() async {
     try {
-      // TODO: Clear user session from secure storage
-      // TODO: Invalidate token with backend if needed
-      await Future.delayed(const Duration(milliseconds: 500));
-      
-      await _clearUserSession();
-      
+      await _auth.signOut();
     } catch (e) {
       debugPrint('Sign out error: $e');
     }
   }
-  
+
   // Reset password
   Future<AuthResult> resetPassword(String email) async {
     try {
-      // TODO: Implement password reset with your backend
-      await Future.delayed(const Duration(seconds: 1));
-      
-      if (!_isValidEmail(email)) {
-        return AuthResult.failure('Please enter a valid email address');
+      await _auth.sendPasswordResetEmail(email: email);
+      return AuthResult.success('ئیمەیڵی گۆڕینی وشەی تێپەڕ نێردرا بۆ $email');
+    } on firebase_auth.FirebaseAuthException catch (e) {
+      String message = 'هەڵەیەک ڕوویدا لە ناردنی ئیمەیڵ';
+      if (e.code == 'user-not-found') {
+        message = 'ئەم هەژمارە بوونی نییە';
+      } else if (e.code == 'invalid-email') {
+        message = 'ئیمەیڵەکە نادروستە';
       }
-      
-      // Mock successful password reset
-      return AuthResult.success('Password reset email sent to $email');
-      
+      return AuthResult.failure(message);
     } catch (e) {
       debugPrint('Password reset error: $e');
-      return AuthResult.failure('Failed to send reset email. Please try again.');
+      return AuthResult.failure('هەڵەیەک ڕوویدا، تکایە دووبارە هەوڵ بدەرەوە');
     }
   }
-  
-  // Get current user data from storage
+
+  // Get current user data
   Future<Map<String, dynamic>?> getCurrentUserData() async {
-    try {
-      // TODO: Get from SharedPreferences or secure storage
-      await Future.delayed(const Duration(milliseconds: 200));
-      
-      // Mock user data - replace with actual storage retrieval
-      return null;
-      
-    } catch (e) {
-      debugPrint('Error getting current user: $e');
-      return null;
-    }
+    final user = _auth.currentUser;
+    if (user == null) return null;
+
+    return {
+      'id': user.uid,
+      'email': user.email,
+      'name': user.displayName ?? _getNameFromEmail(user.email ?? ''),
+    };
   }
-  
+
   // Private helper methods
-  
-  bool _isValidEmail(String email) {
-    return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
-  }
-  
+
   String _getNameFromEmail(String email) {
+    if (email.isEmpty) return 'User';
     final username = email.split('@').first;
     final parts = username.split('.');
-    
+
     if (parts.length > 1) {
-      return parts.map((part) => 
-        part.isNotEmpty ? part[0].toUpperCase() + part.substring(1) : ''
-      ).join(' ');
+      return parts
+          .map((part) =>
+              part.isNotEmpty ? part[0].toUpperCase() + part.substring(1) : '')
+          .join(' ');
     }
-    
-    return username.isNotEmpty 
-      ? username[0].toUpperCase() + username.substring(1)
-      : 'User';
-  }
-  
-  Future<void> _saveUserSession(Map<String, dynamic> userData) async {
-    // TODO: Save to SharedPreferences or secure storage
-    // Example:
-    // final prefs = await SharedPreferences.getInstance();
-    // await prefs.setString('user_data', jsonEncode(userData));
-    await Future.delayed(const Duration(milliseconds: 100));
-  }
-  
-  Future<void> _clearUserSession() async {
-    // TODO: Clear from SharedPreferences or secure storage
-    // Example:
-    // final prefs = await SharedPreferences.getInstance();
-    // await prefs.remove('user_data');
-    await Future.delayed(const Duration(milliseconds: 100));
+
+    return username.isNotEmpty
+        ? username[0].toUpperCase() + username.substring(1)
+        : 'User';
   }
 }
 
@@ -196,13 +163,13 @@ class AuthResult {
   final bool isSuccess;
   final String message;
   final Map<String, dynamic>? userData;
-  
+
   const AuthResult._({
     required this.isSuccess,
     required this.message,
     this.userData,
   });
-  
+
   factory AuthResult.success(String message, [Map<String, dynamic>? userData]) {
     return AuthResult._(
       isSuccess: true,
@@ -210,14 +177,14 @@ class AuthResult {
       userData: userData,
     );
   }
-  
+
   factory AuthResult.failure(String message) {
     return AuthResult._(
       isSuccess: false,
       message: message,
     );
   }
-  
+
   @override
   String toString() {
     return 'AuthResult(isSuccess: $isSuccess, message: $message, userData: $userData)';

@@ -1,4 +1,4 @@
-name: shazman
+name: hozhan
 description: A new Flutter project
 publish_to: "none"
 version: 1.0.0+1
@@ -40,10 +40,10 @@ flutter:
     - assets/data/
     - assets/fonts/
     - assets/images/
-    - assets/images/shazman_logo.png
+    - assets/images/Hozhan.png
     - assets/data/lesson_a1_s1_l1.json
 
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/images/shazman_icon.png"
+  image_path: "assets/images/Hozhan-icon.png"

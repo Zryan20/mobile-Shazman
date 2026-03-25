@@ -3,7 +3,7 @@ class AppTexts {
   AppTexts._();
   
   // App information
-  static const String appName = 'Shazman';
+  static const String appName = 'Hozhan';
   static const String appTagline = 'Learn English with Fun';
   static const String appDescription = 'Master English from A1 to C2 with interactive lessons, engaging characters, and gamified learning.';
   static const String appVersion = '1.0.0';
@@ -261,7 +261,7 @@ class AppTexts {
   static const String helpCenter = 'Help Center';
   
   // Onboarding
-  static const String welcomeToShazman = 'Welcome to Shazman!';
+  static const String welcomeToHozhan = 'Welcome to Hozhan!';
   static const String letsGetStarted = "Let's get started";
   static const String selectYourLevel = 'Select your level';
   static const String takeTest = 'Take placement test';

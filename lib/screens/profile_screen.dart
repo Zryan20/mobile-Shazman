@@ -28,7 +28,7 @@ class ProfileScreen extends StatelessWidget {
       body: Consumer2<UserProvider, ProgressProvider>(
         builder: (context, userProvider, progressProvider, child) {
           final user = userProvider.currentUser;
-          
+
           if (user == null) {
             return Center(
               child: Column(
@@ -58,7 +58,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             );
           }
-          
+
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -99,8 +99,10 @@ class ProfileScreen extends StatelessWidget {
                                       width: 100,
                                       height: 100,
                                       fit: BoxFit.cover,
-                                      errorBuilder: (context, error, stackTrace) {
-                                        return _buildDefaultAvatar(user.initials);
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return _buildDefaultAvatar(
+                                            user.initials);
                                       },
                                     ),
                                   )
@@ -135,9 +137,9 @@ class ProfileScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      
+
                       const SizedBox(height: 16),
-                      
+
                       // Name
                       Text(
                         user.name,
@@ -147,9 +149,9 @@ class ProfileScreen extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
-                      
+
                       const SizedBox(height: 4),
-                      
+
                       // Email
                       Text(
                         user.email,
@@ -158,9 +160,9 @@ class ProfileScreen extends StatelessWidget {
                           color: Colors.white70,
                         ),
                       ),
-                      
+
                       const SizedBox(height: 16),
-                      
+
                       // Edit Profile Button
                       SmallButton(
                         text: AppTextsKurdish.editProfile,
@@ -173,7 +175,7 @@ class ProfileScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                
+
                 // Stats Section
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 20),
@@ -182,47 +184,52 @@ class ProfileScreen extends StatelessWidget {
                     children: [
                       _StatItem(
                         icon: Icons.local_fire_department_rounded,
-                        value: _convertToArabicNumerals(progressProvider.streakDays),
+                        value: _convertToArabicNumerals(
+                            progressProvider.streakDays),
                         label: AppTextsKurdish.streak,
                         color: AppColors.streakFire,
                       ),
                       _StatItem(
                         icon: Icons.star_rounded,
-                        value: _convertToArabicNumerals(progressProvider.totalXP),
+                        value:
+                            _convertToArabicNumerals(progressProvider.totalXP),
                         label: AppTextsKurdish.totalXP,
                         color: AppColors.xpGold,
                       ),
                       _StatItem(
                         icon: Icons.emoji_events_rounded,
-                        value: _convertToArabicNumerals(progressProvider.currentLevel),
+                        value: _convertToArabicNumerals(
+                            progressProvider.currentLevel),
                         label: 'ئاست',
                         color: AppColors.primary600,
                       ),
                     ],
                   ),
                 ),
-                
+
                 const Divider(height: 1),
-                
+
                 // Menu Items
                 _MenuItem(
                   icon: Icons.school_rounded,
                   title: AppTextsKurdish.currentLevel,
-                  subtitle: progressProvider.getLevelName(progressProvider.currentLevel),
+                  subtitle: progressProvider
+                      .getLevelName(progressProvider.currentLevel),
                   onTap: () {
                     // Navigate to level details
                   },
                 ),
-                
+
                 _MenuItem(
                   icon: Icons.trending_up_rounded,
                   title: AppTextsKurdish.progress,
-                  subtitle: '${_convertToArabicNumerals(progressProvider.completedLessons)} ${AppTextsKurdish.lessonsCompleted}',
+                  subtitle:
+                      '${_convertToArabicNumerals(progressProvider.completedLessons)} ${AppTextsKurdish.lessonsCompleted}',
                   onTap: () {
                     // Navigate to progress screen
                   },
                 ),
-                
+
                 _MenuItem(
                   icon: Icons.emoji_events_rounded,
                   title: AppTextsKurdish.achievements,
@@ -231,7 +238,7 @@ class ProfileScreen extends StatelessWidget {
                     Navigator.pushNamed(context, AppRoutes.achievements);
                   },
                 ),
-                
+
                 _MenuItem(
                   icon: Icons.leaderboard_rounded,
                   title: AppTextsKurdish.leaderboard,
@@ -240,18 +247,19 @@ class ProfileScreen extends StatelessWidget {
                     Navigator.pushNamed(context, AppRoutes.leaderboard);
                   },
                 ),
-                
+
                 const Divider(height: 1),
-                
+
                 _MenuItem(
                   icon: Icons.notifications_rounded,
                   title: AppTextsKurdish.notifications,
                   subtitle: 'بەڕێوەبردنی ئاگادارکردنەوەکان',
                   onTap: () {
-                    Navigator.pushNamed(context, AppRoutes.notificationSettings);
+                    Navigator.pushNamed(
+                        context, AppRoutes.notificationSettings);
                   },
                 ),
-                
+
                 _MenuItem(
                   icon: Icons.help_rounded,
                   title: AppTextsKurdish.helpSupport,
@@ -260,7 +268,7 @@ class ProfileScreen extends StatelessWidget {
                     Navigator.pushNamed(context, AppRoutes.help);
                   },
                 ),
-                
+
                 _MenuItem(
                   icon: Icons.info_rounded,
                   title: AppTextsKurdish.about,
@@ -269,9 +277,9 @@ class ProfileScreen extends StatelessWidget {
                     Navigator.pushNamed(context, AppRoutes.about);
                   },
                 ),
-                
+
                 const Divider(height: 1),
-                
+
                 _MenuItem(
                   icon: Icons.logout_rounded,
                   title: AppTextsKurdish.signOut,
@@ -281,9 +289,9 @@ class ProfileScreen extends StatelessWidget {
                   },
                   isDestructive: true,
                 ),
-                
+
                 const SizedBox(height: 20),
-                
+
                 // Version info
                 Center(
                   child: Text(
@@ -294,7 +302,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                
+
                 const SizedBox(height: 20),
               ],
             ),
@@ -303,7 +311,7 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
   }
-  
+
   Widget _buildDefaultAvatar(String initials) {
     return Center(
       child: Text(
@@ -316,7 +324,7 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
   }
-  
+
   void _showImagePickerDialog(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -338,7 +346,8 @@ class ProfileScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               ListTile(
-                leading: Icon(Icons.camera_alt_rounded, color: AppColors.primary600),
+                leading:
+                    Icon(Icons.camera_alt_rounded, color: AppColors.primary600),
                 title: const Text('وێنە بگرە'),
                 onTap: () {
                   Navigator.pop(context);
@@ -349,13 +358,15 @@ class ProfileScreen extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.photo_library_rounded, color: AppColors.primary600),
+                leading: Icon(Icons.photo_library_rounded,
+                    color: AppColors.primary600),
                 title: const Text('لە گەلەری هەڵبژێرە'),
                 onTap: () {
                   Navigator.pop(context);
                   // TODO: Implement gallery picker
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('هەڵبژاردنی گەلەری بەم زووانە دێت!')),
+                    const SnackBar(
+                        content: Text('هەڵبژاردنی گەلەری بەم زووانە دێت!')),
                   );
                 },
               ),
@@ -373,12 +384,12 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
   }
-  
+
   void _showEditProfileDialog(BuildContext context) {
     final nameController = TextEditingController(
       text: context.read<UserProvider>().currentUser?.name ?? '',
     );
-    
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -420,7 +431,7 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
   }
-  
+
   void _showSignOutDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -433,10 +444,17 @@ class ProfileScreen extends StatelessWidget {
             child: const Text(AppTextsKurdish.cancel),
           ),
           TextButton(
-            onPressed: () {
-              context.read<UserProvider>().signOut();
+            onPressed: () async {
+              final userProvider = context.read<UserProvider>();
+              await userProvider.signOut();
+
+              if (!context.mounted) return;
+
               Navigator.pop(context); // Close dialog
-              Navigator.pushReplacementNamed(context, AppRoutes.login);
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                AppRoutes.welcome,
+                (route) => false,
+              );
             },
             child: Text(
               AppTextsKurdish.signOut,
@@ -447,12 +465,12 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
   }
-  
+
   // Helper function to convert numbers to Arabic-Indic numerals
   String _convertToArabicNumerals(int number) {
     const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
     const arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-    
+
     String result = number.toString();
     for (int i = 0; i < english.length; i++) {
       result = result.replaceAll(english[i], arabic[i]);
@@ -467,7 +485,7 @@ class _StatItem extends StatelessWidget {
   final String value;
   final String label;
   final Color color;
-  
+
   const _StatItem({
     required this.icon,
     required this.value,
@@ -520,7 +538,7 @@ class _MenuItem extends StatelessWidget {
   final String subtitle;
   final VoidCallback onTap;
   final bool isDestructive;
-  
+
   const _MenuItem({
     required this.icon,
     required this.title,

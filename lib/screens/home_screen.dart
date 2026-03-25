@@ -197,7 +197,7 @@ class _LearningTab extends StatelessWidget {
                                   padding:
                                       EdgeInsets.all(isSmallScreen ? 6 : 8),
                                   child: Image.asset(
-                                    'assets/images/shazman_icon.png',
+                                    'assets/images/Hozhan_icon.png',
                                     width: isSmallScreen ? 36 : 44,
                                     height: isSmallScreen ? 36 : 44,
                                     fit: BoxFit.contain,
@@ -374,8 +374,8 @@ class _LearningTab extends StatelessWidget {
 
                       SizedBox(height: isSmallScreen ? 12 : 16),
 
-                      // Course sections
-                      ...List.generate(6, (index) {
+                      // Course sections (A1-B2)
+                      ...List.generate(4, (index) {
                         final level = index + 1;
                         final levelName = _getLevelName(level);
                         final levelDescription = _getLevelDescription(level);
@@ -433,10 +433,6 @@ class _LearningTab extends StatelessWidget {
         return 'B1 - ناوەند';
       case 4:
         return 'B2 - ناوەندی بەرز';
-      case 5:
-        return 'C1 - پێشکەوتوو';
-      case 6:
-        return 'C2 - شارەزایی';
       default:
         return 'نامۆ';
     }
@@ -452,10 +448,6 @@ class _LearningTab extends StatelessWidget {
         return 'قسەکردنی ڕوون لەسەر بابەتی ئاشنا';
       case 4:
         return 'دەقی ئاڵۆز و بابەتی چەمکی';
-      case 5:
-        return 'مەودایەکی بەرفراوان لە دەقی قورس';
-      case 6:
-        return 'لێهاتوویی و تێگەیشتنی وەک زمانی دایک';
       default:
         return '';
     }
@@ -656,10 +648,6 @@ class _ProgressTab extends StatelessWidget {
         return 'B1 - ناوەند';
       case 4:
         return 'B2 - ناوەندی بەرز';
-      case 5:
-        return 'C1 - پێشکەوتوو';
-      case 6:
-        return 'C2 - شارەزایی';
       default:
         return 'نامۆ';
     }
@@ -751,7 +739,7 @@ class _ProfileTab extends StatelessWidget {
                       SizedBox(height: isSmallScreen ? 3 : 4),
 
                       Text(
-                        user?.email ?? 'guest@shazman.com',
+                        user?.email ?? 'guest@hozhan.com',
                         style: TextStyle(
                           fontSize:
                               isSmallScreen ? 13 : (isMediumScreen ? 14 : 16),

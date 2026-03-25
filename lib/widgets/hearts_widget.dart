@@ -63,7 +63,7 @@ class HeartsAppBarWidget extends StatelessWidget {
                 if (showLabel) ...[
                   const SizedBox(width: 4),
                   Text(
-                    heartsProvider.isPremium ? 'Shazman+' : 'دڵ',
+                    heartsProvider.isPremium ? 'Hozhan+' : 'دڵ',
                     style: TextStyle(
                       fontSize: 12,
                       color: heartsProvider.isPremium 
@@ -131,7 +131,7 @@ class HeartsInfoDialog extends StatelessWidget {
             
             // Title
             Text(
-              heartsProvider.isPremium ? 'Shazman+ چالاکە' : 'سیستەمی دڵەکان',
+              heartsProvider.isPremium ? 'Hozhan+ چالاکە' : 'سیستەمی دڵەکان',
               style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -183,7 +183,7 @@ class HeartsInfoDialog extends StatelessWidget {
               ),
               child: Text(
                 heartsProvider.isPremium 
-                    ? 'تۆ بەشداربووی Shazman+ یت! دڵی بێسنوورت هەیە و دەتوانیت بێ سنوور فێربیت. 💎'
+                    ? 'تۆ بەشداربووی Hozhan+ یت! دڵی بێسنوورت هەیە و دەتوانیت بێ سنوور فێربیت. 💎'
                     : 'ئەگەر هەڵە بکەیت، دڵێک لەدەست دەدەیت. هەر دڵێک لە ٥ کاتژمێردا دەگەڕێتەوە. 💖',
                 style: TextStyle(
                   fontSize: 14,
@@ -257,7 +257,7 @@ class HeartsInfoDialog extends StatelessWidget {
                     Navigator.pushNamed(context, AppRoutes.premium);
                   },
                   icon: const Icon(Icons.workspace_premium_rounded),
-                  label: const Text('بەرزکردنەوە بۆ Shazman+'),
+                  label: const Text('بەرزکردنەوە بۆ Hozhan+'),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: Colors.amber[700],
                     side: BorderSide(color: Colors.amber[700]!),
@@ -282,7 +282,7 @@ class HeartsInfoDialog extends StatelessWidget {
                     Icon(Icons.check_circle, color: Colors.amber[700]),
                     const SizedBox(width: 8),
                     Text(
-                      'Shazman+ چالاکە',
+                      'Hozhan+ چالاکە',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -376,7 +376,7 @@ class RefillHeartsSheet extends StatelessWidget {
             _buildRefillOption(
               context,
               icon: Icons.workspace_premium_rounded,
-              title: 'Shazman+ بکڕە',
+              title: 'Hozhan+ بکڕە',
               subtitle: 'دڵی بێسنوور بۆ هەمیشە!',
               color: Colors.amber,
               isPremium: true,

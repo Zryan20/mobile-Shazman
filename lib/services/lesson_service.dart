@@ -5,7 +5,7 @@ import '../models/lesson_model.dart';
 
 class LessonService {
   // TODO: Replace with your actual API base URL
-  static const String _baseUrl = 'https://api.shazman.com'; // Change this!
+  static const String _baseUrl = 'https://api.hozhan.com'; // Change this!
   static const String _lessonsEndpoint = '/api/v1/lessons';
   
   /// Check internet connectivity

@@ -1,4 +1,4 @@
-package com.example.shazman
+package com.example.hozhan
 
 import io.flutter.embedding.android.FlutterActivity
 

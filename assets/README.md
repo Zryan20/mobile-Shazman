@@ -1,14 +1,14 @@
-# Shazman App Assets
+# Hozhan App Assets
 
-This directory contains all visual and audio assets used in the Shazman Kurdish-English Learning App.
+This directory contains all visual and audio assets used in the Hozhan Kurdish-English Learning App.
 
 ## 📁 Directory Structure
 
 ```
 assets/
 ├── images/
-│   ├── shazman_icon.png          # App icon/mascot
-│   ├── shazman_logo.png          # Full app logo
+│   ├── Hozhan_icon.png          # App icon/mascot
+│   ├── Hozhan.png          # Full app logo
 │   ├── onboarding/               # Onboarding screen images
 │   ├── characters/               # Character illustrations
 │   ├── badges/                   # Achievement badges
@@ -25,8 +25,8 @@ assets/
 ## 🖼️ Image Assets
 
 ### App Icon & Branding
-- **shazman_icon.png** - Main app mascot/character icon
-- **shazman_logo.png** - Full Shazman wordmark logo
+- **Hozhan_icon.png** - Main app mascot/character icon
+- **Hozhan.png** - Full Hozhan wordmark logo
 
 **Format:** PNG with transparency  
 **Recommended sizes:** 
@@ -69,10 +69,10 @@ Optional ambient music for study sessions (if settings enabled).
 ## 📜 Licensing & Attribution
 
 ### Proprietary Assets
-The following assets are **proprietary** and owned by the Shazman app development team:
+The following assets are **proprietary** and owned by the Hozhan app development team:
 
-- Shazman character designs
-- Shazman logo and branding
+- Hozhan character designs
+- Hozhan logo and branding
 - Custom illustrations created for this app
 - Original audio recordings
 
@@ -187,7 +187,7 @@ When adding or updating assets:
 
 ### Copyright Notice
 ```
-Copyright © 2024 Shazman App Development Team
+Copyright © 2024 Hozhan App Development Team
 All proprietary assets are protected by copyright law.
 Unauthorized use, reproduction, or distribution is prohibited.
 ```
@@ -206,10 +206,10 @@ If the app allows user uploads in the future:
 ## 📞 Contact
 
 For licensing inquiries or asset permissions:
-- **Email:** assets@shazman.app
-- **Website:** https://shazman.app
+- **Email:** assets@hozhan.app
+- **Website:** https://hozhan.app
 
 ---
 
 **Last Updated:** October 18, 2025  
-**Maintained by:** Shazman Development Team
+**Maintained by:** Hozhan Development Team

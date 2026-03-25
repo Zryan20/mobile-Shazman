@@ -141,8 +141,8 @@ class ProgressProvider extends ChangeNotifier {
   void updateLevelProgress(double progress) {
     _currentLevelProgress = progress.clamp(0.0, 100.0);
     
-    // Check if level should advance
-    if (_currentLevelProgress >= 100.0 && _currentLevel < 6) {
+    // Check if level should advance (cap at 4)
+    if (_currentLevelProgress >= 100.0 && _currentLevel < 4) {
       _currentLevel++;
       _currentLevelProgress = 0.0;
     }
@@ -201,8 +201,6 @@ class ProgressProvider extends ChangeNotifier {
       case 2: return 'A2_';
       case 3: return 'B1_';
       case 4: return 'B2_';
-      case 5: return 'C1_';
-      case 6: return 'C2_';
       default: return 'A1_';
     }
   }
@@ -278,8 +276,6 @@ class ProgressProvider extends ChangeNotifier {
       case 2: return 'A2 - Elementary';
       case 3: return 'B1 - Intermediate';
       case 4: return 'B2 - Upper Intermediate';
-      case 5: return 'C1 - Advanced';
-      case 6: return 'C2 - Proficiency';
       default: return 'Unknown';
     }
   }

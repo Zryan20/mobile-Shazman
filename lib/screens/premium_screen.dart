@@ -23,7 +23,7 @@ class PremiumScreen extends StatelessWidget {
                   children: [
                     const SizedBox(width: 40),
                     const Text(
-                      'Shazman+',
+                      'Hozhan+',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -67,7 +67,7 @@ class PremiumScreen extends StatelessWidget {
 
               // Title
               const Text(
-                'بەرزبکەرەوە بۆ Shazman+',
+                'بەرزبکەرەوە بۆ Hozhan+',
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
@@ -395,7 +395,7 @@ class PremiumScreen extends StatelessWidget {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('دڵنیای کە دەتەوێت Shazman+ بکڕیت بە $price دینار؟'),
+            Text('دڵنیای کە دەتەوێت Hozhan+ بکڕیت بە $price دینار؟'),
             const SizedBox(height: 20),
             const Text(
               'ڕێگەی پارەدان هەڵبژێرە:',
@@ -527,7 +527,7 @@ class PremiumScreen extends StatelessWidget {
                   Icon(Icons.check_circle, color: Colors.white),
                   SizedBox(width: 12),
                   Expanded(
-                    child: Text('Shazman+ چالاککرا! دڵی بێسنوورت هەیە! 💎'),
+                    child: Text('Hozhan+ چالاککرا! دڵی بێسنوورت هەیە! 💎'),
                   ),
                 ],
               ),

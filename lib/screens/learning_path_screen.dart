@@ -33,8 +33,6 @@ class _LearningPathScreenState extends State<LearningPathScreen> {
       case 2: return 'A2 - سەرەتایی';
       case 3: return 'B1 - ناوەند';
       case 4: return 'B2 - ناوەندی بەرز';
-      case 5: return 'C1 - پێشکەوتوو';
-      case 6: return 'C2 - شارەزایی';
       default: return 'نامۆ';
     }
   }
