@@ -85,7 +85,7 @@ class CustomProgressBar extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             '${(effectiveProgress * 100).toInt()}%',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
               color: AppColors.textSecondary,
@@ -347,7 +347,7 @@ class XPProgressBar extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.star_rounded,
                   color: AppColors.xpGold,
                   size: 20,
@@ -365,7 +365,7 @@ class XPProgressBar extends StatelessWidget {
             ),
             Text(
               '$currentXP / $requiredXP XP',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textSecondary,
@@ -418,7 +418,7 @@ class StreakProgressBar extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.local_fire_department_rounded,
                   color: AppColors.streakFire,
                   size: 20,
@@ -436,7 +436,7 @@ class StreakProgressBar extends StatelessWidget {
             ),
             Text(
               'Goal: $goalStreak days',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textSecondary,
@@ -451,7 +451,7 @@ class StreakProgressBar extends StatelessWidget {
           progress: progress.clamp(0.0, 1.0),
           height: height,
           progressColor: AppColors.streakFire,
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             colors: [
               AppColors.streakFire,
               Colors.orange,

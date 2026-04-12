@@ -164,7 +164,7 @@ class HeartsInfoDialog extends StatelessWidget {
               // Hearts count
               Text(
                 '${heartsProvider.currentHearts}/${HeartsProvider.MAX_HEARTS} دڵ',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
                   color: AppColors.textSecondary,
@@ -185,7 +185,7 @@ class HeartsInfoDialog extends StatelessWidget {
                 heartsProvider.isPremium 
                     ? 'تۆ بەشداربووی Hozhan+ یت! دڵی بێسنوورت هەیە و دەتوانیت بێ سنوور فێربیت. 💎'
                     : 'ئەگەر هەڵە بکەیت، دڵێک لەدەست دەدەیت. هەر دڵێک لە ٥ کاتژمێردا دەگەڕێتەوە. 💖',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 14,
                   color: AppColors.textSecondary,
                   height: 1.5,
@@ -315,7 +315,7 @@ class HeartsInfoDialog extends StatelessWidget {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (context) => RefillHeartsSheet(),
+      builder: (context) => const RefillHeartsSheet(),
     );
   }
 }
@@ -465,7 +465,7 @@ class RefillHeartsSheet extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     subtitle,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 13,
                       color: AppColors.textSecondary,
                     ),
@@ -474,7 +474,7 @@ class RefillHeartsSheet extends StatelessWidget {
               ),
             ),
             
-            Icon(
+            const Icon(
               Icons.arrow_forward_ios_rounded,
               size: 16,
               color: AppColors.textSecondary,
@@ -505,8 +505,8 @@ class RefillHeartsSheet extends StatelessWidget {
     await context.read<HeartsProvider>().recoverHeart();
     
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text('سوپاس! ١ دڵت وەرگرت 💖'),
+      const SnackBar(
+        content: Text('سوپاس! ١ دڵت وەرگرت 💖'),
         backgroundColor: Colors.green,
       ),
     );

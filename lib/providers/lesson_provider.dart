@@ -214,7 +214,7 @@ class LessonProvider extends ChangeNotifier {
       // SECTION 1: Basics (3 lessons)
       // ========================================
       
-      Lesson(
+      const Lesson(
         id: 'a1_s1_l1',
         title: 'سڵاوکردن و ناساندن - Greetings & Introductions',
         description: 'Lesson content loaded from assets/data',
@@ -222,13 +222,13 @@ class LessonProvider extends ChangeNotifier {
         unitNumber: 1,
         lessonNumber: 1,
         xpReward: 10,
-        estimatedDuration: const Duration(minutes: 5),
+        estimatedDuration: Duration(minutes: 5),
         isCompleted: false,
         isLocked: false,
         tags: ['vocabulary'],
       ),
       
-      Lesson(
+      const Lesson(
         id: 'a1_s1_l2',
         title: 'ژمارەکان ١-٢٠ - Numbers 1-20',
         description: 'One, two, three... twenty | "How old are you?"',
@@ -236,13 +236,13 @@ class LessonProvider extends ChangeNotifier {
         unitNumber: 1,
         lessonNumber: 2,
         xpReward: 10,
-        estimatedDuration: const Duration(minutes: 5),
+        estimatedDuration: Duration(minutes: 5),
         isCompleted: false,
         isLocked: true,
         tags: ['vocabulary', 'numbers', 'questions'],
       ),
       
-      Lesson(
+      const Lesson(
         id: 'a1_s1_l3',
         title: 'زمانی پۆل - Classroom Language',
         description: 'Pen, book, teacher, listen, write | "Open your book."',
@@ -250,7 +250,7 @@ class LessonProvider extends ChangeNotifier {
         unitNumber: 1,
         lessonNumber: 3,
         xpReward: 10,
-        estimatedDuration: const Duration(minutes: 6),
+        estimatedDuration: Duration(minutes: 6),
         isCompleted: false,
         isLocked: true,
         tags: ['vocabulary', 'imperatives', 'classroom'],
@@ -260,7 +260,7 @@ class LessonProvider extends ChangeNotifier {
       // SECTION 2: People and Family (3 lessons)
       // ========================================
       
-      Lesson(
+      const Lesson(
         id: 'a1_s2_l4',
         title: 'ئەندامانی خێزان - Family Members',
         description: 'Mother, father, sister, brother | "This is my mother."',
@@ -268,13 +268,13 @@ class LessonProvider extends ChangeNotifier {
         unitNumber: 2,
         lessonNumber: 4,
         xpReward: 15,
-        estimatedDuration: const Duration(minutes: 7),
+        estimatedDuration: Duration(minutes: 7),
         isCompleted: false,
         isLocked: true,
         tags: ['vocabulary', 'family', 'possessive-adjectives'],
       ),
       
-      Lesson(
+      const Lesson(
         id: 'a1_s2_l5',
         title: 'هاوڕێیان و کەسان - Friends and People',
         description: 'Boy, girl, man, woman, friend | "He is my friend."',
@@ -282,13 +282,13 @@ class LessonProvider extends ChangeNotifier {
         unitNumber: 2,
         lessonNumber: 5,
         xpReward: 15,
-        estimatedDuration: const Duration(minutes: 7),
+        estimatedDuration: Duration(minutes: 7),
         isCompleted: false,
         isLocked: true,
         tags: ['vocabulary', 'people', 'pronouns-he-she'],
       ),
       
-      Lesson(
+      const Lesson(
         id: 'a1_s2_l6',
         title: 'وڵات و نەتەوەکان - Countries and Nationalities',
         description: 'Iraq, America, Kurdistan, English, Kurdish | "I am from Kurdistan."',
@@ -296,7 +296,7 @@ class LessonProvider extends ChangeNotifier {
         unitNumber: 2,
         lessonNumber: 6,
         xpReward: 15,
-        estimatedDuration: const Duration(minutes: 8),
+        estimatedDuration: Duration(minutes: 8),
         isCompleted: false,
         isLocked: true,
         tags: ['vocabulary', 'countries', 'from'],
@@ -306,7 +306,7 @@ class LessonProvider extends ChangeNotifier {
       // SECTION 3: Daily Life (3 lessons)
       // ========================================
       
-      Lesson(
+      const Lesson(
         id: 'a1_s3_l7',
         title: 'ژمارە، ڕۆژ و مانگ - Numbers 20-100, Days, Months',
         description: 'Monday, January, birthday | "Today is Monday. My birthday is in May."',
@@ -314,13 +314,13 @@ class LessonProvider extends ChangeNotifier {
         unitNumber: 3,
         lessonNumber: 7,
         xpReward: 15,
-        estimatedDuration: const Duration(minutes: 8),
+        estimatedDuration: Duration(minutes: 8),
         isCompleted: false,
         isLocked: true,
         tags: ['vocabulary', 'numbers', 'dates', 'have-got'],
       ),
       
-      Lesson(
+      const Lesson(
         id: 'a1_s3_l8',
         title: 'ڕۆتینی ڕۆژانە - Daily Routines',
         description: 'Wake up, go to school, eat, sleep | "I go to school at 8."',
@@ -328,13 +328,13 @@ class LessonProvider extends ChangeNotifier {
         unitNumber: 3,
         lessonNumber: 8,
         xpReward: 15,
-        estimatedDuration: const Duration(minutes: 7),
+        estimatedDuration: Duration(minutes: 7),
         isCompleted: false,
         isLocked: true,
         tags: ['vocabulary', 'routines', 'present-simple'],
       ),
       
-      Lesson(
+      const Lesson(
         id: 'a1_s3_l9',
         title: 'کات و خشتە - Time and Schedules',
         description: 'Clock, hour, morning, evening | "It\'s 3 o\'clock."',
@@ -342,7 +342,7 @@ class LessonProvider extends ChangeNotifier {
         unitNumber: 3,
         lessonNumber: 9,
         xpReward: 15,
-        estimatedDuration: const Duration(minutes: 7),
+        estimatedDuration: Duration(minutes: 7),
         isCompleted: false,
         isLocked: true,
         tags: ['vocabulary', 'time', 'telling-time'],
@@ -352,7 +352,7 @@ class LessonProvider extends ChangeNotifier {
       // SECTION 4: Food and Home (3 lessons)
       // ========================================
       
-      Lesson(
+      const Lesson(
         id: 'a1_s4_l10',
         title: 'خواردن و خواردنەوە - Food and Drinks',
         description: 'Apple, bread, tea, water | "I like apples."',
@@ -360,13 +360,13 @@ class LessonProvider extends ChangeNotifier {
         unitNumber: 4,
         lessonNumber: 10,
         xpReward: 15,
-        estimatedDuration: const Duration(minutes: 7),
+        estimatedDuration: Duration(minutes: 7),
         isCompleted: false,
         isLocked: true,
         tags: ['vocabulary', 'food', 'like'],
       ),
       
-      Lesson(
+      const Lesson(
         id: 'a1_s4_l11',
         title: 'لە ماڵەوە - At Home',
         description: 'House, room, bed, chair | "There is a bed in my room."',
@@ -374,13 +374,13 @@ class LessonProvider extends ChangeNotifier {
         unitNumber: 4,
         lessonNumber: 11,
         xpReward: 15,
-        estimatedDuration: const Duration(minutes: 8),
+        estimatedDuration: Duration(minutes: 8),
         isCompleted: false,
         isLocked: true,
         tags: ['vocabulary', 'home', 'there-is-are'],
       ),
       
-      Lesson(
+      const Lesson(
         id: 'a1_s4_l12',
         title: 'شتە ڕۆژانەکان - Everyday Objects',
         description: 'Phone, bag, keys, money | "This is my phone."',
@@ -388,7 +388,7 @@ class LessonProvider extends ChangeNotifier {
         unitNumber: 4,
         lessonNumber: 12,
         xpReward: 15,
-        estimatedDuration: const Duration(minutes: 7),
+        estimatedDuration: Duration(minutes: 7),
         isCompleted: false,
         isLocked: true,
         tags: ['vocabulary', 'objects', 'this-that'],
@@ -398,7 +398,7 @@ class LessonProvider extends ChangeNotifier {
       // SECTION 5: World Around Us (3 lessons)
       // ========================================
       
-      Lesson(
+      const Lesson(
         id: 'a1_s5_l13',
         title: 'کەش و وەرز - Weather and Seasons',
         description: 'Hot, cold, sunny, rain, winter | "It\'s cold today."',
@@ -406,13 +406,13 @@ class LessonProvider extends ChangeNotifier {
         unitNumber: 5,
         lessonNumber: 13,
         xpReward: 15,
-        estimatedDuration: const Duration(minutes: 7),
+        estimatedDuration: Duration(minutes: 7),
         isCompleted: false,
         isLocked: true,
         tags: ['vocabulary', 'weather', 'present-simple'],
       ),
       
-      Lesson(
+      const Lesson(
         id: 'a1_s5_l14',
         title: 'ڕەنگ و جلوبەرگ - Colors and Clothes',
         description: 'Red, blue, shirt, shoes | "I\'m wearing a blue shirt."',
@@ -420,13 +420,13 @@ class LessonProvider extends ChangeNotifier {
         unitNumber: 5,
         lessonNumber: 14,
         xpReward: 15,
-        estimatedDuration: const Duration(minutes: 7),
+        estimatedDuration: Duration(minutes: 7),
         isCompleted: false,
         isLocked: true,
         tags: ['vocabulary', 'colors', 'clothes', 'present-continuous'],
       ),
       
-      Lesson(
+      const Lesson(
         id: 'a1_s5_l15',
         title: 'شار و شوێنەکان - Town and Places',
         description: 'School, park, shop, hospital | "The bank is near the park."',
@@ -434,7 +434,7 @@ class LessonProvider extends ChangeNotifier {
         unitNumber: 5,
         lessonNumber: 15,
         xpReward: 15,
-        estimatedDuration: const Duration(minutes: 8),
+        estimatedDuration: Duration(minutes: 8),
         isCompleted: false,
         isLocked: true,
         tags: ['vocabulary', 'places', 'prepositions'],
@@ -444,7 +444,7 @@ class LessonProvider extends ChangeNotifier {
       // SECTION 6: Travel and Activities (3 lessons)
       // ========================================
       
-      Lesson(
+      const Lesson(
         id: 'a1_s6_l16',
         title: 'گواستنەوە - Transport',
         description: 'Car, bus, train, walk | "I go to school by bus."',
@@ -452,13 +452,13 @@ class LessonProvider extends ChangeNotifier {
         unitNumber: 6,
         lessonNumber: 16,
         xpReward: 15,
-        estimatedDuration: const Duration(minutes: 7),
+        estimatedDuration: Duration(minutes: 7),
         isCompleted: false,
         isLocked: true,
         tags: ['vocabulary', 'transport', 'by'],
       ),
       
-      Lesson(
+      const Lesson(
         id: 'a1_s6_l17',
         title: 'حەزوسەرگەرمی - Hobbies and Free Time',
         description: 'Play football, watch TV, read books | "I play football on Fridays."',
@@ -466,13 +466,13 @@ class LessonProvider extends ChangeNotifier {
         unitNumber: 6,
         lessonNumber: 17,
         xpReward: 15,
-        estimatedDuration: const Duration(minutes: 7),
+        estimatedDuration: Duration(minutes: 7),
         isCompleted: false,
         isLocked: true,
         tags: ['vocabulary', 'hobbies', 'present-simple-he-she'],
       ),
       
-      Lesson(
+      const Lesson(
         id: 'a1_s6_l18',
         title: 'پشوو و پلان - Holidays and Plans',
         description: 'Travel, holiday, beach, visit | "We go on holiday in summer."',
@@ -480,7 +480,7 @@ class LessonProvider extends ChangeNotifier {
         unitNumber: 6,
         lessonNumber: 18,
         xpReward: 20,
-        estimatedDuration: const Duration(minutes: 8),
+        estimatedDuration: Duration(minutes: 8),
         isCompleted: false,
         isLocked: true,
         tags: ['vocabulary', 'holidays', 'going-to'],
@@ -490,7 +490,7 @@ class LessonProvider extends ChangeNotifier {
       // SECTION 7: Review and Communication (3 lessons)
       // ========================================
       
-      Lesson(
+      const Lesson(
         id: 'a1_s7_l19',
         title: 'پێداچوونەوەی یەکەم - Review 1 (Lessons 1-9)',
         description: 'Review of basics, people, family, and daily life',
@@ -498,13 +498,13 @@ class LessonProvider extends ChangeNotifier {
         unitNumber: 7,
         lessonNumber: 19,
         xpReward: 25,
-        estimatedDuration: const Duration(minutes: 15),
+        estimatedDuration: Duration(minutes: 15),
         isCompleted: false,
         isLocked: true,
         tags: ['review', 'practice', 'mixed'],
       ),
       
-      Lesson(
+      const Lesson(
         id: 'a1_s7_l20',
         title: 'پێداچوونەوەی دووەم - Review 2 (Lessons 10-18)',
         description: 'Review of food, home, world, travel, and activities',
@@ -512,13 +512,13 @@ class LessonProvider extends ChangeNotifier {
         unitNumber: 7,
         lessonNumber: 20,
         xpReward: 25,
-        estimatedDuration: const Duration(minutes: 15),
+        estimatedDuration: Duration(minutes: 15),
         isCompleted: false,
         isLocked: true,
         tags: ['review', 'practice', 'mixed'],
       ),
       
-      Lesson(
+      const Lesson(
         id: 'a1_s7_l21',
         title: 'ڕاهێنانی کۆتایی - Final Practice',
         description: 'Short dialogues and role play - Complete A1 practice',
@@ -526,7 +526,7 @@ class LessonProvider extends ChangeNotifier {
         unitNumber: 7,
         lessonNumber: 21,
         xpReward: 50,
-        estimatedDuration: const Duration(minutes: 20),
+        estimatedDuration: Duration(minutes: 20),
         isCompleted: false,
         isLocked: true,
         tags: ['review', 'dialogue', 'roleplay', 'final'],

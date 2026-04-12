@@ -145,7 +145,7 @@ class _TranslationDialog extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   '/$pronunciation/',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     color: AppColors.textSecondary,
                     fontStyle: FontStyle.italic,
@@ -179,7 +179,7 @@ class _TranslationDialog extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'واتا بە کوردی:',
                     style: TextStyle(
                       fontSize: 12,

@@ -27,7 +27,7 @@ class NoInternetWidget extends StatelessWidget {
                 color: AppColors.error.withOpacity(0.1),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
+              child: const Icon(
                 Icons.wifi_off_rounded,
                 size: 60,
                 color: AppColors.error,
@@ -51,7 +51,7 @@ class NoInternetWidget extends StatelessWidget {
             // Message
             Text(
               message ?? 'تکایە پەیوەندی ئینتەرنێت بپشکنە و دووبارە هەوڵ بدەرەوە',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 color: AppColors.textSecondary,
               ),
@@ -143,7 +143,7 @@ class ErrorWidget extends StatelessWidget {
             // Message
             Text(
               message,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 color: AppColors.textSecondary,
               ),

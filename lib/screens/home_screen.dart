@@ -155,7 +155,7 @@ class _LearningTab extends StatelessWidget {
                 ],
                 flexibleSpace: FlexibleSpaceBar(
                   background: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
@@ -197,7 +197,7 @@ class _LearningTab extends StatelessWidget {
                                   padding:
                                       EdgeInsets.all(isSmallScreen ? 6 : 8),
                                   child: Image.asset(
-                                    'assets/images/Hozhan-icon.png',
+                                    'assets/images/Hozhan.png',
                                     width: isSmallScreen ? 36 : 44,
                                     height: isSmallScreen ? 36 : 44,
                                     fit: BoxFit.contain,
@@ -461,11 +461,11 @@ class _LearningTab extends StatelessWidget {
     if (!progressProvider.isLevelUnlocked(level)) {
       // Show locked message
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content:
-              const Text('تکایە ئاستی پێشوو تەواو بکە بۆ کردنەوەی ئەم ئاستە'),
+              Text('تکایە ئاستی پێشوو تەواو بکە بۆ کردنەوەی ئەم ئاستە'),
           backgroundColor: AppColors.warning,
-          duration: const Duration(seconds: 2),
+          duration: Duration(seconds: 2),
         ),
       );
       return;
@@ -691,7 +691,7 @@ class _ProfileTab extends StatelessWidget {
                   width: double.infinity,
                   padding: EdgeInsets.all(isSmallScreen ? 16 : 20),
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
+                    gradient: const LinearGradient(
                       colors: [AppColors.primary600, AppColors.primary700],
                     ),
                     borderRadius:
@@ -808,12 +808,12 @@ class _ProfileTab extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(AppTextsKurdish.signOut),
-        content: Text(AppTextsKurdish.confirmSignOut),
+        title: const Text(AppTextsKurdish.signOut),
+        content: const Text(AppTextsKurdish.confirmSignOut),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(AppTextsKurdish.cancel),
+            child: const Text(AppTextsKurdish.cancel),
           ),
           TextButton(
             onPressed: () {
@@ -821,7 +821,7 @@ class _ProfileTab extends StatelessWidget {
               Navigator.pop(context);
               Navigator.pushReplacementNamed(context, AppRoutes.login);
             },
-            child: Text(
+            child: const Text(
               AppTextsKurdish.signOut,
               style: TextStyle(color: AppColors.error),
             ),

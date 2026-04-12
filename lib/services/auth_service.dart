@@ -22,9 +22,10 @@ class AuthService {
 
   // Sign in with email and password
   Future<AuthResult> signInWithEmail(String email, String password) async {
+    final normalizedEmail = email.trim().toLowerCase();
     try {
       final userCredential = await _auth.signInWithEmailAndPassword(
-        email: email,
+        email: normalizedEmail,
         password: password,
       );
 
@@ -41,19 +42,24 @@ class AuthService {
 
       return AuthResult.success('چوونەژوورەوە سەرکەوتووبوو', userData);
     } on firebase_auth.FirebaseAuthException catch (e) {
+      debugPrint('❌ FirebaseAuthException code: ${e.code}');
+      debugPrint('❌ FirebaseAuthException message: ${e.message}');
+      
       String message = 'هەڵەیەک ڕوویدا لە چوونەژوورەوە';
       if (e.code == 'user-not-found') {
         message = 'ئەم هەژمارە بوونی نییە';
-      } else if (e.code == 'wrong-password') {
-        message = 'وشەی تێپەڕ هەڵەیە';
+      } else if (e.code == 'wrong-password' || e.code == 'invalid-credential') {
+        message = 'وشەی تێپەڕ هەڵەیە یان ئیمەیڵەکە نادروستە';
       } else if (e.code == 'invalid-email') {
         message = 'ئیمەیڵەکە نادروستە';
       } else if (e.code == 'user-disabled') {
         message = 'ئەم هەژمارە ڕاگیراوە';
+      } else if (e.code == 'too-many-requests') {
+        message = 'هەوڵی زۆر دراوە، تکایە دواتر هەوڵ بدەرەوە';
       }
       return AuthResult.failure(message);
     } catch (e) {
-      debugPrint('Sign in error: $e');
+      debugPrint('❌ Sign in error: $e');
       return AuthResult.failure('هەڵەیەک ڕوویدا، تکایە دووبارە هەوڵ بدەرەوە');
     }
   }
@@ -61,9 +67,10 @@ class AuthService {
   // Sign up with name, email and password
   Future<AuthResult> signUpWithEmail(
       String name, String email, String password) async {
+    final normalizedEmail = email.trim().toLowerCase();
     try {
       final userCredential = await _auth.createUserWithEmailAndPassword(
-        email: email,
+        email: normalizedEmail,
         password: password,
       );
 
@@ -83,6 +90,9 @@ class AuthService {
 
       return AuthResult.success('هەژمارەکەت بە سەرکەوتوویی دروستکرا', userData);
     } on firebase_auth.FirebaseAuthException catch (e) {
+      debugPrint('❌ FirebaseAuthException code: ${e.code}');
+      debugPrint('❌ FirebaseAuthException message: ${e.message}');
+      
       String message = 'هەڵەیەک ڕوویدا لە دروستکردنی هەژمار';
       if (e.code == 'weak-password') {
         message = 'وشەی تێپەڕەکە لاوازە';
@@ -90,10 +100,12 @@ class AuthService {
         message = 'ئەم ئیمەیڵە پێشتر بەکارهێنراوە';
       } else if (e.code == 'invalid-email') {
         message = 'ئیمەیڵەکە نادروستە';
+      } else if (e.code == 'operation-not-allowed') {
+        message = 'دروستکردنی هەژمار ڕێگەنەدراوە';
       }
       return AuthResult.failure(message);
     } catch (e) {
-      debugPrint('Sign up error: $e');
+      debugPrint('❌ Sign up error: $e');
       return AuthResult.failure('هەڵەیەک ڕوویدا، تکایە دووبارە هەوڵ بدەرەوە');
     }
   }
@@ -109,10 +121,13 @@ class AuthService {
 
   // Reset password
   Future<AuthResult> resetPassword(String email) async {
+    final normalizedEmail = email.trim().toLowerCase();
     try {
-      await _auth.sendPasswordResetEmail(email: email);
-      return AuthResult.success('ئیمەیڵی گۆڕینی وشەی تێپەڕ نێردرا بۆ $email');
+      await _auth.sendPasswordResetEmail(email: normalizedEmail);
+      return AuthResult.success('ئیمەیڵی گۆڕینی وشەی تێپەڕ نێردرا بۆ $normalizedEmail');
     } on firebase_auth.FirebaseAuthException catch (e) {
+      debugPrint('❌ FirebaseAuthException code: ${e.code}');
+      
       String message = 'هەڵەیەک ڕوویدا لە ناردنی ئیمەیڵ';
       if (e.code == 'user-not-found') {
         message = 'ئەم هەژمارە بوونی نییە';
@@ -121,8 +136,32 @@ class AuthService {
       }
       return AuthResult.failure(message);
     } catch (e) {
-      debugPrint('Password reset error: $e');
+      debugPrint('❌ Password reset error: $e');
       return AuthResult.failure('هەڵەیەک ڕوویدا، تکایە دووبارە هەوڵ بدەرەوە');
+    }
+  }
+
+  // Delete current user account
+  Future<AuthResult> deleteAccount() async {
+    try {
+      final user = _auth.currentUser;
+      if (user == null) {
+        return AuthResult.failure('بەکارهێنەر نەدۆزرایەوە');
+      }
+
+      await user.delete();
+      return AuthResult.success('هەژمارەکەت بە سەرکەوتوویی سڕایەوە');
+    } on firebase_auth.FirebaseAuthException catch (e) {
+      debugPrint('❌ FirebaseAuthException code: ${e.code}');
+      
+      String message = 'هەڵەیەک ڕوویدا لە سڕینەوەی هەژمار';
+      if (e.code == 'requires-recent-login') {
+        message = 'تکایە جارێکی تر بچۆوە ژوورەوە بۆ ئەوەی بتوانیت هەژمارەکەت بسڕیتەوە (بەهۆکاری پاراستن)';
+      }
+      return AuthResult.failure(message);
+    } catch (e) {
+      debugPrint('❌ Account deletion error: $e');
+      return AuthResult.failure('هەڵەیەک ڕوویدا لە کاتی سڕینەوەی هەژمار');
     }
   }
 

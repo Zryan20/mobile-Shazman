@@ -138,7 +138,7 @@ class LessonCard extends StatelessWidget {
                   children: [
                     // XP Reward
                     if (xpReward != null) ...[
-                      Icon(
+                      const Icon(
                         Icons.star_rounded,
                         size: 16,
                         color: AppColors.xpGold,
@@ -146,7 +146,7 @@ class LessonCard extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         '$xpReward XP',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                           color: AppColors.textSecondary,
@@ -157,7 +157,7 @@ class LessonCard extends StatelessWidget {
                     
                     // Duration
                     if (duration != null) ...[
-                      Icon(
+                      const Icon(
                         Icons.access_time_rounded,
                         size: 16,
                         color: AppColors.textSecondary,
@@ -165,7 +165,7 @@ class LessonCard extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         duration!,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
                           color: AppColors.textSecondary,
@@ -206,7 +206,7 @@ class LessonCard extends StatelessWidget {
           color: AppColors.neutral200,
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Icon(
+        child: const Icon(
           Icons.lock_rounded,
           color: AppColors.neutral500,
           size: 24,
@@ -258,7 +258,7 @@ class LessonCard extends StatelessWidget {
           color: AppColors.neutral200,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Icon(
+        child: const Icon(
           Icons.lock_rounded,
           size: 20,
           color: AppColors.neutral500,
@@ -273,7 +273,7 @@ class LessonCard extends StatelessWidget {
           color: AppColors.success.withOpacity(0.1),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Icon(
+        child: const Icon(
           Icons.check_circle_rounded,
           size: 20,
           color: AppColors.success,
@@ -383,7 +383,7 @@ class CompactLessonCard extends StatelessWidget {
               
               // Arrow icon
               if (!isLocked)
-                Icon(
+                const Icon(
                   Icons.arrow_forward_ios_rounded,
                   size: 16,
                   color: AppColors.textSecondary,
@@ -477,13 +477,13 @@ class LevelCard extends StatelessWidget {
                   
                   // Status icon
                   if (isCompleted)
-                    Icon(
+                    const Icon(
                       Icons.check_circle_rounded,
                       color: AppColors.success,
                       size: 28,
                     )
                   else if (isLocked)
-                    Icon(
+                    const Icon(
                       Icons.lock_rounded,
                       color: AppColors.neutral500,
                       size: 28,
@@ -535,7 +535,7 @@ class LevelCard extends StatelessWidget {
                     if (totalLessons != null && completedLessons != null)
                       Text(
                         '$completedLessons/$totalLessons lessons',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                           color: AppColors.textSecondary,

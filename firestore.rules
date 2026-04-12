@@ -1,0 +1,18 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Users can read/write their own profile
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // OTP docs: only readable/writable by the authenticated owner
+    // Cloud Functions use Admin SDK so they bypass these rules
+    match /otpVerifications/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      // No client-side writes — all managed by Cloud Functions
+      allow write: if false;
+    }
+  }
+}

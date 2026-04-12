@@ -9,6 +9,7 @@ class AppRoutes {
   static const String signUp = '/signup';
   static const String forgotPassword = '/forgot-password';
   static const String resetPassword = '/reset-password';
+  static const String otpVerification = '/otp-verification';
 
   // Main app routes
   static const String home = '/home';

@@ -23,6 +23,7 @@ import 'services/backend_service.dart';
 // Import utils
 import 'utils/app_colors.dart';
 import 'utils/app_routes.dart';
+import 'utils/app_config.dart';
 
 // Import screens
 import 'screens/home_screen.dart';
@@ -34,6 +35,7 @@ import 'screens/signup_screen.dart';
 import 'screens/forgot_password_screen.dart';
 import 'screens/premium_screen.dart';
 import 'screens/welcome_screen.dart';
+import 'screens/otp_verification_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -100,13 +102,13 @@ class HozhanApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider<BackendService>.value(value: backendService),
         ChangeNotifierProvider<HeartsProvider>.value(value: heartsProvider),
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => LessonProvider()),
-        ChangeNotifierProvider(create: (_) => ProgressProvider()),
+        ChangeNotifierProvider(create: (_) => ProgressProvider(backendService: backendService)),
         ChangeNotifierProvider(create: (_) => SettingsProvider()),
         Provider(create: (_) => AuthService()),
-        Provider<BackendService>.value(value: backendService),
       ],
       child: Consumer<SettingsProvider>(
         builder: (context, settings, _) {
@@ -346,6 +348,8 @@ class HozhanApp extends StatelessWidget {
               AppRoutes.signUp: (context) => const SignUpScreen(),
               AppRoutes.forgotPassword: (context) =>
                   const ForgotPasswordScreen(),
+              AppRoutes.otpVerification: (context) =>
+                  const OtpVerificationScreen(),
               AppRoutes.home: (context) => const HomeScreen(),
               AppRoutes.lesson: (context) => const LessonScreen(),
               AppRoutes.profile: (context) => const ProfileScreen(),
@@ -426,7 +430,21 @@ class _SplashScreenState extends State<SplashScreen>
     final user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
+      // Reload to get latest emailVerified status
+      await user.reload();
+      final freshUser = FirebaseAuth.instance.currentUser;
+
       if (!mounted) return;
+
+      // Guard: if email not verified and OTP is enabled, send back to OTP screen
+      if (AppConfig.otpEnabled && (freshUser == null || !freshUser.emailVerified)) {
+        Navigator.of(context).pushReplacementNamed(
+          AppRoutes.otpVerification,
+          arguments: {'email': freshUser?.email ?? ''},
+        );
+        return;
+      }
+
       final userProvider = Provider.of<UserProvider>(context, listen: false);
       final progressProvider =
           Provider.of<ProgressProvider>(context, listen: false);

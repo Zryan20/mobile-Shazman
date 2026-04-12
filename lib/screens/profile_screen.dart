@@ -34,13 +34,13 @@ class ProfileScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.person_off_rounded,
                     size: 64,
                     color: AppColors.neutral400,
                   ),
                   const SizedBox(height: 16),
-                  Text(
+                  const Text(
                     'هیچ بەکارهێنەرێک چوونەژوورەوەی نەکردووە',
                     style: TextStyle(
                       fontSize: 18,
@@ -66,7 +66,7 @@ class ProfileScreen extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       colors: [AppColors.primary600, AppColors.primary700],
                       begin: Alignment.topLeft,
@@ -293,7 +293,7 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(height: 20),
 
                 // Version info
-                Center(
+                const Center(
                   child: Text(
                     '${AppTextsKurdish.appName} وەشان ${AppTextsKurdish.appVersion}',
                     style: TextStyle(
@@ -316,7 +316,7 @@ class ProfileScreen extends StatelessWidget {
     return Center(
       child: Text(
         initials,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 36,
           fontWeight: FontWeight.bold,
           color: AppColors.primary600,
@@ -347,7 +347,7 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(height: 20),
               ListTile(
                 leading:
-                    Icon(Icons.camera_alt_rounded, color: AppColors.primary600),
+                    const Icon(Icons.camera_alt_rounded, color: AppColors.primary600),
                 title: const Text('وێنە بگرە'),
                 onTap: () {
                   Navigator.pop(context);
@@ -358,7 +358,7 @@ class ProfileScreen extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.photo_library_rounded,
+                leading: const Icon(Icons.photo_library_rounded,
                     color: AppColors.primary600),
                 title: const Text('لە گەلەری هەڵبژێرە'),
                 onTap: () {
@@ -371,7 +371,7 @@ class ProfileScreen extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.delete_rounded, color: AppColors.error),
+                leading: const Icon(Icons.delete_rounded, color: AppColors.error),
                 title: const Text('لابردنی وێنە'),
                 onTap: () {
                   Navigator.pop(context);
@@ -418,8 +418,8 @@ class ProfileScreen extends StatelessWidget {
                 context.read<UserProvider>().updateProfile(name: newName);
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: const Text(AppTextsKurdish.profileUpdated),
+                  const SnackBar(
+                    content: Text(AppTextsKurdish.profileUpdated),
                     backgroundColor: AppColors.success,
                   ),
                 );
@@ -456,7 +456,7 @@ class ProfileScreen extends StatelessWidget {
                 (route) => false,
               );
             },
-            child: Text(
+            child: const Text(
               AppTextsKurdish.signOut,
               style: TextStyle(color: AppColors.error),
             ),
@@ -521,7 +521,7 @@ class _StatItem extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 12,
             color: AppColors.textSecondary,
           ),
@@ -574,12 +574,12 @@ class _MenuItem extends StatelessWidget {
       ),
       subtitle: Text(
         subtitle,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 12,
           color: AppColors.textSecondary,
         ),
       ),
-      trailing: Icon(
+      trailing: const Icon(
         Icons.arrow_forward_ios_rounded,
         size: 16,
         color: AppColors.textSecondary,

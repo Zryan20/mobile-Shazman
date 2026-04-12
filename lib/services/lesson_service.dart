@@ -63,8 +63,8 @@ class LessonService {
       }
     } on SocketException {
       throw NoInternetException('پەیوەندی ئینتەرنێت نییە. تکایە پەیوەندی ئینتەرنێت بپشکنە');
-    } on TimeoutException catch (e) {
-      throw e;
+    } on TimeoutException {
+      rethrow;
     } on NoInternetException {
       rethrow;
     } catch (e) {

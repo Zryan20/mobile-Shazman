@@ -47,3 +47,5 @@ flutter_launcher_icons:
   android: true
   ios: true
   image_path: "assets/images/Hozhan-icon.png"
+  adaptive_icon_background: "#508AA8"
+  adaptive_icon_foreground: "assets/images/Hozhan-icon-foreground.png"

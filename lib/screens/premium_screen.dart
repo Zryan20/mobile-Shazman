@@ -77,7 +77,7 @@ class PremiumScreen extends StatelessWidget {
               const SizedBox(height: 8),
 
               // Subtitle
-              Text(
+              const Text(
                 'فێربوونی بێسنوور بەبێ سنوورەکان',
                 style: TextStyle(
                   fontSize: 16,
@@ -192,8 +192,8 @@ class PremiumScreen extends StatelessWidget {
               const SizedBox(height: 16),
 
               // Legal text
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24),
                 child: Text(
                   'بە کلیککردن لەسەر "دەستپێکردنی تاقیکردنەوە"، تۆ ڕازی دەبیت بە مەرجەکانی خزمەتگوزاری و سیاسەتی تایبەتێتیمان.',
                   style: TextStyle(
@@ -247,7 +247,7 @@ class PremiumScreen extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   description,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14,
                     color: AppColors.textSecondary,
                   ),
@@ -337,8 +337,8 @@ class PremiumScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 4),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8),
+                const Padding(
+                  padding: EdgeInsets.only(top: 8),
                   child: Text(
                     'دینار',
                     style: TextStyle(
@@ -351,7 +351,7 @@ class PremiumScreen extends StatelessWidget {
             ),
             Text(
               'بۆ $period',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14,
                 color: AppColors.textSecondary,
               ),
@@ -521,8 +521,8 @@ class PremiumScreen extends StatelessWidget {
 
           // Show success message
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Row(
+            const SnackBar(
+              content: Row(
                 children: [
                   Icon(Icons.check_circle, color: Colors.white),
                   SizedBox(width: 12),
@@ -532,7 +532,7 @@ class PremiumScreen extends StatelessWidget {
                 ],
               ),
               backgroundColor: Colors.green,
-              duration: const Duration(seconds: 3),
+              duration: Duration(seconds: 3),
             ),
           );
         }

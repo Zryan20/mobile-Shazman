@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/user_provider.dart';
+import '../providers/hearts_provider.dart';
+import '../providers/progress_provider.dart';
 import '../providers/settings_provider.dart';
+import '../services/backend_service.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_texts_kurdish.dart';
 
@@ -118,7 +121,7 @@ class SettingsScreen extends StatelessWidget {
                             color: AppColors.primary600.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.volume_up_rounded,
                             color: AppColors.primary600,
                             size: 22,
@@ -138,7 +141,7 @@ class SettingsScreen extends StatelessWidget {
                               ),
                               Text(
                                 '٪${_convertToArabicNumerals((settingsProvider.audioVolume * 100).round())}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 12,
                                   color: AppColors.textSecondary,
                                 ),
@@ -302,7 +305,7 @@ class SettingsScreen extends StatelessWidget {
               const SizedBox(height: 32),
               
               // App Version
-              Center(
+              const Center(
                 child: Column(
                   children: [
                     Text(
@@ -313,7 +316,7 @@ class SettingsScreen extends StatelessWidget {
                         color: AppColors.textSecondary,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4),
                     Text(
                       'وەشان ${AppTextsKurdish.appVersion}',
                       style: TextStyle(
@@ -415,8 +418,8 @@ class SettingsScreen extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: const Text('کاش بە سەرکەوتوویی سڕایەوە'),
+                const SnackBar(
+                  content: Text('کاش بە سەرکەوتوویی سڕایەوە'),
                   backgroundColor: AppColors.success,
                 ),
               );
@@ -432,7 +435,7 @@ class SettingsScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(
+        title: const Text(
           'سڕینەوەی هەژمار',
           style: TextStyle(color: AppColors.error),
         ),
@@ -443,16 +446,54 @@ class SettingsScreen extends StatelessWidget {
             child: const Text('پاشگەزبوونەوە'),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               Navigator.pop(context);
+              
+              final userProvider = Provider.of<UserProvider>(context, listen: false);
+              final heartsProvider = Provider.of<HeartsProvider>(context, listen: false);
+              final progressProvider = Provider.of<ProgressProvider>(context, listen: false);
+              final backendService = Provider.of<BackendService>(context, listen: false);
+
+              // Show loading overlay
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: const Text('سڕینەوەی هەژمار هێشتا جێبەجێ نەکراوە'),
-                  backgroundColor: AppColors.error,
-                ),
+                const SnackBar(content: Text('خەریکی سڕینەوەی هەژمارین...')),
               );
+
+              final result = await userProvider.deleteAccount(backendService);
+
+              if (context.mounted) {
+                if (result.isSuccess) {
+                  // Stop timers and clear local state (don't let errors here block navigation)
+                  try {
+                    await heartsProvider.reset();
+                    await progressProvider.clearProgress();
+                    debugPrint('✅ Local state cleared after deletion.');
+                  } catch (e) {
+                    debugPrint('⚠️ Error clearing local state (ignoring): $e');
+                  }
+                  
+                  // Navigate to splash/root screen
+                  debugPrint('🔄 Navigating to root after successful deletion...');
+                  Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+                  
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(result.message),
+                      backgroundColor: AppColors.success,
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(result.message),
+                      backgroundColor: AppColors.error,
+                      duration: const Duration(seconds: 5),
+                    ),
+                  );
+                }
+              }
             },
-            child: Text(
+            child: const Text(
               'سڕینەوە',
               style: TextStyle(color: AppColors.error),
             ),
@@ -516,13 +557,13 @@ class _SettingsTile extends StatelessWidget {
       ),
       subtitle: Text(
         subtitle,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 12,
           color: AppColors.textSecondary,
         ),
       ),
       trailing: onTap != null
-          ? Icon(
+          ? const Icon(
               Icons.arrow_forward_ios_rounded,
               size: 16,
               color: AppColors.textSecondary,
@@ -572,7 +613,7 @@ class _SettingsSwitchTile extends StatelessWidget {
       ),
       subtitle: Text(
         subtitle,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 12,
           color: AppColors.textSecondary,
         ),
@@ -580,7 +621,7 @@ class _SettingsSwitchTile extends StatelessWidget {
       trailing: Switch(
         value: value,
         onChanged: onChanged,
-        activeColor: AppColors.primary600,
+        activeThumbColor: AppColors.primary600,
       ),
     );
   }

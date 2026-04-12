@@ -1,7 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../services/backend_service.dart';
+
 class ProgressProvider extends ChangeNotifier {
+  final BackendService? _backendService;
+
+  ProgressProvider({BackendService? backendService}) : _backendService = backendService;
+
   // Private fields
   int _currentLevel = 1; // A1 level
   double _currentLevelProgress = 15.0; // Progress within current level (0-100%)
@@ -56,6 +62,11 @@ class ProgressProvider extends ChangeNotifier {
       
       notifyListeners();
       
+      // Sync with backend if available
+      if (_backendService != null) {
+        await _syncWithBackend();
+      }
+
       if (kDebugMode) {
         print('✅ Progress loaded: Level $_currentLevel, XP $_totalXP, Streak $_streakDays days');
         print('📚 Completed lessons: ${_completedLessonIds.length}');
@@ -92,6 +103,19 @@ class ProgressProvider extends ChangeNotifier {
       
       if (kDebugMode) {
         print('💾 Progress saved successfully');
+      }
+
+      // Sync with backend if available
+      if (_backendService != null) {
+        await _backendService!.updateProgress({
+          'currentLevel': _currentLevel,
+          'currentLevelProgress': _currentLevelProgress,
+          'streakDays': _streakDays,
+          'totalXP': _totalXP,
+          'completedLessons': _completedLessons,
+          'lastStudyDate': _lastStudyDate?.toIso8601String(),
+          'completedLessonIds': _completedLessonIds.toList(),
+        });
       }
     } catch (e) {
       if (kDebugMode) {
@@ -311,6 +335,54 @@ class ProgressProvider extends ChangeNotifier {
       return _currentLevelProgress;
     } else {
       return 0.0; // Locked
+    }
+  }
+
+  /// Internal method to sync local data with backend data
+  Future<void> _syncWithBackend() async {
+    if (_backendService == null) return;
+    
+    final remoteData = await _backendService!.syncProgress();
+    if (remoteData == null) return;
+
+    bool hasChanges = false;
+
+    // Reconciliation logic: Prefer remote data if it has more XP
+    final remoteXP = remoteData['totalXP'] as int? ?? 0;
+    if (remoteXP > _totalXP) {
+      _currentLevel = remoteData['currentLevel'] as int? ?? 1;
+      _currentLevelProgress = (remoteData['currentLevelProgress'] as num?)?.toDouble() ?? 0.0;
+      _streakDays = remoteData['streakDays'] as int? ?? 0;
+      _totalXP = remoteXP;
+      _completedLessons = remoteData['completedLessons'] as int? ?? 0;
+      
+      final remoteLastStudyDate = remoteData['lastStudyDate'] as String?;
+      if (remoteLastStudyDate != null) {
+        _lastStudyDate = DateTime.parse(remoteLastStudyDate);
+      }
+      
+      final remoteCompletedLessonIds = remoteData['completedLessonIds'] as List<dynamic>?;
+      if (remoteCompletedLessonIds != null) {
+        _completedLessonIds = Set<String>.from(remoteCompletedLessonIds.cast<String>());
+      }
+      
+      hasChanges = true;
+      if (kDebugMode) {
+        print('🔄 Local progress updated from backend (Remote XP: $remoteXP > Local XP: $_totalXP)');
+      }
+    } else if (_totalXP > remoteXP) {
+      // Local is ahead, push to backend
+      hasChanges = true; 
+      // We don't call saveProgress here to avoid loop, 
+      // but we will push at the next save.
+      if (kDebugMode) {
+        print('🔄 Local progress is ahead of backend (Local XP: $_totalXP > Remote XP: $remoteXP)');
+      }
+      await saveProgress();
+    }
+
+    if (hasChanges) {
+      notifyListeners();
     }
   }
 }

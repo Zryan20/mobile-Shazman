@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
-/// Backend service for syncing hearts and premium status with Firestore
+/// Backend service for syncing hearts, progress, and account data with Firestore
 class BackendService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -47,80 +47,85 @@ class BackendService {
             'transactionId': null,
             'autoRenew': false,
           },
-        });
-
-        if (kDebugMode) {
-          print('✅ User initialized in Firestore: $_userId');
-        }
-      } else {
-        // Update last seen
-        await userDoc.update({
-          'profile.lastSeen': FieldValue.serverTimestamp(),
+          'progress': {
+            'currentLevel': 1,
+            'currentLevelProgress': 0.0,
+            'streakDays': 0,
+            'totalXP': 0,
+            'completedLessons': 0,
+            'lastStudyDate': null,
+            'completedLessonIds': [],
+          },
         });
       }
     } catch (e) {
-      if (kDebugMode) {
-        print('❌ Error initializing user: $e');
-      }
+      debugPrint('Error initializing user in Firestore: $e');
       rethrow;
     }
   }
 
-  /// Sync hearts from server
-  Future<Map<String, dynamic>> syncHearts() async {
-    if (_userId == null) {
-      throw Exception('User not authenticated');
+  /// Delete user data from Firestore
+  Future<void> deleteUserData() async {
+    final uid = _userId;
+    if (uid == null) {
+      debugPrint('⚠️ Cannot delete user data: _userId is null');
+      return;
     }
 
     try {
-      final userDoc = await _firestore.collection('users').doc(_userId).get();
-
-      if (!userDoc.exists) {
-        // Initialize if doesn't exist
-        await initializeUser(
-          email: _auth.currentUser!.email!,
-          displayName: _auth.currentUser!.displayName,
-        );
-        return {
-          'currentHearts': 5,
-          'lastLossTime': null,
-          'isPremium': false,
-        };
-      }
-
-      final heartsData = userDoc.data()?['hearts'] ?? {};
-      final premiumData = userDoc.data()?['premium'] ?? {};
-
-      final currentHearts = heartsData['current'] ?? 5;
-      final lastLossTime = heartsData['lastLossTime'] as Timestamp?;
-      final isPremium = premiumData['isActive'] ?? false;
-
-      if (kDebugMode) {
-        print(
-            '💾 Hearts synced from server: $currentHearts/5, Premium: $isPremium');
-      }
-
-      return {
-        'currentHearts': currentHearts,
-        'lastLossTime': lastLossTime?.toDate(),
-        'isPremium': isPremium,
-      };
+      debugPrint('🗑️ Attempting to delete Firestore document: users/$uid');
+      
+      // Add a timeout because Firestore delete can hang if rules deny it
+      await _firestore
+          .collection('users')
+          .doc(uid)
+          .delete()
+          .timeout(const Duration(seconds: 10), onTimeout: () {
+            throw Exception('Firestore deletion timed out. Check your security rules.');
+          });
+          
+      debugPrint('✅ User data deleted from Firestore: $uid');
+    } on FirebaseException catch (e) {
+      debugPrint('❌ FirebaseException deleting user data: ${e.code} - ${e.message}');
+      // Re-throw so the UI can handle it
+      rethrow;
     } catch (e) {
-      if (kDebugMode) {
-        print('❌ Error syncing hearts: $e');
-      }
+      debugPrint('❌ Unexpected error deleting user data: $e');
       rethrow;
     }
   }
 
-  /// Update hearts on server when user loses a heart
-  Future<bool> loseHeart({
-    required int newHeartCount,
-    required DateTime lossTime,
-  }) async {
-    if (_userId == null) {
-      throw Exception('User not authenticated');
+  /// Sync hearts with Firestore
+  Future<Map<String, dynamic>> syncHearts() async {
+    if (_userId == null) return {'currentHearts': 5, 'lastLossTime': null, 'isPremium': false};
+
+    try {
+      final doc = await _firestore.collection('users').doc(_userId).get();
+      if (doc.exists) {
+        final data = doc.data()!;
+        final heartsData = data['hearts'] as Map<String, dynamic>?;
+        final premiumData = data['premium'] as Map<String, dynamic>?;
+
+        DateTime? lastLossTime;
+        if (heartsData != null && heartsData['lastLossTime'] != null) {
+          lastLossTime = (heartsData['lastLossTime'] as Timestamp).toDate();
+        }
+
+        return {
+          'currentHearts': heartsData?['current'] ?? 5,
+          'lastLossTime': lastLossTime,
+          'isPremium': premiumData?['isActive'] ?? false,
+        };
+      }
+    } catch (e) {
+      debugPrint('Error syncing hearts from Firestore: $e');
     }
+    return {'currentHearts': 5, 'lastLossTime': null, 'isPremium': false};
+  }
+
+  /// Update hearts when lost
+  Future<void> loseHeart({required int newHeartCount, required DateTime lossTime}) async {
+    if (_userId == null) return;
 
     try {
       await _firestore.collection('users').doc(_userId).update({
@@ -128,258 +133,93 @@ class BackendService {
         'hearts.lastLossTime': Timestamp.fromDate(lossTime),
         'hearts.totalLost': FieldValue.increment(1),
       });
-
-      if (kDebugMode) {
-        print('💔 Heart loss synced to server: $newHeartCount remaining');
-      }
-
-      return true;
     } catch (e) {
-      if (kDebugMode) {
-        print('❌ Error syncing heart loss: $e');
-      }
-      return false;
+      debugPrint('Error updating heart loss in Firestore: $e');
     }
   }
 
-  /// Update hearts on server when user recovers a heart
-  Future<bool> recoverHeart({
-    required int newHeartCount,
-    DateTime? newLossTime,
-  }) async {
-    if (_userId == null) {
-      throw Exception('User not authenticated');
-    }
+  /// Update hearts when recovered
+  Future<void> recoverHeart({required int newHeartCount, DateTime? newLossTime}) async {
+    if (_userId == null) return;
 
     try {
       await _firestore.collection('users').doc(_userId).update({
         'hearts.current': newHeartCount,
-        'hearts.lastLossTime':
-            newLossTime != null ? Timestamp.fromDate(newLossTime) : null,
+        'hearts.lastLossTime': newLossTime != null ? Timestamp.fromDate(newLossTime) : null,
         'hearts.totalRecovered': FieldValue.increment(1),
       });
-
-      if (kDebugMode) {
-        print('💚 Heart recovery synced to server: $newHeartCount/5');
-      }
-
-      return true;
     } catch (e) {
-      if (kDebugMode) {
-        print('❌ Error syncing heart recovery: $e');
-      }
-      return false;
+      debugPrint('Error updating heart recovery in Firestore: $e');
     }
   }
 
-  /// Refill all hearts (after watching ad or manual refill)
-  Future<bool> refillHearts() async {
-    if (_userId == null) {
-      throw Exception('User not authenticated');
-    }
-
-    try {
-      await _firestore.collection('users').doc(_userId).update({
-        'hearts.current': 5,
-        'hearts.lastLossTime': null,
-      });
-
-      if (kDebugMode) {
-        print('💖 Hearts refilled on server');
-      }
-
-      return true;
-    } catch (e) {
-      if (kDebugMode) {
-        print('❌ Error refilling hearts: $e');
-      }
-      return false;
-    }
-  }
-
-  /// Check premium status from server
-  Future<Map<String, dynamic>> checkPremiumStatus() async {
-    if (_userId == null) {
-      throw Exception('User not authenticated');
-    }
-
-    try {
-      final userDoc = await _firestore.collection('users').doc(_userId).get();
-      final premiumData = userDoc.data()?['premium'] ?? {};
-
-      final isActive = premiumData['isActive'] ?? false;
-      final planType = premiumData['planType'];
-      final expiryDate = (premiumData['expiryDate'] as Timestamp?)?.toDate();
-
-      // Check if subscription has expired
-      if (isActive &&
-          expiryDate != null &&
-          DateTime.now().isAfter(expiryDate)) {
-        // Deactivate expired subscription
-        await _firestore.collection('users').doc(_userId).update({
-          'premium.isActive': false,
-        });
-
-        if (kDebugMode) {
-          print('⏰ Premium subscription expired');
-        }
-
-        return {
-          'isActive': false,
-          'planType': null,
-          'expiryDate': null,
-        };
-      }
-
-      if (kDebugMode) {
-        print('💎 Premium status: $isActive, Plan: $planType');
-      }
-
-      return {
-        'isActive': isActive,
-        'planType': planType,
-        'expiryDate': expiryDate,
-      };
-    } catch (e) {
-      if (kDebugMode) {
-        print('❌ Error checking premium status: $e');
-      }
-      return {
-        'isActive': false,
-        'planType': null,
-        'expiryDate': null,
-      };
-    }
-  }
-
-  /// Activate premium subscription (called after successful payment)
-  Future<bool> activatePremium({
+  /// Activate premium status
+  Future<void> activatePremium({
     required String planType,
     required String transactionId,
     required String paymentGateway,
   }) async {
-    if (_userId == null) {
-      throw Exception('User not authenticated');
-    }
+    if (_userId == null) return;
 
     try {
-      final now = DateTime.now();
-      DateTime expiryDate;
-
-      // Calculate expiry date based on plan type
-      if (planType == 'monthly') {
-        expiryDate = DateTime(now.year, now.month + 1, now.day);
-      } else if (planType == 'yearly') {
-        expiryDate = DateTime(now.year + 1, now.month, now.day);
-      } else {
-        throw Exception('Invalid plan type: $planType');
-      }
-
       await _firestore.collection('users').doc(_userId).update({
         'premium.isActive': true,
         'premium.planType': planType,
-        'premium.purchaseDate': Timestamp.fromDate(now),
-        'premium.expiryDate': Timestamp.fromDate(expiryDate),
-        'premium.paymentGateway': paymentGateway,
         'premium.transactionId': transactionId,
-        'hearts.current': 5, // Give full hearts
-        'hearts.lastLossTime': null,
+        'premium.paymentGateway': paymentGateway,
+        'premium.purchaseDate': FieldValue.serverTimestamp(),
+        'hearts.current': 5, // Refill hearts on premium activation
       });
-
-      // Create transaction record
-      await _firestore.collection('transactions').add({
-        'userId': _userId,
-        'type': 'premium_purchase',
-        'amount': planType == 'monthly' ? 15000 : 110000,
-        'currency': 'IQD',
-        'gateway': paymentGateway,
-        'status': 'completed',
-        'gatewayTransactionId': transactionId,
-        'createdAt': FieldValue.serverTimestamp(),
-        'completedAt': FieldValue.serverTimestamp(),
-        'metadata': {
-          'planType': planType,
-          'expiryDate': Timestamp.fromDate(expiryDate),
-        },
-      });
-
-      if (kDebugMode) {
-        print('💎 Premium activated: $planType, expires: $expiryDate');
-      }
-
-      return true;
     } catch (e) {
-      if (kDebugMode) {
-        print('❌ Error activating premium: $e');
-      }
-      return false;
+      debugPrint('Error activating premium in Firestore: $e');
     }
   }
 
-  /// Stream user's hearts data (for real-time updates)
-  Stream<Map<String, dynamic>> watchHearts() {
-    if (_userId == null) {
-      return Stream.value({
-        'currentHearts': 5,
-        'lastLossTime': null,
-        'isPremium': false,
-      });
-    }
+  /// Check premium status
+  Future<Map<String, dynamic>> checkPremiumStatus() async {
+    if (_userId == null) return {'isActive': false};
 
-    return _firestore
-        .collection('users')
-        .doc(_userId)
-        .snapshots()
-        .map((snapshot) {
-      if (!snapshot.exists) {
+    try {
+      final doc = await _firestore.collection('users').doc(_userId).get();
+      if (doc.exists) {
+        final data = doc.data()!;
+        final premiumData = data['premium'] as Map<String, dynamic>?;
         return {
-          'currentHearts': 5,
-          'lastLossTime': null,
-          'isPremium': false,
+          'isActive': premiumData?['isActive'] ?? false,
         };
       }
-
-      final heartsData = snapshot.data()?['hearts'] ?? {};
-      final premiumData = snapshot.data()?['premium'] ?? {};
-
-      return {
-        'currentHearts': heartsData['current'] ?? 5,
-        'lastLossTime': (heartsData['lastLossTime'] as Timestamp?)?.toDate(),
-        'isPremium': premiumData['isActive'] ?? false,
-      };
-    });
+    } catch (e) {
+      debugPrint('Error checking premium status in Firestore: $e');
+    }
+    return {'isActive': false};
   }
 
-  /// Stream user's premium status (for real-time updates)
-  Stream<Map<String, dynamic>> watchPremiumStatus() {
-    if (_userId == null) {
-      return Stream.value({
-        'isActive': false,
-        'planType': null,
-        'expiryDate': null,
-      });
-    }
+  /// Sync progress with Firestore
+  Future<Map<String, dynamic>?> syncProgress() async {
+    if (_userId == null) return null;
 
-    return _firestore
-        .collection('users')
-        .doc(_userId)
-        .snapshots()
-        .map((snapshot) {
-      if (!snapshot.exists) {
-        return {
-          'isActive': false,
-          'planType': null,
-          'expiryDate': null,
-        };
+    try {
+      final doc = await _firestore.collection('users').doc(_userId).get();
+      if (doc.exists && doc.data()!.containsKey('progress')) {
+        return doc.data()!['progress'] as Map<String, dynamic>;
       }
+    } catch (e) {
+      debugPrint('Error syncing progress from Firestore: $e');
+    }
+    return null;
+  }
 
-      final premiumData = snapshot.data()?['premium'] ?? {};
+  /// Update progress in Firestore
+  Future<void> updateProgress(Map<String, dynamic> progressData) async {
+    if (_userId == null) return;
 
-      return {
-        'isActive': premiumData['isActive'] ?? false,
-        'planType': premiumData['planType'],
-        'expiryDate': (premiumData['expiryDate'] as Timestamp?)?.toDate(),
-      };
-    });
+    try {
+      await _firestore.collection('users').doc(_userId).update({
+        'progress': progressData,
+        'lastSeen': FieldValue.serverTimestamp(),
+      });
+    } catch (e) {
+      debugPrint('Error updating progress in Firestore: $e');
+    }
   }
 }

@@ -415,7 +415,25 @@ class HeartsProvider extends ChangeNotifier {
     }
   }
 
-  /// Reset hearts (for testing)
+  /// Reset hearts (for testing or logout)
+  Future<void> reset() async {
+    _heartRecoveryTimer?.cancel();
+    _heartRecoveryTimer = null;
+    
+    _currentHearts = MAX_HEARTS;
+    _lastHeartLossTime = null;
+    _isPremium = false;
+    _backendService = null;
+
+    await _saveHearts();
+    notifyListeners();
+
+    if (kDebugMode) {
+      print('🔄 HeartsProvider reset to default');
+    }
+  }
+
+  /// Reset hearts manually (for testing)
   Future<void> resetHearts() async {
     _currentHearts = MAX_HEARTS;
     _lastHeartLossTime = null;

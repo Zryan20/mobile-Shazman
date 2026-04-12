@@ -66,7 +66,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       if (!mounted) return;
       
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text(AppTextsKurdish.somethingWentWrong),
           backgroundColor: AppColors.error,
         ),
@@ -84,7 +84,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppTextsKurdish.forgotPassword),
+        title: const Text(AppTextsKurdish.forgotPassword),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -114,7 +114,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 color: AppColors.primary600.withOpacity(0.1),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
+              child: const Icon(
                 Icons.lock_reset_rounded,
                 size: 50,
                 color: AppColors.primary600,
@@ -125,10 +125,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           const SizedBox(height: 32),
           
           // Title
-          Center(
+          const Center(
             child: Text(
               AppTextsKurdish.resetPassword,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
               ),
@@ -138,7 +138,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           const SizedBox(height: 12),
           
           // Description
-          Center(
+          const Center(
             child: Text(
               'ئیمەیڵەکەت بنووسە، ئێمە لینکێکی گەڕانەوەی وشەی تێپەڕت دەنێرین',
               style: TextStyle(
@@ -157,7 +157,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.done,
             onFieldSubmitted: (_) => _resetPassword(),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: AppTextsKurdish.email,
               hintText: 'ئیمەیڵەکەت بنووسە',
               prefixIcon: Icon(
@@ -220,7 +220,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             color: AppColors.success.withOpacity(0.1),
             shape: BoxShape.circle,
           ),
-          child: Icon(
+          child: const Icon(
             Icons.check_circle_rounded,
             size: 60,
             color: AppColors.success,
@@ -241,7 +241,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         const SizedBox(height: 12),
         
         // Success message
-        Text(
+        const Text(
           'لینکێکی گەڕانەوەی وشەی تێپەڕ نێردراوە بۆ',
           style: TextStyle(
             fontSize: 16,
@@ -255,7 +255,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         // Email address
         Text(
           _emailController.text.trim(),
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
             color: AppColors.primary600,
@@ -278,11 +278,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
+              const Row(
                 children: [
                   Icon(Icons.info_rounded, color: AppColors.info),
-                  const SizedBox(width: 12),
-                  const Expanded(
+                  SizedBox(width: 12),
+                  Expanded(
                     child: Text(
                       'هەنگاوەکانی دواتر:',
                       style: TextStyle(
@@ -341,7 +341,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           Container(
             width: 24,
             height: 24,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppColors.primary600,
               shape: BoxShape.circle,
             ),
@@ -362,7 +362,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               padding: const EdgeInsets.only(top: 2),
               child: Text(
                 text,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 14,
                   color: AppColors.textSecondary,
                 ),

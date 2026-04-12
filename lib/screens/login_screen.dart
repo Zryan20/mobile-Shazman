@@ -53,20 +53,22 @@ class _LoginScreenState extends State<LoginScreen> {
         final userProvider = context.read<UserProvider>();
         final backendService = context.read<BackendService>();
 
-        await userProvider.signIn(
-          _emailController.text.trim(),
-          _passwordController.text,
-        );
+        userProvider.setUserFromData(result.userData!);
 
         // Initialize user in Firestore
-        await backendService.initializeUser(
-          email: _emailController.text.trim(),
-        );
+        try {
+          await backendService.initializeUser(
+            email: _emailController.text.trim(),
+          );
+        } catch (e) {
+          debugPrint('❌ BackendService initialization failed during login: $e');
+          // Continue anyway - user is authenticated in Firebase Auth
+        }
 
         Navigator.pushReplacementNamed(context, AppRoutes.home);
 
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text(AppTextsKurdish.signInSuccess),
             backgroundColor: AppColors.success,
           ),
@@ -83,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text(AppTextsKurdish.somethingWentWrong),
           backgroundColor: AppColors.error,
         ),
@@ -132,17 +134,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 32),
-                Center(
+                const Center(
                   child: Column(
                     children: [
-                      const Text(
+                      Text(
                         AppTextsKurdish.welcome,
                         style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8),
                       Text(
                         AppTextsKurdish.appTagline,
                         style: TextStyle(
@@ -159,7 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: AppTextsKurdish.email,
                     hintText: 'ئیمەیڵەکەت بنووسە',
                     prefixIcon: Icon(
@@ -187,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   decoration: InputDecoration(
                     labelText: AppTextsKurdish.password,
                     hintText: 'وشەی تێپەڕەکەت بنووسە',
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       Icons.lock_rounded,
                       color: AppColors.primary600,
                     ),
@@ -237,12 +239,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                Row(
+                const Row(
                   children: [
                     Expanded(
                         child: Divider(color: AppColors.border, thickness: 1)),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      padding: EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
                         'یان',
                         style: TextStyle(
@@ -286,7 +288,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       AppTextsKurdish.dontHaveAccount,
                       style: TextStyle(color: AppColors.textSecondary),
                     ),

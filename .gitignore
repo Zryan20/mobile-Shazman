@@ -154,3 +154,6 @@ run_crash.log
 **/build/
 **/android/app/build/
 **/android/.gradle/
+node_modules/
+nul
+scripts/service_account.json

@@ -67,7 +67,7 @@ class _LearningPathScreenState extends State<LearningPathScreen> {
                     ),
                   ),
                   background: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
@@ -242,7 +242,7 @@ class _SectionHeader extends StatelessWidget {
           Container(
             width: 50,
             height: 50,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppColors.primary600,
               shape: BoxShape.circle,
             ),
@@ -307,7 +307,7 @@ class _LessonNode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final nodeSize = 80.0;
+    const nodeSize = 80.0;
     final offset = screenWidth * 0.15;
 
     return GestureDetector(
@@ -489,16 +489,16 @@ class _SectionCompleteWidget extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
+      child: const Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
+          Icon(
             Icons.emoji_events_rounded,
             color: Colors.white,
             size: 32,
           ),
-          const SizedBox(width: 12),
-          const Flexible(
+          SizedBox(width: 12),
+          Flexible(
             child: Text(
               'بەشەکە تەواو کرا!',
               style: TextStyle(

@@ -7,6 +7,7 @@ import '../services/backend_service.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_texts_kurdish.dart';
 import '../utils/app_routes.dart';
+import '../utils/app_config.dart';
 import '../widgets/custom_button.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -44,8 +45,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     if (!_acceptedTerms) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text('تکایە مەرجەکانی خزمەتگوزاری قبوڵ بکە'),
+        const SnackBar(
+          content: Text('تکایە مەرجەکانی خزمەتگوزاری قبوڵ بکە'),
           backgroundColor: AppColors.warning,
         ),
       );
@@ -67,39 +68,48 @@ class _SignUpScreenState extends State<SignUpScreen> {
       if (!mounted) return;
 
       if (result.isSuccess) {
-        print('✅ AuthService signup successful');
-        final userProvider = context.read<UserProvider>();
-        final backendService = context.read<BackendService>();
+        debugPrint('✅ AuthService signup successful');
 
-        await userProvider.signUp(
-          _nameController.text.trim(),
-          _emailController.text.trim(),
-          _passwordController.text,
-        );
-        print('✅ UserProvider signup completed');
-
-        // Initialize user in Firestore
-        try {
-          await backendService.initializeUser(
-            email: _emailController.text.trim(),
-            displayName: _nameController.text.trim(),
+        if (AppConfig.otpEnabled) {
+          // Don't update UserProvider yet — wait for OTP verification
+          // Navigate to OTP verification screen
+          if (!mounted) return;
+          Navigator.pushReplacementNamed(
+            context,
+            AppRoutes.otpVerification,
+            arguments: {'email': _emailController.text.trim()},
           );
-          print('✅ BackendService initialization completed');
-        } catch (e) {
-          print('❌ BackendService initialization failed: $e');
-          // Continue anyway - user is created in Firebase Auth
+        } else {
+          // OTP disabled: bypass everything and go straight to Home
+          final userProvider = context.read<UserProvider>();
+          final backendService = context.read<BackendService>();
+
+          userProvider.setUserFromData(result.userData!);
+          debugPrint('✅ UserProvider user state updated (OTP bypassed)');
+
+          // Initialize user in Firestore
+          try {
+            await backendService.initializeUser(
+              email: _emailController.text.trim(),
+              displayName: _nameController.text.trim(),
+            );
+            debugPrint('✅ BackendService initialization completed');
+          } catch (e) {
+            debugPrint('❌ BackendService initialization failed: $e');
+          }
+
+          if (!mounted) return;
+          Navigator.pushReplacementNamed(context, AppRoutes.home);
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(AppTextsKurdish.signUpSuccess),
+              backgroundColor: AppColors.success,
+            ),
+          );
         }
-
-        Navigator.pushReplacementNamed(context, AppRoutes.home);
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(AppTextsKurdish.signUpSuccess),
-            backgroundColor: AppColors.success,
-          ),
-        );
       } else {
-        print('❌ AuthService signup failed: ${result.message}');
+        debugPrint('❌ AuthService signup failed: ${result.message}');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(result.message),
@@ -111,7 +121,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text(AppTextsKurdish.somethingWentWrong),
           backgroundColor: AppColors.error,
         ),
@@ -156,7 +166,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       borderRadius: BorderRadius.circular(25),
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.primary600.withOpacity(0.3),
+                          color: AppColors.primary600.withValues(alpha: 0.3),
                           blurRadius: 20,
                           offset: const Offset(0, 10),
                         ),
@@ -173,17 +183,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(height: 32),
 
                 // Title
-                Center(
+                const Center(
                   child: Column(
                     children: [
                       Text(
                         AppTextsKurdish.createAccount,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8),
                       Text(
                         'هەژمارێک دروست بکە بۆ دەستپێکردن',
                         style: TextStyle(
@@ -203,7 +213,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   controller: _nameController,
                   keyboardType: TextInputType.name,
                   textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: AppTextsKurdish.fullName,
                     hintText: 'ناوی تەواوت بنووسە',
                     prefixIcon: Icon(
@@ -229,7 +239,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: AppTextsKurdish.email,
                     hintText: 'ئیمەیڵەکەت بنووسە',
                     prefixIcon: Icon(
@@ -259,7 +269,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   decoration: InputDecoration(
                     labelText: AppTextsKurdish.password,
                     hintText: 'وشەی تێپەڕەکەت بنووسە',
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       Icons.lock_rounded,
                       color: AppColors.primary600,
                     ),
@@ -299,7 +309,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   decoration: InputDecoration(
                     labelText: AppTextsKurdish.confirmPassword,
                     hintText: 'وشەی تێپەڕەکەت دووبارە بنووسە',
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       Icons.lock_rounded,
                       color: AppColors.primary600,
                     ),
@@ -354,13 +364,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: Padding(
                           padding: const EdgeInsets.only(top: 12),
                           child: RichText(
-                            text: TextSpan(
+                            text: const TextSpan(
                               style: TextStyle(
                                 fontSize: 14,
                                 color: AppColors.textSecondary,
                               ),
                               children: [
-                                const TextSpan(text: 'من ڕازیم بە '),
+                                TextSpan(text: 'من ڕازیم بە '),
                                 TextSpan(
                                   text: 'مەرجەکانی خزمەتگوزاری',
                                   style: TextStyle(
@@ -368,7 +378,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
-                                const TextSpan(text: ' و '),
+                                TextSpan(text: ' و '),
                                 TextSpan(
                                   text: 'سیاسەتی تایبەتێتی',
                                   style: TextStyle(
@@ -401,12 +411,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(height: 24),
 
                 // Divider
-                Row(
+                const Row(
                   children: [
                     Expanded(
                         child: Divider(color: AppColors.border, thickness: 1)),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      padding: EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
                         'یان',
                         style: TextStyle(
@@ -464,7 +474,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       AppTextsKurdish.alreadyHaveAccount,
                       style: TextStyle(color: AppColors.textSecondary),
                     ),
