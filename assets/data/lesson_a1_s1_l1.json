@@ -249,19 +249,13 @@
     },
     {
       "id": "ex_10",
-      "type": "multiple_choice",
-      "question": "Which is correct for introducing yourself?",
-      "questionKurdish": "کامە ڕاستە بۆ ناساندنی خۆت؟",
-      "options": [
-        "My name is Sara",
-        "My hello is Sara",
-        "My goodbye is Sara",
-        "My please is Sara"
-      ],
+      "type": "sentence_builder",
+      "question": "Translate: ناوم سارایە",
+      "questionKurdish": "ئەم ڕستەیە بە ئینگلیزی دروست بکە",
+      "options": ["My", "name", "is", "Sara", "Hello", "Ahmed"],
       "correctAnswer": "My name is Sara",
-      "hint": "We use 'name' to introduce ourselves",
-      "explanation": "We say 'My name is' followed by our name.",
-      "explanationKurdish": "ناوم ... ە دەڵێین و دواتر ناوەکەمان دەڵێین"
+      "explanation": "To introduce yourself, you say: My name is Sara.",
+      "explanationKurdish": "بۆ ناساندنی خۆت دەڵێیت: My name is Sara."
     }
   ],
   

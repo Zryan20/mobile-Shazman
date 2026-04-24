@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:audioplayers/audioplayers.dart';
-
 import '../providers/progress_provider.dart';
 import '../providers/lesson_provider.dart';
 import '../providers/hearts_provider.dart';
+import '../services/audio_service.dart';
 import '../services/lesson_data_service.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_texts.dart';
@@ -40,6 +39,10 @@ class _LessonScreenState extends State<LessonScreen> {
   List<Map<String, dynamic>> _exercises = [];
   bool _isLoading = true;
   String? _errorMessage;
+
+  // Sentence builder state
+  List<String> _builtSentence = [];
+  List<String> _shuffledBank = [];
 
   bool _isInit = true;
 
@@ -105,6 +108,7 @@ class _LessonScreenState extends State<LessonScreen> {
       setState(() {
         _currentPhase = LessonPhase.exercises;
       });
+      _initExercise(0);
     }
   }
 
@@ -156,8 +160,67 @@ class _LessonScreenState extends State<LessonScreen> {
         _isAnswered = false;
         _selectedAnswer = null;
       });
+      _initExercise(_currentExerciseIndex);
     } else {
       _finishLesson();
+    }
+  }
+
+  void _initExercise(int index) {
+    if (index >= _exercises.length) return;
+    
+    final exercise = _exercises[index];
+    
+    // Handle Sentence Builder initialization
+    if (exercise['type'] == 'sentence_builder') {
+      final List<String> bank = List<String>.from(exercise['options'] ?? []);
+      setState(() {
+        _builtSentence = [];
+        _shuffledBank = bank..shuffle();
+      });
+    }
+
+    _checkAutoPlay();
+  }
+
+  void _handleWordTap(String word, bool fromBank) {
+    if (_isAnswered) return;
+    
+    setState(() {
+      if (fromBank) {
+        _shuffledBank.remove(word);
+        _builtSentence.add(word);
+      } else {
+        _builtSentence.remove(word);
+        _shuffledBank.add(word);
+      }
+    });
+  }
+
+  void _checkSentence() {
+    if (_builtSentence.isEmpty || _isAnswered) return;
+    
+    final fullSentence = _builtSentence.join(' ');
+    _selectAnswer(fullSentence);
+  }
+
+  void _checkAutoPlay() {
+    if (_currentPhase == LessonPhase.exercises && _exercises.isNotEmpty) {
+      final currentExercise = _exercises[_currentExerciseIndex];
+      if (currentExercise['type'] == 'listening') {
+        // Delay slightly to allow the UI to transition
+        Future.delayed(const Duration(milliseconds: 500), () {
+          if (mounted && _currentPhase == LessonPhase.exercises) {
+            final textToSpeak = currentExercise['textToSpeak'] ?? 
+                              currentExercise['correctAnswer'] ?? 
+                              currentExercise['question'];
+            AudioService().playPronunciation(
+              textToSpeak as String, 
+              audioPath: currentExercise['audioPath'] as String?
+            );
+          }
+        });
+      }
     }
   }
 
@@ -480,20 +543,60 @@ class _LessonScreenState extends State<LessonScreen> {
                     textDirection: TextDirection.rtl,
                   ),
                 const SizedBox(height: 32),
+                // Exercise Visual (Interactive for listening)
                 Center(
-                  child: Container(
-                    width: 120,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary600.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(60),
+                  child: GestureDetector(
+                    onTap: () {
+                      if (currentExercise['type'] == 'listening') {
+                        final textToSpeak = currentExercise['textToSpeak'] ?? 
+                                          currentExercise['correctAnswer'] ?? 
+                                          currentExercise['question'];
+                        AudioService().playPronunciation(
+                          textToSpeak as String, 
+                          audioPath: currentExercise['audioPath'] as String?
+                        );
+                      }
+                    },
+                    child: Container(
+                      width: 120,
+                      height: 120,
+                      decoration: BoxDecoration(
+                        color: AppColors.primary600.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(60),
+                        border: currentExercise['type'] == 'listening' 
+                          ? Border.all(color: AppColors.primary600.withValues(alpha: 0.3), width: 2)
+                          : null,
+                      ),
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Icon(
+                            _getExerciseIcon(currentExercise['type'] as String),
+                            size: 60, 
+                            color: AppColors.primary600
+                          ),
+                          if (currentExercise['type'] == 'listening')
+                            Positioned(
+                              bottom: 15,
+                              right: 15,
+                              child: Container(
+                                padding: const EdgeInsets.all(4),
+                                decoration: const BoxDecoration(
+                                  color: AppColors.primary600,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(Icons.play_arrow_rounded, size: 16, color: Colors.white),
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
-                    child: const Icon(Icons.school_rounded,
-                        size: 60, color: AppColors.primary600),
                   ),
                 ),
                 const SizedBox(height: 32),
-                if (currentExercise['options'] != null)
+                if (currentExercise['type'] == 'sentence_builder')
+                  _buildSentenceBuilder()
+                else if (currentExercise['options'] != null)
                   ...(currentExercise['options'] as List<dynamic>)
                       .map((option) {
                     final optionStr = option as String;
@@ -573,6 +676,19 @@ class _LessonScreenState extends State<LessonScreen> {
                       ),
                     );
                   }),
+                
+                if (currentExercise['type'] == 'sentence_builder' && !_isAnswered)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: PrimaryButton(
+                        text: 'پێداچوونەوە بکە', // "Check" in Kurdish
+                        onPressed: _builtSentence.isEmpty ? null : _checkSentence,
+                      ),
+                    ),
+                  ),
+
                 if (_isAnswered) ...[
                   const SizedBox(height: 24),
                   Container(
@@ -675,6 +791,23 @@ class _LessonScreenState extends State<LessonScreen> {
     }
   }
 
+  IconData _getExerciseIcon(String type) {
+    switch (type) {
+      case 'listening':
+        return Icons.volume_up_rounded;
+      case 'fill_blank':
+        return Icons.edit_note_rounded;
+      case 'translation':
+        return Icons.translate_rounded;
+      case 'matching':
+        return Icons.grid_view_rounded;
+      case 'speaking':
+        return Icons.mic_rounded;
+      default:
+        return Icons.school_rounded;
+    }
+  }
+
   void _showExitDialog() {
     showDialog(
       context: context,
@@ -695,6 +828,67 @@ class _LessonScreenState extends State<LessonScreen> {
                 style: TextStyle(color: AppColors.error)),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildSentenceBuilder() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Target area (where selected words go)
+        Container(
+          width: double.infinity,
+          constraints: const BoxConstraints(minHeight: 120),
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: AppColors.border, width: 2),
+          ),
+          child: Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: _builtSentence.map((word) => _buildWordChip(word, false)).toList(),
+          ),
+        ),
+        const SizedBox(height: 32),
+        // Word bank (available words)
+        Wrap(
+          spacing: 10,
+          runSpacing: 10,
+          children: _shuffledBank.map((word) => _buildWordChip(word, true)).toList(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildWordChip(String word, bool fromBank) {
+    return GestureDetector(
+      onTap: () => _handleWordTap(word, fromBank),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppColors.border, width: 2),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.05),
+              offset: const Offset(0, 2),
+              blurRadius: 0,
+              spreadRadius: 0,
+            ),
+          ],
+        ),
+        child: Text(
+          word,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: AppColors.textPrimary,
+          ),
+        ),
       ),
     );
   }
@@ -807,9 +1001,8 @@ class VocabularyIntroCard extends StatelessWidget {
                 iconSize: 40,
                 color: AppColors.primary600,
                 onPressed: () {
-                  // Play audio
-                  final player = AudioPlayer();
-                  player.play(AssetSource(audioPath!));
+                  // Play audio using TTS or file
+                  AudioService().playPronunciation(englishWord, audioPath: audioPath);
                 },
               ),
             ],

@@ -80,7 +80,6 @@ app.*.map.json
 **/ios/Runner/GeneratedPluginRegistrant.*
 
 # Web related
-lib/generated_plugin_registrant.dart
 
 # Windows related
 **/windows/**/generated_plugin_registrant.cc
@@ -157,3 +156,4 @@ run_crash.log
 node_modules/
 nul
 scripts/service_account.json
+.firebase/

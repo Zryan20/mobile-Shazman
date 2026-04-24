@@ -9,7 +9,6 @@ class LessonProvider extends ChangeNotifier {
   // 🔧 CONFIGURATION: Toggle between mock and API
   // ========================================
   static const bool USE_MOCK_DATA = true; // Set to false when API is ready
-  
   // Private fields
   List<Lesson> _lessons = [];
   bool _isLoading = false;
@@ -231,7 +230,7 @@ class LessonProvider extends ChangeNotifier {
       const Lesson(
         id: 'a1_s1_l2',
         title: 'ژمارەکان ١-٢٠ - Numbers 1-20',
-        description: 'One, two, three... twenty | "How old are you?"',
+        description: 'Learn numbers from 1 to 20 and how to talk about age',
         level: 1,
         unitNumber: 1,
         lessonNumber: 2,

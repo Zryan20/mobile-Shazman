@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
 import '../providers/hearts_provider.dart';
 import '../providers/progress_provider.dart';
+import '../providers/lesson_provider.dart';
 import '../providers/settings_provider.dart';
 import '../services/backend_service.dart';
 import '../utils/app_colors.dart';
@@ -52,19 +53,6 @@ class SettingsScreen extends StatelessWidget {
               
               const Divider(height: 32),
               
-              // Learning Preferences Section
-              _buildSectionHeader('هەڵبژاردنەکانی فێربوون'),
-              
-              _SettingsTile(
-                icon: Icons.flag_rounded,
-                title: 'ئامانجی ڕۆژانە',
-                subtitle: '١٥ خولەک لە ڕۆژێکدا',
-                onTap: () {
-                  // Navigator.pushNamed(context, AppRoutes.dailyGoal);
-                },
-              ),
-              
-              const Divider(height: 32),
               
               // Notifications Section
               _buildSectionHeader('ئاگادارکردنەوەکان'),
@@ -91,81 +79,11 @@ class SettingsScreen extends StatelessWidget {
               ),
               
               _SettingsSwitchTile(
-                icon: Icons.music_note_rounded,
-                title: 'میوزیک',
-                subtitle: 'میوزیکی پاشبنەما',
-                value: settingsProvider.musicEnabled,
-                onChanged: settingsProvider.setMusic,
-              ),
-              
-              _SettingsSwitchTile(
                 icon: Icons.vibration_rounded,
                 title: 'لەرینەوە',
                 subtitle: 'وەڵامی لەرینەوە',
                 value: settingsProvider.vibrationEnabled,
                 onChanged: settingsProvider.setVibration,
-              ),
-              
-              // Volume Slider
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: AppColors.primary600.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Icon(
-                            Icons.volume_up_rounded,
-                            color: AppColors.primary600,
-                            size: 22,
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'ئاستی دەنگ',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              Text(
-                                '٪${_convertToArabicNumerals((settingsProvider.audioVolume * 100).round())}',
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: AppColors.textSecondary,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    SliderTheme(
-                      data: SliderThemeData(
-                        activeTrackColor: AppColors.primary600,
-                        inactiveTrackColor: AppColors.neutral200,
-                        thumbColor: AppColors.primary600,
-                        overlayColor: AppColors.primary600.withOpacity(0.2),
-                      ),
-                      child: Slider(
-                        value: settingsProvider.audioVolume,
-                        onChanged: settingsProvider.setAudioVolume,
-                      ),
-                    ),
-                  ],
-                ),
               ),
               
               const Divider(height: 32),
@@ -188,27 +106,6 @@ class SettingsScreen extends StatelessWidget {
                 },
               ),
               
-              _SettingsSwitchTile(
-                icon: Icons.closed_caption_rounded,
-                title: 'ژێرنووس',
-                subtitle: 'ژێرنووس بۆ دەنگەکان پیشان بدە',
-                value: settingsProvider.subtitlesEnabled,
-                onChanged: settingsProvider.setSubtitles,
-              ),
-              
-              const Divider(height: 32),
-              
-              // Playback Section
-              _buildSectionHeader('لێدان'),
-              
-              _SettingsSwitchTile(
-                icon: Icons.play_circle_rounded,
-                title: 'لێدانی خۆکار',
-                subtitle: 'وانەی دواتر بە خۆکاری بلێدرێ',
-                value: settingsProvider.autoplayEnabled,
-                onChanged: settingsProvider.setAutoplay,
-              ),
-              
               const Divider(height: 32),
               
               // Data & Storage Section
@@ -225,10 +122,10 @@ class SettingsScreen extends StatelessWidget {
               
               _SettingsTile(
                 icon: Icons.delete_sweep_rounded,
-                title: 'سڕینەوەی کاش',
-                subtitle: 'شوێنی کۆگا ئازاد بکە',
+                title: 'سڕینەوەی پێشکەوتن',
+                subtitle: 'هەموو زانیارییەکان سفر بکەرەوە',
                 onTap: () {
-                  _showClearCacheDialog(context);
+                  _showClearProgressDialog(context);
                 },
               ),
               
@@ -401,13 +298,13 @@ class SettingsScreen extends StatelessWidget {
     );
   }
   
-  void _showClearCacheDialog(BuildContext context) {
+  void _showClearProgressDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('سڕینەوەی کاش'),
+        title: const Text('سڕینەوەی پێشکەوتن'),
         content: const Text(
-          'ئەمە شوێنی کۆگا ئازاد دەکات بە لابردنی پەڕگە کاتییەکان.',
+          'ئایا دڵنیایت کە دەتەوێت هەموو پێشکەوتنەکانت بسڕیتەوە؟ ئەمە وانە تەواوکراوەکان و خاڵەکان سفر دەکاتەوە.',
         ),
         actions: [
           TextButton(
@@ -415,16 +312,27 @@ class SettingsScreen extends StatelessWidget {
             child: const Text('پاشگەزبوونەوە'),
           ),
           TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('کاش بە سەرکەوتوویی سڕایەوە'),
-                  backgroundColor: AppColors.success,
-                ),
-              );
+            onPressed: () async {
+              final lessonProvider = Provider.of<LessonProvider>(context, listen: false);
+              final progressProvider = Provider.of<ProgressProvider>(context, listen: false);
+              
+              await lessonProvider.clearCompletionData();
+              await progressProvider.clearProgress();
+              
+              if (context.mounted) {
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('هەموو پێشکەوتنەکان بە سەرکەوتوویی سڕانەوە'),
+                    backgroundColor: AppColors.success,
+                  ),
+                );
+              }
             },
-            child: const Text('سڕینەوە'),
+            child: const Text(
+              'سڕینەوە',
+              style: TextStyle(color: AppColors.error),
+            ),
           ),
         ],
       ),
@@ -503,16 +411,6 @@ class SettingsScreen extends StatelessWidget {
     );
   }
   
-  String _convertToArabicNumerals(int number) {
-    const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-    const arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-    
-    String result = number.toString();
-    for (int i = 0; i < english.length; i++) {
-      result = result.replaceAll(english[i], arabic[i]);
-    }
-    return result;
-  }
 }
 
 class _SettingsTile extends StatelessWidget {

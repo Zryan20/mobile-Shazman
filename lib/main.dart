@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Firebase options
 import 'firebase_options.dart';
@@ -19,6 +20,7 @@ import 'providers/hearts_provider.dart';
 // Import services
 import 'services/auth_service.dart';
 import 'services/backend_service.dart';
+import 'services/audio_service.dart';
 
 // Import utils
 import 'utils/app_colors.dart';
@@ -36,6 +38,7 @@ import 'screens/forgot_password_screen.dart';
 import 'screens/premium_screen.dart';
 import 'screens/welcome_screen.dart';
 import 'screens/otp_verification_screen.dart';
+import 'screens/web_lock_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -58,6 +61,9 @@ void main() async {
       systemNavigationBarIconBrightness: Brightness.dark,
     ),
   );
+
+  // Initialize Audio Service (TTS)
+  await AudioService().initialize();
 
   // Create backend service and hearts provider
   final backendService = BackendService();
@@ -343,6 +349,7 @@ class HozhanApp extends StatelessWidget {
             initialRoute: AppRoutes.splash,
             routes: {
               AppRoutes.splash: (context) => const SplashScreen(),
+              AppRoutes.webLock: (context) => const WebLockScreen(),
               AppRoutes.welcome: (context) => const WelcomeScreen(),
               AppRoutes.login: (context) => const LoginScreen(),
               AppRoutes.signUp: (context) => const SignUpScreen(),
@@ -413,6 +420,17 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _initializeApp() async {
+    // Check web lock if on web
+    if (kIsWeb) {
+      final prefs = await SharedPreferences.getInstance();
+      final isUnlocked = prefs.getBool('web_unlocked') ?? false;
+      if (!isUnlocked) {
+        if (!mounted) return;
+        Navigator.of(context).pushReplacementNamed(AppRoutes.webLock);
+        return;
+      }
+    }
+
     // Load settings first
     final settingsProvider =
         Provider.of<SettingsProvider>(context, listen: false);

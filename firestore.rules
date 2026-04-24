@@ -14,5 +14,11 @@ service cloud.firestore {
       // No client-side writes — all managed by Cloud Functions
       allow write: if false;
     }
+
+    // Lessons collection: everyone can read, no one can write (except admin)
+    match /Lessons/{lessonId} {
+      allow read: if true;
+      allow write: if false;
+    }
   }
 }

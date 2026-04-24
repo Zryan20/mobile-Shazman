@@ -29,10 +29,8 @@ class _ClickableWordState extends State<ClickableWord> {
   bool _isPressed = false;
 
   void _showTranslation(BuildContext context) {
-    // Play pronunciation audio if available
-    if (widget.audioPath != null) {
-      AudioService().playPronunciation(widget.audioPath!);
-    }
+    // Play pronunciation audio (TTS fallback)
+    AudioService().playPronunciation(widget.englishWord, audioPath: widget.audioPath);
     
     // Show translation popup
     showDialog(
@@ -132,7 +130,7 @@ class _TranslationDialog extends StatelessWidget {
                       size: 32,
                     ),
                     onPressed: () {
-                      AudioService().playPronunciation(audioPath!);
+                      AudioService().playPronunciation(englishWord, audioPath: audioPath);
                     },
                   ),
               ],

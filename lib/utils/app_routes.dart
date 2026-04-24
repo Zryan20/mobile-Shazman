@@ -4,6 +4,7 @@ class AppRoutes {
 
   // Authentication routes
   static const String splash = '/';
+  static const String webLock = '/web-lock';
   static const String welcome = '/welcome';
   static const String login = '/login';
   static const String signUp = '/signup';
