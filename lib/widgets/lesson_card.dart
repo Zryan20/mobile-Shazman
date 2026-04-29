@@ -35,161 +35,114 @@ class LessonCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final effectiveAccentColor = accentColor ?? AppColors.primary600;
     
-    return Card(
-      elevation: isLocked ? 1 : 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: InkWell(
-        onTap: isLocked ? null : onTap,
-        borderRadius: BorderRadius.circular(16),
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            gradient: isCompleted
-                ? LinearGradient(
-                    colors: [
-                      AppColors.success.withOpacity(0.1),
-                      AppColors.success.withOpacity(0.05),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  )
-                : null,
-            border: isCompleted
-                ? Border.all(
-                    color: AppColors.success.withOpacity(0.3),
-                    width: 2,
-                  )
-                : null,
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      decoration: BoxDecoration(
+        color: isLocked ? Colors.grey[50] : Colors.white,
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(isLocked ? 0.05 : 0.08),
+            blurRadius: 15,
+            offset: const Offset(0, 8),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        ],
+        border: Border.all(
+          color: isCompleted 
+              ? AppColors.success.withOpacity(0.2) 
+              : Colors.transparent,
+          width: 2,
+        ),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(24),
+        child: InkWell(
+          onTap: isLocked ? null : onTap,
+          child: Stack(
             children: [
-              Row(
-                children: [
-                  // Icon or Image
-                  _buildLeadingWidget(effectiveAccentColor),
-                  
-                  const SizedBox(width: 12),
-                  
-                  // Title and subtitle
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: isLocked
-                                ? AppColors.neutral500
-                                : AppColors.textPrimary,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        if (subtitle != null) ...[
-                          const SizedBox(height: 4),
-                          Text(
-                            subtitle!,
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: isLocked
-                                  ? AppColors.neutral400
-                                  : AppColors.textSecondary,
-                            ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ],
-                    ),
-                  ),
-                  
-                  const SizedBox(width: 8),
-                  
-                  // Status icon
-                  _buildStatusIcon(effectiveAccentColor),
-                ],
-              ),
-              
-              // Progress bar (if not locked and not completed)
-              if (showProgress && !isLocked && !isCompleted && progress > 0) ...[
-                const SizedBox(height: 12),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
-                  child: LinearProgressIndicator(
-                    value: progress,
-                    backgroundColor: AppColors.neutral200,
-                    valueColor: AlwaysStoppedAnimation<Color>(effectiveAccentColor),
-                    minHeight: 6,
+              if (isCompleted)
+                Positioned(
+                  right: -20,
+                  top: -20,
+                  child: Icon(
+                    Icons.check_circle_rounded,
+                    size: 100,
+                    color: AppColors.success.withOpacity(0.05),
                   ),
                 ),
-              ],
-              
-              // Bottom info (XP, duration, progress percentage)
-              if ((xpReward != null || duration != null || (showProgress && !isLocked && !isCompleted)) &&
-                  !isLocked) ...[
-                const SizedBox(height: 12),
-                Row(
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // XP Reward
-                    if (xpReward != null) ...[
-                      const Icon(
-                        Icons.star_rounded,
-                        size: 16,
-                        color: AppColors.xpGold,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        '$xpReward XP',
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.textSecondary,
+                    Row(
+                      children: [
+                        _buildLeadingWidget(effectiveAccentColor),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                title,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w800,
+                                  color: isLocked
+                                      ? AppColors.neutral400
+                                      : AppColors.textPrimary,
+                                  letterSpacing: -0.5,
+                                ),
+                              ),
+                              if (subtitle != null) ...[
+                                const SizedBox(height: 4),
+                                Text(
+                                  subtitle!,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: isLocked
+                                        ? AppColors.neutral400
+                                        : AppColors.textSecondary,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 12),
-                    ],
-                    
-                    // Duration
-                    if (duration != null) ...[
-                      const Icon(
-                        Icons.access_time_rounded,
-                        size: 16,
-                        color: AppColors.textSecondary,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        duration!,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                    ],
-                    
-                    const Spacer(),
-                    
-                    // Progress percentage
-                    if (showProgress && !isCompleted && progress > 0) ...[
-                      Text(
-                        '${(progress * 100).toInt()}%',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: effectiveAccentColor,
-                        ),
+                        _buildStatusIcon(effectiveAccentColor),
+                      ],
+                    ),
+                    if (showProgress && !isLocked && !isCompleted) ...[
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: LinearProgressIndicator(
+                                value: progress,
+                                backgroundColor: AppColors.neutral100,
+                                valueColor: AlwaysStoppedAnimation<Color>(effectiveAccentColor),
+                                minHeight: 10,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Text(
+                            '${(progress * 100).toInt()}%',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: effectiveAccentColor,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ],
                 ),
-              ],
+              ),
             ],
           ),
         ),
@@ -200,16 +153,16 @@ class LessonCard extends StatelessWidget {
   Widget _buildLeadingWidget(Color accentColor) {
     if (isLocked) {
       return Container(
-        width: 48,
-        height: 48,
+        width: 56,
+        height: 56,
         decoration: BoxDecoration(
           color: AppColors.neutral200,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(18),
         ),
         child: const Icon(
-          Icons.lock_rounded,
-          color: AppColors.neutral500,
-          size: 24,
+          Icons.lock_outline_rounded,
+          color: AppColors.neutral400,
+          size: 28,
         ),
       );
     }
@@ -234,18 +187,22 @@ class LessonCard extends StatelessWidget {
   
   Widget _buildIconContainer(Color accentColor) {
     return Container(
-      width: 48,
-      height: 48,
+      width: 56,
+      height: 56,
       decoration: BoxDecoration(
         color: isCompleted
-            ? AppColors.success.withOpacity(0.1)
-            : accentColor.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12),
+            ? AppColors.success.withOpacity(0.12)
+            : accentColor.withOpacity(0.12),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(
+          color: (isCompleted ? AppColors.success : accentColor).withOpacity(0.2),
+          width: 1,
+        ),
       ),
       child: Icon(
-        icon ?? Icons.book_rounded,
+        icon ?? Icons.auto_stories_rounded,
         color: isCompleted ? AppColors.success : accentColor,
-        size: 24,
+        size: 28,
       ),
     );
   }

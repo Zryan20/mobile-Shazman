@@ -1,0 +1,109 @@
+{
+  "id": "a1_s1_l3",
+  "title": "Numbers 1-10",
+  "titleKurdish": "ژمارەکان ١-١٠",
+  "description": "Learn to count from 1 to 10 in English",
+  "descriptionKurdish": "فێربە چۆن لە ١ تا ١٠ بژمێریت بە ئینگلیزی",
+  "level": 1,
+  "section": 1,
+  "lessonNumber": 3,
+  "estimatedMinutes": 5,
+  "totalExercises": 6,
+  
+  "vocabulary": [
+    {
+      "english": "One",
+      "kurdish": "یەک",
+      "audioPath": "audio/a1/one.mp3",
+      "exampleSentence": "One apple.",
+      "exampleTranslation": "یەک سێو.",
+      "notes": "1",
+      "notesKurdish": "١"
+    },
+    {
+      "english": "Five",
+      "kurdish": "پێنج",
+      "audioPath": "audio/a1/five.mp3",
+      "exampleSentence": "Five fingers.",
+      "exampleTranslation": "پێنج پەنجە.",
+      "notes": "5",
+      "notesKurdish": "٥"
+    },
+    {
+      "english": "Ten",
+      "kurdish": "دە",
+      "audioPath": "audio/a1/ten.mp3",
+      "exampleSentence": "Ten pens.",
+      "exampleTranslation": "دە پێنوس.",
+      "notes": "10",
+      "notesKurdish": "١٠"
+    }
+  ],
+  
+  "exercises": [
+    {
+      "id": "ex_1",
+      "type": "multiple_choice",
+      "question": "One + One = ?",
+      "questionKurdish": "یەک کۆ یەک دەکاتە چەند؟",
+      "options": ["Two", "Three", "One", "Zero"],
+      "correctAnswer": "Two",
+      "explanation": "1 + 1 = 2.",
+      "explanationKurdish": "١ + ١ = ٢."
+    },
+    {
+      "id": "ex_2",
+      "type": "multiple_choice",
+      "question": "What is 'Ten'?",
+      "questionKurdish": "واتای 'Ten' چییە؟",
+      "options": ["دە", "یەک", "پێنج", "دوو"],
+      "correctAnswer": "دە",
+      "explanation": "Ten is the number 10.",
+      "explanationKurdish": "Ten ژمارە ١٠ـە."
+    },
+    {
+      "id": "ex_3",
+      "type": "multiple_choice",
+      "question": "How many fingers on one hand?",
+      "questionKurdish": "چەند پەنجە لە یەک دەستدا هەیە؟",
+      "options": ["Five", "Ten", "Two", "One"],
+      "correctAnswer": "Five",
+      "explanation": "One hand has 5 fingers.",
+      "explanationKurdish": "یەک دەست ٥ پەنجەی هەیە."
+    },
+    {
+      "id": "ex_4",
+      "type": "sentence_builder",
+      "question": "Translate: یەک سێو",
+      "questionKurdish": "ئەمە بە ئینگلیزی دروست بکە",
+      "options": ["One", "apple", "Five", "Ten"],
+      "correctAnswer": "One apple",
+      "explanation": "Number comes before the noun.",
+      "explanationKurdish": "ژمارەکە پێش ناوەکە دەکەوێت."
+    },
+    {
+      "id": "ex_5",
+      "type": "multiple_choice",
+      "question": "Five + Five = ?",
+      "questionKurdish": "پێنج کۆ پێنج دەکاتە چەند؟",
+      "options": ["Ten", "Five", "Twenty", "Eight"],
+      "correctAnswer": "Ten",
+      "explanation": "5 + 5 = 10.",
+      "explanationKurdish": "٥ + ٥ = ١٠."
+    },
+    {
+      "id": "ex_6",
+      "type": "sentence_builder",
+      "question": "Translate: دە پێنوس",
+      "questionKurdish": "ئەمە بە ئینگلیزی دروست بکە",
+      "options": ["Ten", "pens", "One", "Five"],
+      "correctAnswer": "Ten pens",
+      "explanation": "Counting objects.",
+      "explanationKurdish": "ژماردنی شتەکان."
+    }
+  ],
+  "grammarNotes": [],
+  "culturalNotes": [],
+  "tips": ["Use your fingers to practice counting"],
+  "tipsKurdish": ["پەنجەکانت بەکاربهێنە بۆ مەشقی ژماردن"]
+}

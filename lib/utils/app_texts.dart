@@ -52,7 +52,7 @@ class AppTexts {
   static const String skip = 'Skip';
   static const String finish = 'Finish';
   static const String done = 'Done';
-  static const String cancel = 'Cancel';
+  static const String cancel = 'پاشگەزبوونەوە';
   static const String save = 'Save';
   static const String edit = 'Edit';
   static const String delete = 'Delete';
@@ -235,11 +235,11 @@ class AppTexts {
   static const String errorUpdatingProfile = 'Error updating profile';
   
   // Confirmation dialogs
-  static const String areYouSure = 'Are you sure?';
+  static const String areYouSure = 'دڵنیایت؟';
   static const String confirmSignOut = 'Are you sure you want to sign out?';
   static const String confirmDeleteAccount = 'Are you sure you want to delete your account? This action cannot be undone.';
   static const String confirmResetProgress = 'Are you sure you want to reset your progress?';
-  static const String confirmExitLesson = 'Are you sure you want to exit? Your progress will be lost.';
+  static const String confirmExitLesson = 'دڵنیایت دەتەوێت بچیتە دەرەوە؟ پێشکەوتنەکانت لەدەست دەچن.';
   
   // Success messages
   static const String profileUpdated = 'Profile updated successfully';
@@ -270,7 +270,7 @@ class AppTexts {
   static const String howMuchTimeDaily = 'How much time can you dedicate daily?';
   
   // Common phrases
-  static const String yes = 'Yes';
+  static const String yes = 'بەڵێ';
   static const String no = 'No';
   static const String ok = 'OK';
   static const String got_it = 'Got it';

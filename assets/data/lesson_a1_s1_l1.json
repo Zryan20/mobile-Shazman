@@ -1,103 +1,51 @@
 {
   "id": "a1_s1_l1",
-  "title": "Greetings & Introductions",
-  "titleKurdish": "سڵاوکردن و ناساندن",
-  "description": "Learn basic greetings and how to introduce yourself",
-  "descriptionKurdish": "فێری سڵاوکردنی بنەڕەتی و ناساندنی خۆت ببە",
+  "title": "Basic Greetings",
+  "titleKurdish": "سڵاوکردنی بنەڕەتی",
+  "description": "Learn basic greetings like Hello, Goodbye, and Thank you",
+  "descriptionKurdish": "فێری سڵاوکردنی بنەڕەتی ببە وەک سڵاو، خواحافیز، و سوپاس",
   "level": 1,
   "section": 1,
   "lessonNumber": 1,
-  "estimatedMinutes": 10,
-  "totalExercises": 10,
+  "estimatedMinutes": 5,
+  "totalExercises": 6,
   
   "vocabulary": [
     {
       "english": "Hello",
       "kurdish": "سڵاو",
-      "pronunciation": "həˈloʊ",
       "audioPath": "audio/a1/hello.mp3",
-      "partOfSpeech": "interjection",
       "exampleSentence": "Hello! How are you?",
       "exampleTranslation": "سڵاو! چۆنیت؟",
-      "imageUrl": null,
-      "notes": "Most common greeting in English"
+      "notes": "Most common greeting",
+      "notesKurdish": "باوترین سڵاوە"
     },
     {
       "english": "Goodbye",
       "kurdish": "خواحافیز",
-      "pronunciation": "ɡʊdˈbaɪ",
       "audioPath": "audio/a1/goodbye.mp3",
-      "partOfSpeech": "interjection",
-      "exampleSentence": "Goodbye! See you tomorrow.",
-      "exampleTranslation": "خواحافیز! بەیانی دەتبینمەوە.",
-      "imageUrl": null,
-      "notes": "Used when leaving or ending a conversation"
+      "exampleSentence": "Goodbye! See you later.",
+      "exampleTranslation": "خواحافیز! دواتر دەتبینمەوە.",
+      "notes": "Used when leaving",
+      "notesKurdish": "بەکاردێت کاتێک دەڕۆیت"
     },
     {
       "english": "Thank you",
       "kurdish": "سوپاس",
-      "pronunciation": "θæŋk juː",
       "audioPath": "audio/a1/thank_you.mp3",
-      "partOfSpeech": "phrase",
-      "exampleSentence": "Thank you for your help!",
-      "exampleTranslation": "سوپاس بۆ یارمەتیەکەت!",
-      "imageUrl": null,
-      "notes": "Shows gratitude and appreciation"
+      "exampleSentence": "Thank you for the tea.",
+      "exampleTranslation": "سوپاس بۆ چایەکە.",
+      "notes": "Shows appreciation",
+      "notesKurdish": "بۆ سوپاسگوزاری"
     },
     {
       "english": "Please",
       "kurdish": "تکایە",
-      "pronunciation": "pliːz",
       "audioPath": "audio/a1/please.mp3",
-      "partOfSpeech": "adverb",
-      "exampleSentence": "Can you help me, please?",
-      "exampleTranslation": "دەتوانیت یارمەتیم بدەیت، تکایە؟",
-      "imageUrl": null,
-      "notes": "Used to make polite requests"
-    },
-    {
-      "english": "My name is",
-      "kurdish": "ناوم ... ە",
-      "pronunciation": "maɪ neɪm ɪz",
-      "audioPath": "audio/a1/my_name_is.mp3",
-      "partOfSpeech": "phrase",
-      "exampleSentence": "My name is Ahmed.",
-      "exampleTranslation": "ناوم ئەحمەدە.",
-      "imageUrl": null,
-      "notes": "Used to introduce yourself"
-    },
-    {
-      "english": "Nice to meet you",
-      "kurdish": "خۆشحاڵم بە ناسینت",
-      "pronunciation": "naɪs tuː miːt juː",
-      "audioPath": "audio/a1/nice_to_meet_you.mp3",
-      "partOfSpeech": "phrase",
-      "exampleSentence": "Nice to meet you, Sara!",
-      "exampleTranslation": "خۆشحاڵم بە ناسینت، سارا!",
-      "imageUrl": null,
-      "notes": "Polite response when meeting someone new"
-    },
-    {
-      "english": "Good morning",
-      "kurdish": "بەیانی باش",
-      "pronunciation": "ɡʊd ˈmɔːrnɪŋ",
-      "audioPath": "audio/a1/good_morning.mp3",
-      "partOfSpeech": "phrase",
-      "exampleSentence": "Good morning! Did you sleep well?",
-      "exampleTranslation": "بەیانی باش! باش نوستیت؟",
-      "imageUrl": null,
-      "notes": "Used before noon"
-    },
-    {
-      "english": "Good evening",
-      "kurdish": "ئێوارە باش",
-      "pronunciation": "ɡʊd ˈiːvnɪŋ",
-      "audioPath": "audio/a1/good_evening.mp3",
-      "partOfSpeech": "phrase",
-      "exampleSentence": "Good evening! How was your day?",
-      "exampleTranslation": "ئێوارە باش! ڕۆژەکەت چۆن بوو؟",
-      "imageUrl": null,
-      "notes": "Used after 6 PM"
+      "exampleSentence": "Help me, please.",
+      "exampleTranslation": "یارمەتیم بدە، تکایە.",
+      "notes": "Polite request",
+      "notesKurdish": "بۆ داواکاری بە ڕێزەوە"
     }
   ],
   
@@ -105,201 +53,66 @@
     {
       "id": "ex_1",
       "type": "multiple_choice",
-      "question": "How do you greet someone in the morning?",
-      "questionKurdish": "چۆن سڵاو لە کەسێک دەکەیت لە بەیانیدا؟",
-      "options": [
-        "Good morning",
-        "Good evening",
-        "Good night",
-        "Goodbye"
-      ],
-      "correctAnswer": "Good morning",
-      "hint": "Think about what time of day it is",
-      "explanation": "We use 'Good morning' to greet people before noon.",
-      "explanationKurdish": "بەیانی باش بەکاردێت بۆ سڵاوکردن پێش نیوەڕۆ"
+      "question": "How do you say 'سڵاو' in English?",
+      "questionKurdish": "چۆن دەڵێیت 'سڵاو' بە ئینگلیزی؟",
+      "options": ["Hello", "Goodbye", "Please", "Thanks"],
+      "correctAnswer": "Hello",
+      "explanation": "Hello means سڵاو.",
+      "explanationKurdish": "Hello واتای سڵاوە."
     },
     {
       "id": "ex_2",
       "type": "multiple_choice",
-      "question": "What does 'Thank you' mean in Kurdish?",
-      "questionKurdish": "'Thank you' چی دەگەیەنێت بە کوردی؟",
-      "options": [
-        "سوپاس",
-        "سڵاو",
-        "خواحافیز",
-        "ببورە"
-      ],
-      "correctAnswer": "سوپاس",
-      "hint": "It's an expression of gratitude",
-      "explanation": "'Thank you' means سوپاس - used to show appreciation.",
-      "explanationKurdish": "'Thank you' واتای سوپاسە - بەکاردێت بۆ پیشاندانی سوپاسگوزاری"
+      "question": "When leaving, you say:",
+      "questionKurdish": "کاتێک دەڕۆیت، دەڵێیت:",
+      "options": ["Hello", "Goodbye", "Please", "Thank you"],
+      "correctAnswer": "Goodbye",
+      "explanation": "Goodbye is used when leaving.",
+      "explanationKurdish": "خواحافیز بەکاردێت کاتێک دەڕۆیت."
     },
     {
       "id": "ex_3",
-      "type": "multiple_choice",
-      "question": "Complete: My _____ is Ahmed.",
-      "questionKurdish": "تەواو بکە: ناوم _____ ئەحمەدە.",
-      "options": [
-        "name",
-        "friend",
-        "hello",
-        "goodbye"
-      ],
-      "correctAnswer": "name",
-      "hint": "What word do we use to introduce ourselves?",
-      "explanation": "We say 'My name is' followed by our name.",
-      "explanationKurdish": "ناوم ... ە بەکاردێت بۆ ناساندنی خۆمان"
+      "type": "sentence_builder",
+      "question": "Translate: سوپاس",
+      "questionKurdish": "ئەمە بە ئینگلیزی دروست بکە",
+      "options": ["Thank", "you", "Hello", "Please"],
+      "correctAnswer": "Thank you",
+      "explanation": "Thank you means سوپاس.",
+      "explanationKurdish": "Thank you واتای سوپاسە."
     },
     {
       "id": "ex_4",
       "type": "multiple_choice",
-      "question": "When do we say 'Goodbye'?",
-      "questionKurdish": "کەی 'خواحافیز' دەڵێین؟",
-      "options": [
-        "When leaving",
-        "When arriving",
-        "When eating",
-        "When sleeping"
-      ],
-      "correctAnswer": "When leaving",
-      "hint": "Think about when you're ending a conversation",
-      "explanation": "We say 'Goodbye' when we are leaving or ending a conversation.",
-      "explanationKurdish": "خواحافیز دەڵێین کاتێک دەڕۆین یان گفتوگۆیەک کۆتایی دێت"
+      "question": "_____ help me.",
+      "questionKurdish": "تەواوی بکە: تکایە یارمەتیم بدە.",
+      "options": ["Please", "Hello", "Goodbye", "Thanks"],
+      "correctAnswer": "Please",
+      "explanation": "Please makes a request polite.",
+      "explanationKurdish": "تکایە داواکارییەکە بەڕێزتر دەکات."
     },
     {
       "id": "ex_5",
-      "type": "multiple_choice",
-      "question": "Hello",
-      "questionKurdish": "ئەمە چییە بە کوردی؟",
-      "options": [
-        "سڵاو",
-        "سوپاس",
-        "تکایە",
-        "خواحافیز"
-      ],
-      "correctAnswer": "سڵاو",
-      "audioPath": "audio/a1/hello.mp3",
-      "hint": "It's the most common greeting",
-      "explanation": "'Hello' means سڵاو in Kurdish.",
-      "explanationKurdish": "'Hello' واتای سڵاوە بە کوردی"
+      "type": "sentence_builder",
+      "question": "Translate: سڵاو! سوپاس.",
+      "questionKurdish": "ئەمە بە ئینگلیزی دروست بکە",
+      "options": ["Hello!", "Thank", "you.", "Please", "Goodbye"],
+      "correctAnswer": "Hello! Thank you.",
+      "explanation": "Combining two basic greetings.",
+      "explanationKurdish": "کۆکردنەوەی دوو سڵاوی بنەڕەتی."
     },
     {
       "id": "ex_6",
       "type": "multiple_choice",
-      "question": "What is a polite way to ask for something?",
-      "questionKurdish": "شێوەیەکی ڕێزدارانە چییە بۆ داواکردنی شتێک؟",
-      "options": [
-        "Please",
-        "Goodbye",
-        "Hello",
-        "Thank you"
-      ],
-      "correctAnswer": "Please",
-      "hint": "This word makes requests more polite",
-      "explanation": "We use 'Please' to make polite requests.",
-      "explanationKurdish": "تکایە بەکاردێت بۆ داواکردنی شتێک بە شێوەیەکی ڕێزدارانە"
-    },
-    {
-      "id": "ex_7",
-      "type": "multiple_choice",
-      "question": "Nice to _____ you!",
-      "questionKurdish": "خۆشحاڵم بە _____ ت!",
-      "options": [
-        "meet",
-        "hello",
-        "goodbye",
-        "please"
-      ],
-      "correctAnswer": "meet",
-      "hint": "What do you say when meeting someone new?",
-      "explanation": "'Nice to meet you' is what we say when meeting someone for the first time.",
-      "explanationKurdish": "خۆشحاڵم بە ناسینت دەڵێین کاتێک بۆ یەکەم جار کەسێک دەناسین"
-    },
-    {
-      "id": "ex_8",
-      "type": "multiple_choice",
-      "question": "Good _____! (after 6 PM)",
-      "questionKurdish": "ئێوارە _____! (دوای ٦ ئێوارە)",
-      "options": [
-        "evening",
-        "morning",
-        "night",
-        "afternoon"
-      ],
-      "correctAnswer": "evening",
-      "hint": "What greeting do we use in the evening?",
-      "explanation": "We say 'Good evening' after 6 PM.",
-      "explanationKurdish": "ئێوارە باش دەڵێین دوای کاتژمێری ٦ ئێوارە"
-    },
-    {
-      "id": "ex_9",
-      "type": "multiple_choice",
-      "question": "Translate: سوپاس",
-      "questionKurdish": "ئەمە وەربگێڕە بۆ ئینگلیزی",
-      "options": [
-        "Thank you",
-        "Please",
-        "Hello",
-        "Goodbye"
-      ],
-      "correctAnswer": "Thank you",
-      "hint": "This shows gratitude",
-      "explanation": "سوپاس means 'Thank you' in English.",
-      "explanationKurdish": "سوپاس واتای 'Thank you' یە بە ئینگلیزی"
-    },
-    {
-      "id": "ex_10",
-      "type": "sentence_builder",
-      "question": "Translate: ناوم سارایە",
-      "questionKurdish": "ئەم ڕستەیە بە ئینگلیزی دروست بکە",
-      "options": ["My", "name", "is", "Sara", "Hello", "Ahmed"],
-      "correctAnswer": "My name is Sara",
-      "explanation": "To introduce yourself, you say: My name is Sara.",
-      "explanationKurdish": "بۆ ناساندنی خۆت دەڵێیت: My name is Sara."
+      "question": "Thank you",
+      "questionKurdish": "ئەمە چییە بە کوردی؟",
+      "options": ["سوپاس", "سڵاو", "تکایە", "ببورە"],
+      "correctAnswer": "سوپاس",
+      "explanation": "Thank you is the English word for سوپاس.",
+      "explanationKurdish": "Thank you وشە ئینگلیزییەکەیە بۆ سوپاس."
     }
   ],
-  
-  "grammarNotes": [
-    {
-      "title": "Personal Pronouns",
-      "titleKurdish": "جێناوە کەسییەکان",
-      "content": "I, you, he, she, it, we, they",
-      "contentKurdish": "من، تۆ، ئەو (نێر)، ئەو (مێ)، ئەوە، ئێمە، ئەوان",
-      "examples": [
-        "I am Ahmed. (من ئەحمەدم)",
-        "You are my friend. (تۆ هاوڕێی منیت)"
-      ]
-    },
-    {
-      "title": "Verb 'to be' - Present",
-      "titleKurdish": "کردارەکە 'بوون' - ئێستا",
-      "content": "I am, you are, he/she/it is, we are, they are",
-      "contentKurdish": "من ...م، تۆ ...یت، ئەو ...ە، ئێمە ...ین، ئەوان ...ن",
-      "examples": [
-        "I am a student. (من قوتابیم)",
-        "She is a teacher. (ئەو مامۆستایە)"
-      ]
-    }
-  ],
-  
-  "culturalNotes": [
-    {
-      "title": "Formal vs Informal Greetings",
-      "titleKurdish": "سڵاوکردنی فەرمی و نافەرمی",
-      "content": "In English, 'Hello' is neutral and can be used in both formal and informal situations. 'Hi' is more casual.",
-      "contentKurdish": "لە ئینگلیزیدا، 'Hello' گشتییە و دەتوانرێت لە هەر دوو دۆخی فەرمی و نافەرمیدا بەکاربهێنرێت. 'Hi' زیاتر نافەرمییە."
-    }
-  ],
-  
-  "tips": [
-    "Practice greetings with friends and family",
-    "Try to use these phrases in real conversations",
-    "Listen to how native speakers pronounce these words"
-  ],
-  
-  "tipsKurdish": [
-    "سڵاوەکان لەگەڵ هاوڕێ و خێزان مەشق بکە",
-    "هەوڵ بدە ئەم دەربڕینانە لە گفتوگۆی ڕاستەقینەدا بەکاربهێنیت",
-    "گوێ لە شێوەی گوتنی قسەکەرە ڕەسەنەکان بگرە"
-  ]
+  "grammarNotes": [],
+  "culturalNotes": [],
+  "tips": ["Always use 'Please' to be polite"],
+  "tipsKurdish": ["هەمیشە 'تکایە' بەکاربهێنە بۆ ئەوەی بەڕێز بیت"]
 }

@@ -1,0 +1,118 @@
+{
+  "id": "a1_s1_l4",
+  "title": "Numbers 11-20 & Age",
+  "titleKurdish": "ژمارەکان ١١-٢٠ و تەمەن",
+  "description": "Learn numbers 11-20 and how to talk about age",
+  "descriptionKurdish": "فێری ژمارەکان ١١-٢٠ ببە و چۆنییەتی باسکردنی تەمەن",
+  "level": 1,
+  "section": 1,
+  "lessonNumber": 4,
+  "estimatedMinutes": 6,
+  "totalExercises": 6,
+  
+  "vocabulary": [
+    {
+      "english": "Eleven",
+      "kurdish": "یازدە",
+      "audioPath": "audio/a1/eleven.mp3",
+      "exampleSentence": "Eleven apples.",
+      "exampleTranslation": "یازدە سێو.",
+      "notes": "11",
+      "notesKurdish": "١١"
+    },
+    {
+      "english": "Twenty",
+      "kurdish": "بیست",
+      "audioPath": "audio/a1/twenty.mp3",
+      "exampleSentence": "He is twenty.",
+      "exampleTranslation": "ئەو بیست ساڵە.",
+      "notes": "20",
+      "notesKurdish": "٢٠"
+    },
+    {
+      "english": "How old are you?",
+      "kurdish": "تەمەنت چەند ساڵە؟",
+      "audioPath": "audio/a1/how_old_are_you.mp3",
+      "exampleSentence": "How old are you, Ahmed?",
+      "exampleTranslation": "تەمەنت چەند ساڵە، ئەحمەد؟",
+      "notes": "Asking for age",
+      "notesKurdish": "بۆ پرسیارکردن لە تەمەن"
+    },
+    {
+      "english": "I am ... years old",
+      "kurdish": "تەمەنم ... ساڵە",
+      "audioPath": "audio/a1/i_am_years_old.mp3",
+      "exampleSentence": "I am ten years old.",
+      "exampleTranslation": "تەمەنم دە ساڵە.",
+      "notes": "Answering age",
+      "notesKurdish": "بۆ وەڵامدانەوەی تەمەن"
+    }
+  ],
+  
+  "exercises": [
+    {
+      "id": "ex_1",
+      "type": "multiple_choice",
+      "question": "Ten + One = ?",
+      "questionKurdish": "دە کۆ یەک دەکاتە چەند؟",
+      "options": ["Eleven", "Twelve", "Twenty", "Ten"],
+      "correctAnswer": "Eleven",
+      "explanation": "10 + 1 = 11.",
+      "explanationKurdish": "١٠ + ١ = ١١."
+    },
+    {
+      "id": "ex_2",
+      "type": "sentence_builder",
+      "question": "Translate: تەمەنت چەند ساڵە؟",
+      "questionKurdish": "ئەم ڕستەیە بە ئینگلیزی دروست بکە",
+      "options": ["How", "old", "are", "you?", "is", "where"],
+      "correctAnswer": "How old are you?",
+      "explanation": "Standard way to ask for age.",
+      "explanationKurdish": "شێوازە باوەکە بۆ پرسیارکردن لە تەمەن."
+    },
+    {
+      "id": "ex_3",
+      "type": "multiple_choice",
+      "question": "Ten + Ten = ?",
+      "questionKurdish": "دە کۆ دە دەکاتە چەند؟",
+      "options": ["Twenty", "Ten", "Thirty", "Eleven"],
+      "correctAnswer": "Twenty",
+      "explanation": "10 + 10 = 20.",
+      "explanationKurdish": "١٠ + ١٠ = ٢٠."
+    },
+    {
+      "id": "ex_4",
+      "type": "sentence_builder",
+      "question": "Translate: تەمەنم دە ساڵە",
+      "questionKurdish": "ئەم ڕستەیە بە ئینگلیزی دروست بکە",
+      "options": ["I", "am", "ten", "years", "old", "is"],
+      "correctAnswer": "I am ten years old",
+      "explanation": "How to answer about your age.",
+      "explanationKurdish": "چۆنییەتی وەڵامدانەوە لەسەر تەمەنت."
+    },
+    {
+      "id": "ex_5",
+      "type": "multiple_choice",
+      "question": "What is 'Twelve'?",
+      "questionKurdish": "واتای 'Twelve' چییە؟",
+      "options": ["دوازدە", "یازدە", "بیست", "دە"],
+      "correctAnswer": "دوازدە",
+      "explanation": "Twelve is 12.",
+      "explanationKurdish": "Twelve دەکاتە ١٢."
+    },
+    {
+      "id": "ex_6",
+      "type": "sentence_builder",
+      "question": "Translate: بیست ساڵ",
+      "questionKurdish": "ئەم ڕستەیە بە ئینگلیزی دروست بکە",
+      "options": ["Twenty", "years", "old", "Ten", "one"],
+      "correctAnswer": "Twenty years old",
+      "explanation": "Combining numbers with age units.",
+      "explanationKurdish": "کۆکردنەوەی ژمارەکان لەگەڵ یەکەکانی تەمەن."
+    }
+  ],
+  "grammarNotes": [],
+  "culturalNotes": [],
+  "tips": ["Numbers 13-19 end in 'teen'"],
+  "tipsKurdish": ["ژمارەکانی ١٣-١٩ بە 'teen' کۆتایی دێن"]
+}

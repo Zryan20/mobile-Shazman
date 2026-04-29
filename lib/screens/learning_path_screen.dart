@@ -106,38 +106,66 @@ class _LearningPathScreenState extends State<LearningPathScreen> {
                           
                           const SizedBox(height: 20),
                           
-                          // Lesson Nodes in Path
-                          ...List.generate(section['lessons'].length, (lessonIndex) {
-                            final lesson = section['lessons'][lessonIndex];
-                            final isCompleted = progressProvider.isLessonCompleted(lesson.id);
-                            final isUnlocked = lessonIndex == 0 || 
-                                progressProvider.isLessonCompleted(
-                                  section['lessons'][lessonIndex - 1].id
-                                );
-                            final isCurrent = !isCompleted && isUnlocked;
+                          // Lesson Nodes in Path (Grouped in pairs)
+                          ...List.generate((section['lessons'].length / 2).ceil(), (pairIndex) {
+                            final startIndex = pairIndex * 2;
+                            final lessonPair = <dynamic>[];
+                            lessonPair.add(section['lessons'][startIndex]);
+                            if (startIndex + 1 < section['lessons'].length) {
+                              lessonPair.add(section['lessons'][startIndex + 1]);
+                            }
+                            
+                            final absoluteFirstLessonIndex = lessons.indexOf(lessonPair.first);
+                            
+                            // A node is completed only if ALL lessons in it are completed
+                            final isCompleted = lessonPair.every((l) => progressProvider.isLessonCompleted(l.id));
+                            
+                            // A node is unlocked if it's the first node or the previous node's last lesson is completed
+                            final isUnlocked = absoluteFirstLessonIndex == 0 || 
+                                progressProvider.isLessonCompleted(lessons[absoluteFirstLessonIndex - 1].id);
+                            
+                            // A node is current if it's unlocked but not all lessons are finished
+                            final isCurrent = isUnlocked && !isCompleted;
+                            
+                            // Show "Jump here" for the first lesson of a locked section
+                            final showJumpHere = pairIndex == 0 && !isUnlocked;
                             
                             // Alternate left/right positioning
-                            final isLeft = lessonIndex % 2 == 0;
+                            final isLeft = pairIndex % 2 == 0;
                             
                             return Column(
                               children: [
+                                if (showJumpHere)
+                                  _JumpHereBadge(
+                                    onTap: () {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(content: Text('Jump to this unit feature coming soon!')),
+                                      );
+                                    },
+                                  ),
                                 _LessonNode(
-                                  lesson: lesson,
+                                  lessons: lessonPair,
                                   isLeft: isLeft,
                                   isCompleted: isCompleted,
                                   isUnlocked: isUnlocked,
                                   isCurrent: isCurrent,
                                   onTap: isUnlocked ? () {
+                                    // Find first uncompleted lesson in the pair
+                                    final targetLesson = lessonPair.firstWhere(
+                                      (l) => !progressProvider.isLessonCompleted(l.id),
+                                      orElse: () => lessonPair.last,
+                                    );
+                                    
                                     Navigator.pushNamed(
                                       context,
                                       AppRoutes.lesson,
-                                      arguments: {'lessonId': lesson.id},
+                                      arguments: {'lessonId': targetLesson.id},
                                     );
                                   } : null,
                                 ),
                                 
-                                // Connecting line to next lesson
-                                if (lessonIndex < section['lessons'].length - 1)
+                                // Connecting line to next node
+                                if (pairIndex < (section['lessons'].length / 2).ceil() - 1)
                                   _ConnectingLine(
                                     isCompleted: isCompleted,
                                     isUnlocked: isUnlocked,
@@ -176,19 +204,19 @@ class _LearningPathScreenState extends State<LearningPathScreen> {
     final sections = <Map<String, dynamic>>[];
     
     final sectionTitles = [
-      {'title': 'بەشی یەکەم', 'subtitle': 'دەستەواژە بنەڕەتییەکان'},
-      {'title': 'بەشی دووەم', 'subtitle': 'ژمارە و ڕەنگەکان'},
-      {'title': 'بەشی سێیەم', 'subtitle': 'خواردن و خواردنەوە'},
-      {'title': 'بەشی چوارەم', 'subtitle': 'کات و ڕۆژەکان'},
-      {'title': 'بەشی پێنجەم', 'subtitle': 'گفتوگۆی ڕۆژانە'},
-      {'title': 'بەشی شەشەم', 'subtitle': 'شوێن و ئاراستە'},
-      {'title': 'بەشی حەوتەم', 'subtitle': 'پێداچوونەوە و تاقیکردنەوە'},
+      {'title': 'بەشی یەکەم', 'subtitle': 'سەرەتا، ژمارەکان و پۆل'},
+      {'title': 'بەشی دووەم', 'subtitle': 'خێزان و وڵاتەکان'},
+      {'title': 'بەشی سێیەم', 'subtitle': 'ژیانی ڕۆژانە و کات'},
+      {'title': 'بەشی چوارەم', 'subtitle': 'خواردن و ماڵ'},
+      {'title': 'بەشی پێنجەم', 'subtitle': 'کەش و شوێنەکان'},
+      {'title': 'بەشی شەشەم', 'subtitle': 'چالاکی و پشوو'},
+      {'title': 'بەشی حەوتەم', 'subtitle': 'پێداچوونەوەی کۆتایی'},
     ];
     
     int lessonIndex = 0;
     for (int i = 0; i < 7; i++) {
       final sectionLessons = <dynamic>[];
-      for (int j = 0; j < 3 && lessonIndex < lessons.length; j++) {
+      for (int j = 0; j < 6 && lessonIndex < lessons.length; j++) {
         sectionLessons.add(lessons[lessonIndex]);
         lessonIndex++;
       }
@@ -288,7 +316,7 @@ class _SectionHeader extends StatelessWidget {
 
 // Lesson Node Widget (the circles on the path)
 class _LessonNode extends StatelessWidget {
-  final dynamic lesson;
+  final List<dynamic> lessons;
   final bool isLeft;
   final bool isCompleted;
   final bool isUnlocked;
@@ -296,7 +324,7 @@ class _LessonNode extends StatelessWidget {
   final VoidCallback? onTap;
 
   const _LessonNode({
-    required this.lesson,
+    required this.lessons,
     required this.isLeft,
     required this.isCompleted,
     required this.isUnlocked,
@@ -306,8 +334,13 @@ class _LessonNode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final progressProvider = Provider.of<ProgressProvider>(context, listen: false);
+    final completedCount = lessons.where((l) => progressProvider.isLessonCompleted(l.id)).length;
+    final totalCount = lessons.length;
+    final progressValue = completedCount / totalCount;
+
     final screenWidth = MediaQuery.of(context).size.width;
-    const nodeSize = 80.0;
+    const nodeSize = 90.0; // Slightly larger for grouped node
     final offset = screenWidth * 0.15;
 
     return GestureDetector(
@@ -319,7 +352,7 @@ class _LessonNode extends StatelessWidget {
         ),
         child: Column(
           children: [
-            // Lesson Circle
+            // Lesson Circle with Progress Ring
             Stack(
               alignment: Alignment.center,
               children: [
@@ -332,11 +365,26 @@ class _LessonNode extends StatelessWidget {
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.primary600.withOpacity(0.3),
+                          color: AppColors.primary600.withOpacity(0.2),
                           blurRadius: 20,
                           spreadRadius: 5,
                         ),
                       ],
+                    ),
+                  ),
+                
+                // Progress Ring
+                if (isUnlocked && !isCompleted)
+                  SizedBox(
+                    width: nodeSize + 10,
+                    height: nodeSize + 10,
+                    child: CircularProgressIndicator(
+                      value: progressValue,
+                      strokeWidth: 6,
+                      backgroundColor: Colors.grey[200],
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        progressValue >= 1.0 ? Colors.green : AppColors.primary500,
+                      ),
                     ),
                   ),
                 
@@ -371,24 +419,10 @@ class _LessonNode extends StatelessWidget {
                     isCompleted
                         ? Icons.check_rounded
                         : isUnlocked
-                            ? Icons.play_arrow_rounded
+                            ? (progressValue > 0 ? Icons.play_arrow_rounded : Icons.star_rounded)
                             : Icons.lock_rounded,
                     color: Colors.white,
-                    size: 36,
-                  ),
-                ),
-                
-                // Pulse animation for current lesson
-                if (isCurrent)
-                Container(
-                  width: nodeSize + 20,
-                  height: nodeSize + 20,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: AppColors.primary600.withOpacity(0.3),
-                      width: 3,
-                    ),
+                    size: 40,
                   ),
                 ),
               ],
@@ -396,11 +430,13 @@ class _LessonNode extends StatelessWidget {
             
             const SizedBox(height: 12),
             
-            // Lesson Title
+            // Lesson Group Title
             Container(
-              constraints: const BoxConstraints(maxWidth: 120),
+              constraints: const BoxConstraints(maxWidth: 140),
               child: Text(
-                lesson.title,
+                lessons.length > 1 
+                  ? '${lessons.first.titleKurdish}...' // Show first lesson title or a group name
+                  : lessons.first.titleKurdish,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 14,
@@ -412,7 +448,25 @@ class _LessonNode extends StatelessWidget {
               ),
             ),
             
-            // Progress indicator
+            // Progress Text
+            if (isUnlocked && !isCompleted)
+              Container(
+                margin: const EdgeInsets.only(top: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                decoration: BoxDecoration(
+                  color: AppColors.primary600.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(
+                  '$completedCount / $totalCount',
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: AppColors.primary700,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              
             if (isCompleted)
               Container(
                 margin: const EdgeInsets.only(top: 4),
@@ -514,3 +568,46 @@ class _SectionCompleteWidget extends StatelessWidget {
   }
 }
 
+// Jump Here Badge Widget
+class _JumpHereBadge extends StatelessWidget {
+  final VoidCallback onTap;
+
+  const _JumpHereBadge({required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: AppColors.primary600,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primary600.withOpacity(0.3),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: const Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.bolt_rounded, color: Colors.white, size: 16),
+            SizedBox(width: 6),
+            Text(
+              'بازدان', // Jump here
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

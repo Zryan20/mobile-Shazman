@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/foundation.dart';
 import '../models/user_model.dart';
 import '../services/auth_service.dart';
@@ -115,7 +116,7 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  // Update user profile
+  // Update user profile (persists to Firebase Auth)
   Future<bool> updateProfile({
     String? name,
     String? profileImageUrl,
@@ -125,12 +126,17 @@ class UserProvider extends ChangeNotifier {
     _setLoading(true);
 
     try {
-      // In a real app, update on Firebase Auth too
+      final firebaseUser = firebase_auth.FirebaseAuth.instance.currentUser;
+      if (firebaseUser != null && name != null && name.isNotEmpty) {
+        await firebaseUser.updateDisplayName(name);
+      }
+
       _currentUser = _currentUser!.copyWith(
         name: name ?? _currentUser!.name,
         profileImageUrl: profileImageUrl ?? _currentUser!.profileImageUrl,
       );
 
+      notifyListeners();
       return true;
     } catch (e) {
       debugPrint('Error updating profile: $e');

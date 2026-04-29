@@ -136,222 +136,158 @@ class _LearningTab extends StatelessWidget {
             slivers: [
               // App Bar - Responsive height
               SliverAppBar(
-                expandedHeight:
-                    isSmallScreen ? 160 : (isMediumScreen ? 180 : 200),
+                expandedHeight: isSmallScreen ? 250 : 280,
                 floating: false,
                 pinned: true,
+                elevation: 0,
                 backgroundColor: AppColors.primary600,
-                actions: [
-                  const Padding(
-                    padding: EdgeInsets.only(right: 8),
-                    child: HeartsAppBarWidget(), // ADD THIS
+                leading: Container(
+                  margin: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.2),
+                    shape: BoxShape.circle,
                   ),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, AppRoutes.settings);
-                    },
-                    icon: const Icon(Icons.settings_rounded),
+                  child: IconButton(
+                    onPressed: () => Navigator.pushNamed(context, AppRoutes.settings),
+                    icon: const Icon(Icons.settings_rounded, color: Colors.white, size: 20),
+                  ),
+                ),
+                actions: const [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 12),
+                    child: HeartsAppBarWidget(),
                   ),
                 ],
                 flexibleSpace: FlexibleSpaceBar(
                   background: Container(
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                         colors: [
                           AppColors.primary600,
                           AppColors.primary700,
+                          AppColors.primary800,
                         ],
+                        stops: [0.0, 0.6, 1.0],
                       ),
                     ),
-                    child: Padding(
-                      padding: EdgeInsets.all(horizontalPadding),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
+                    child: Stack(
+                      children: [
+                        // Decorative background elements
+                        Positioned(
+                          right: -50,
+                          top: -50,
+                          child: Container(
+                            width: 200,
+                            height: 200,
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.05),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(
+                            horizontalPadding,
+                            MediaQuery.of(context).padding.top + 20,
+                            horizontalPadding,
+                            10,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              // Character/Brand logo - Responsive size
-                              Container(
-                                width: isSmallScreen
-                                    ? 48
-                                    : (isMediumScreen ? 54 : 60),
-                                height: isSmallScreen
-                                    ? 48
-                                    : (isMediumScreen ? 54 : 60),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(
-                                      isSmallScreen ? 24 : 30),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.1),
-                                      blurRadius: 10,
-                                      offset: const Offset(0, 4),
-                                    ),
-                                  ],
-                                ),
-                                child: Padding(
-                                  padding:
-                                      EdgeInsets.all(isSmallScreen ? 6 : 8),
-                                  child: Image.asset(
-                                    'assets/images/Hozhan.png',
-                                    width: isSmallScreen ? 36 : 44,
-                                    height: isSmallScreen ? 36 : 44,
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                              ),
-
-                              SizedBox(
-                                  width: isSmallScreen
-                                      ? 10
-                                      : (isMediumScreen ? 12 : 16)),
-
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'سڵاو، ${user?.name ?? 'خوێندکار'}!',
-                                      style: TextStyle(
-                                        fontSize: isSmallScreen
-                                            ? 18
-                                            : (isMediumScreen ? 20 : 24),
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    SizedBox(height: isSmallScreen ? 2 : 4),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.local_fire_department_rounded,
-                                          color: Colors.orange[300],
-                                          size: isSmallScreen ? 16 : 20,
-                                        ),
-                                        SizedBox(width: isSmallScreen ? 3 : 4),
-                                        Flexible(
-                                          child: Text(
-                                            '${_toArabicIndic(streakDays)} ${AppTextsKurdish.day} ${AppTextsKurdish.streak}',
-                                            style: TextStyle(
-                                              fontSize: isSmallScreen
-                                                  ? 13
-                                                  : (isMediumScreen ? 14 : 16),
-                                              color: Colors.white70,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  // Brand Logo
+                                  Container(
+                                    width: isSmallScreen ? 56 : 68,
+                                    height: isSmallScreen ? 56 : 68,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.15),
+                                          blurRadius: 10,
+                                          offset: const Offset(0, 4),
                                         ),
                                       ],
                                     ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8),
+                                      child: Image.asset(
+                                        'assets/images/Hozhan.png',
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  // Greeting
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          'بەخێربێیتەوە،',
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.white.withOpacity(0.85),
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        Text(
+                                          user?.name ?? 'خوێندکار',
+                                          style: TextStyle(
+                                            fontSize: isSmallScreen ? 18 : 22,
+                                            fontWeight: FontWeight.w800,
+                                            color: Colors.white,
+                                            height: 1.2,
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: isSmallScreen ? 12 : 20),
+                              // Streak Card
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.12),
+                                  borderRadius: BorderRadius.circular(16),
+                                  border: Border.all(color: Colors.white.withOpacity(0.2)),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Icon(
+                                      Icons.local_fire_department_rounded,
+                                      color: Colors.orange,
+                                      size: 20,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      '${_toArabicIndic(streakDays)} ${AppTextsKurdish.day} ${AppTextsKurdish.streak}',
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
-
-                              // Settings button
-                              IconButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                      context, AppRoutes.settings);
-                                },
-                                icon: Icon(
-                                  Icons.settings_rounded,
-                                  color: Colors.white,
-                                  size: isSmallScreen ? 20 : 24,
-                                ),
-                                padding: EdgeInsets.all(isSmallScreen ? 8 : 12),
-                                constraints: const BoxConstraints(
-                                    minWidth: 40, minHeight: 40),
-                              ),
                             ],
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-
-              // Current Level Progress
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.all(horizontalPadding),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Flexible(
-                            child: Text(
-                              'ئاستی ئێستا: ${_getLevelName(currentLevel)}',
-                              style: TextStyle(
-                                fontSize: isSmallScreen
-                                    ? 15
-                                    : (isMediumScreen ? 16 : 18),
-                                fontWeight: FontWeight.bold,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          SizedBox(width: isSmallScreen ? 6 : 8),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: isSmallScreen
-                                  ? 8
-                                  : (isMediumScreen ? 10 : 12),
-                              vertical: isSmallScreen ? 4 : 6,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppColors.primary600.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Text(
-                              '${_toArabicIndic(progressProvider.currentLevelProgress.toInt())}٪',
-                              style: TextStyle(
-                                color: AppColors.primary600,
-                                fontWeight: FontWeight.bold,
-                                fontSize: isSmallScreen ? 12 : 14,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      SizedBox(
-                          height:
-                              isSmallScreen ? 8 : (isMediumScreen ? 10 : 12)),
-
-                      CustomProgressBar(
-                        progress: progressProvider.currentLevelProgress / 100,
-                        height: isSmallScreen ? 6 : 8,
-                      ),
-
-                      SizedBox(
-                          height:
-                              isSmallScreen ? 16 : (isMediumScreen ? 20 : 24)),
-
-                      // Continue Learning Button
-                      SizedBox(
-                        width: double.infinity,
-                        height: isSmallScreen ? 48 : 56,
-                        child: CustomButton(
-                          text: AppTextsKurdish.continueLearning,
-                          onPressed: () {
-                            Navigator.pushNamed(context, AppRoutes.lesson);
-                          },
-                          icon: Icons.play_arrow_rounded,
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -363,16 +299,17 @@ class _LearningTab extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const SizedBox(height: 16),
                       Text(
                         AppTextsKurdish.englishCourse,
                         style: TextStyle(
-                          fontSize:
-                              isSmallScreen ? 16 : (isMediumScreen ? 18 : 20),
-                          fontWeight: FontWeight.bold,
+                          fontSize: isSmallScreen ? 20 : 22,
+                          fontWeight: FontWeight.w900,
+                          color: AppColors.textPrimary,
                         ),
                       ),
 
-                      SizedBox(height: isSmallScreen ? 12 : 16),
+                      const SizedBox(height: 16),
 
                       // Course sections (A1-B2)
                       ...List.generate(4, (index) {
@@ -591,44 +528,24 @@ class _ProgressTab extends StatelessWidget {
                 SizedBox(
                     height: isSmallScreen ? 20 : (isMediumScreen ? 24 : 32)),
 
-                // Weekly Progress Chart Placeholder
-                Container(
-                  width: double.infinity,
-                  height: isSmallScreen ? 160 : (isMediumScreen ? 180 : 200),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[50],
-                    borderRadius:
-                        BorderRadius.circular(isSmallScreen ? 12 : 16),
-                    border: Border.all(color: Colors.grey[200]!),
-                  ),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.bar_chart_rounded,
-                          size: isSmallScreen ? 36 : 48,
-                          color: Colors.grey,
-                        ),
-                        SizedBox(height: isSmallScreen ? 6 : 8),
-                        Text(
-                          'چارتی پێشکەوتنی هەفتانە',
-                          style: TextStyle(
-                            fontSize: isSmallScreen ? 14 : 16,
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        Text(
-                          'بەم زووانە دێت',
-                          style: TextStyle(
-                            fontSize: isSmallScreen ? 11 : 12,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                // Level Progress
+                LabeledProgressBar(
+                  label: 'پێشکەوتنی ئاست',
+                  progress: (progressProvider.currentLevelProgress / 100).clamp(0.0, 1.0),
+                  height: isSmallScreen ? 8.0 : 10.0,
+                  progressColor: AppColors.primary600,
+                  showPercentage: true,
+                ),
+
+                SizedBox(height: isSmallScreen ? 12 : 16),
+
+                // Weekly Streak Goal Progress
+                LabeledProgressBar(
+                  label: 'ئامانجی هەفتانە',
+                  progress: ((progressProvider.streakDays % 7) / 7).clamp(0.0, 1.0),
+                  height: isSmallScreen ? 8.0 : 10.0,
+                  progressColor: Colors.orange,
+                  showPercentage: true,
                 ),
               ],
             ),
@@ -762,13 +679,13 @@ class _ProfileTab extends StatelessWidget {
                       _ProfileMenuItem(
                         icon: Icons.edit_rounded,
                         title: AppTextsKurdish.editProfile,
-                        onTap: () {},
+                        onTap: () => Navigator.pushNamed(context, AppRoutes.editProfile),
                         isSmallScreen: isSmallScreen,
                       ),
                       _ProfileMenuItem(
                         icon: Icons.notifications_rounded,
                         title: AppTextsKurdish.notifications,
-                        onTap: () {},
+                        onTap: () => Navigator.pushNamed(context, AppRoutes.notifications),
                         isSmallScreen: isSmallScreen,
                       ),
                       _ProfileMenuItem(
@@ -815,16 +732,18 @@ class _ProfileTab extends StatelessWidget {
             onPressed: () => Navigator.pop(context),
             child: const Text(AppTextsKurdish.cancel),
           ),
-          TextButton(
+          CustomButton(
+            text: AppTextsKurdish.signOut,
             onPressed: () {
               context.read<UserProvider>().signOut();
               Navigator.pop(context);
               Navigator.pushReplacementNamed(context, AppRoutes.login);
             },
-            child: const Text(
-              AppTextsKurdish.signOut,
-              style: TextStyle(color: AppColors.error),
-            ),
+            backgroundColor: AppColors.error,
+            textColor: Colors.white,
+            height: 40,
+            fontSize: 14,
+            borderRadius: 8,
           ),
         ],
       ),

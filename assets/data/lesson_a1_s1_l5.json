@@ -1,0 +1,109 @@
+{
+  "id": "a1_s1_l5",
+  "title": "Classroom Objects",
+  "titleKurdish": "کەلوپەلی پۆل",
+  "description": "Learn names of common classroom objects",
+  "descriptionKurdish": "ناوی کەلوپەلە باوەکانی ناو پۆل فێربە",
+  "level": 1,
+  "section": 1,
+  "lessonNumber": 5,
+  "estimatedMinutes": 5,
+  "totalExercises": 6,
+  
+  "vocabulary": [
+    {
+      "english": "Pen",
+      "kurdish": "پێنوس",
+      "audioPath": "audio/a1/pen.mp3",
+      "exampleSentence": "This is a pen.",
+      "exampleTranslation": "ئەمە پێنوسێکە.",
+      "notes": "Used for writing",
+      "notesKurdish": "بۆ نووسین بەکاردێت"
+    },
+    {
+      "english": "Book",
+      "kurdish": "کتێب",
+      "audioPath": "audio/a1/book.mp3",
+      "exampleSentence": "Open your book.",
+      "exampleTranslation": "کتێبەکەت بکەرەوە.",
+      "notes": "Used for reading",
+      "notesKurdish": "بۆ خوێندنەوە بەکاردێت"
+    },
+    {
+      "english": "Teacher",
+      "kurdish": "مامۆستا",
+      "audioPath": "audio/a1/teacher.mp3",
+      "exampleSentence": "The teacher is in the class.",
+      "exampleTranslation": "مامۆستاکە لە ناو پۆلدایە.",
+      "notes": "Person who teaches",
+      "notesKurdish": "ئەو کەسەی وانە دەڵێتەوە"
+    }
+  ],
+  
+  "exercises": [
+    {
+      "id": "ex_1",
+      "type": "multiple_choice",
+      "question": "What is 'پێنوس' in English?",
+      "questionKurdish": "چییە بە ئینگلیزی؟ 'پێنوس'",
+      "options": ["Pen", "Book", "Teacher", "Desk"],
+      "correctAnswer": "Pen",
+      "explanation": "Pen means پێنوس.",
+      "explanationKurdish": "Pen واتای پێنوسە."
+    },
+    {
+      "id": "ex_2",
+      "type": "multiple_choice",
+      "question": "What is 'کتێب' in English?",
+      "questionKurdish": "چییە بە ئینگلیزی؟ 'کتێب'",
+      "options": ["Book", "Pen", "Paper", "Pencil"],
+      "correctAnswer": "Book",
+      "explanation": "Book means کتێب.",
+      "explanationKurdish": "Book واتای کتێبەکەیە."
+    },
+    {
+      "id": "ex_3",
+      "type": "sentence_builder",
+      "question": "Translate: ئەمە پێنوسێکە",
+      "questionKurdish": "ئەمە بە ئینگلیزی دروست بکە",
+      "options": ["This", "is", "a", "pen", "book", "my"],
+      "correctAnswer": "This is a pen",
+      "explanation": "Simple sentence structure.",
+      "explanationKurdish": "پێکهاتەی ڕستەی سادە."
+    },
+    {
+      "id": "ex_4",
+      "type": "multiple_choice",
+      "question": "Who teaches in the classroom?",
+      "questionKurdish": "کێ وانە دەڵێتەوە لە ناو پۆلدا؟",
+      "options": ["Teacher", "Student", "Pen", "Book"],
+      "correctAnswer": "Teacher",
+      "explanation": "The teacher is the one who leads the class.",
+      "explanationKurdish": "مامۆستا ئەو کەسەیە کە وانە دەڵێتەوە."
+    },
+    {
+      "id": "ex_5",
+      "type": "sentence_builder",
+      "question": "Translate: ئەمە کتێبێکە",
+      "questionKurdish": "ئەمە بە ئینگلیزی دروست بکە",
+      "options": ["This", "is", "a", "book", "pen", "is"],
+      "correctAnswer": "This is a book",
+      "explanation": "Using 'this' to identify objects.",
+      "explanationKurdish": "بەکارهێنانی 'this' بۆ ناساندنی شتەکان."
+    },
+    {
+      "id": "ex_6",
+      "type": "multiple_choice",
+      "question": "Pen",
+      "questionKurdish": "ئەمە چییە بە کوردی؟",
+      "options": ["پێنوس", "کتێب", "پۆل", "پەنجە"],
+      "correctAnswer": "پێنوس",
+      "explanation": "Pen is a writing tool.",
+      "explanationKurdish": "Pen ئامرازێکی نووسینە."
+    }
+  ],
+  "grammarNotes": [],
+  "culturalNotes": [],
+  "tips": ["Learn vocabulary in context"],
+  "tipsKurdish": ["وشەکان لە ناو ڕستەدا فێربە"]
+}

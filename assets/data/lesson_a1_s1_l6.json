@@ -1,0 +1,109 @@
+{
+  "id": "a1_s1_l6",
+  "title": "Classroom Phrases",
+  "titleKurdish": "دەستەواژەکانی پۆل",
+  "description": "Learn common instructions and phrases used in class",
+  "descriptionKurdish": "فێری ڕێنمایی و دەستەواژە باوەکان ببە کە لە پۆلدا بەکاردێن",
+  "level": 1,
+  "section": 1,
+  "lessonNumber": 6,
+  "estimatedMinutes": 5,
+  "totalExercises": 6,
+  
+  "vocabulary": [
+    {
+      "english": "Open your book",
+      "kurdish": "کتێبەکەت بکەرەوە",
+      "audioPath": "audio/a1/open_your_book.mp3",
+      "exampleSentence": "Please, open your book to page 10.",
+      "exampleTranslation": "تکایە، کتێبەکەت لە لاپەڕە ١٠ بکەرەوە.",
+      "notes": "Instruction",
+      "notesKurdish": "ڕێنمایی"
+    },
+    {
+      "english": "Listen",
+      "kurdish": "گوێ بگرە",
+      "audioPath": "audio/a1/listen.mp3",
+      "exampleSentence": "Listen to the teacher.",
+      "exampleTranslation": "گوێ لە مامۆستاکە بگرە.",
+      "notes": "Verb",
+      "notesKurdish": "کردار"
+    },
+    {
+      "english": "Write",
+      "kurdish": "بنووسە",
+      "audioPath": "audio/a1/write.mp3",
+      "exampleSentence": "Write your name.",
+      "exampleTranslation": "ناوەکەت بنووسە.",
+      "notes": "Verb",
+      "notesKurdish": "کردار"
+    }
+  ],
+  
+  "exercises": [
+    {
+      "id": "ex_1",
+      "type": "multiple_choice",
+      "question": "What does 'Listen' mean?",
+      "questionKurdish": "واتای 'Listen' چییە؟",
+      "options": ["گوێ بگرە", "بنووسە", "بکەرەوە", "سەیر بکە"],
+      "correctAnswer": "گوێ بگرە",
+      "explanation": "Listen means to hear with attention.",
+      "explanationKurdish": "Listen واتای گوێگرتنە بە سەرنجەوە."
+    },
+    {
+      "id": "ex_2",
+      "type": "multiple_choice",
+      "question": "What does 'Write' mean?",
+      "questionKurdish": "واتای 'Write' چییە؟",
+      "options": ["بنووسە", "بخوێنەرەوە", "دابنیشە", "بڕۆ"],
+      "correctAnswer": "بنووسە",
+      "explanation": "Write is to put words on paper.",
+      "explanationKurdish": "Write واتای نووسینە لەسەر کاغەز."
+    },
+    {
+      "id": "ex_3",
+      "type": "sentence_builder",
+      "question": "Translate: کتێبەکەت بکەرەوە",
+      "questionKurdish": "ئەمە بە ئینگلیزی دروست بکە",
+      "options": ["Open", "your", "book", "Close", "my"],
+      "correctAnswer": "Open your book",
+      "explanation": "A common classroom command.",
+      "explanationKurdish": "فەرمانێکی باوی ناو پۆلە."
+    },
+    {
+      "id": "ex_4",
+      "type": "sentence_builder",
+      "question": "Translate: ناوەکەت بنووسە",
+      "questionKurdish": "ئەمە بە ئینگلیزی دروست بکە",
+      "options": ["Write", "your", "name", "Read", "my"],
+      "correctAnswer": "Write your name",
+      "explanation": "How to ask someone to write their name.",
+      "explanationKurdish": "چۆنییەتی داواکردن لە کەسێک بۆ نووسینی ناوی."
+    },
+    {
+      "id": "ex_5",
+      "type": "multiple_choice",
+      "question": "How do you say 'گوێ بگرە' in English?",
+      "questionKurdish": "چۆن دەڵێیت 'گوێ بگرە' بە ئینگلیزی؟",
+      "options": ["Listen", "Look", "Speak", "Sing"],
+      "correctAnswer": "Listen",
+      "explanation": "Listen is the English verb for گوێگرتن.",
+      "explanationKurdish": "Listen کردارە ئینگلیزییەکەیە بۆ گوێگرتن."
+    },
+    {
+      "id": "ex_6",
+      "type": "sentence_builder",
+      "question": "Translate: تکایە، گوێ بگرە.",
+      "questionKurdish": "ئەمە بە ئینگلیزی دروست بکە",
+      "options": ["Please,", "listen.", "Thank", "you", "Hello"],
+      "correctAnswer": "Please, listen.",
+      "explanation": "Adding politeness to a command.",
+      "explanationKurdish": "زیادکردنی ڕێز بۆ فەرمانێک."
+    }
+  ],
+  "grammarNotes": [],
+  "culturalNotes": [],
+  "tips": ["Pay attention to word endings"],
+  "tipsKurdish": ["سەرنج بدە بۆ کۆتایی وشەکان"]
+}

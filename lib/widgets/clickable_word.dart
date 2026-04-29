@@ -6,7 +6,6 @@ import '../services/audio_service.dart';
 class ClickableWord extends StatefulWidget {
   final String englishWord;
   final String kurdishTranslation;
-  final String? pronunciation; // IPA or phonetic
   final String? audioPath; // Path to pronunciation audio
   final TextStyle? textStyle;
   final bool showUnderline;
@@ -15,7 +14,6 @@ class ClickableWord extends StatefulWidget {
     super.key,
     required this.englishWord,
     required this.kurdishTranslation,
-    this.pronunciation,
     this.audioPath,
     this.textStyle,
     this.showUnderline = true,
@@ -39,7 +37,6 @@ class _ClickableWordState extends State<ClickableWord> {
       builder: (context) => _TranslationDialog(
         englishWord: widget.englishWord,
         kurdishTranslation: widget.kurdishTranslation,
-        pronunciation: widget.pronunciation,
         audioPath: widget.audioPath,
       ),
     );
@@ -81,13 +78,11 @@ class _ClickableWordState extends State<ClickableWord> {
 class _TranslationDialog extends StatelessWidget {
   final String englishWord;
   final String kurdishTranslation;
-  final String? pronunciation;
   final String? audioPath;
   
   const _TranslationDialog({
     required this.englishWord,
     required this.kurdishTranslation,
-    this.pronunciation,
     this.audioPath,
   });
 
@@ -135,22 +130,6 @@ class _TranslationDialog extends StatelessWidget {
                   ),
               ],
             ),
-            
-            // Pronunciation
-            if (pronunciation != null) ...[
-              const SizedBox(height: 8),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '/$pronunciation/',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: AppColors.textSecondary,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-              ),
-            ],
             
             const SizedBox(height: 20),
             
@@ -264,7 +243,6 @@ class ClickableText extends StatelessWidget {
             child: ClickableWord(
               englishWord: word,
               kurdishTranslation: translation.kurdish,
-              pronunciation: translation.pronunciation,
               audioPath: translation.audioPath,
               textStyle: textStyle,
             ),
@@ -299,13 +277,11 @@ class ClickableText extends StatelessWidget {
 /// Word translation data model
 class WordTranslation {
   final String kurdish;
-  final String? pronunciation;
   final String? audioPath;
   final String? example; // Example sentence
   
   const WordTranslation({
     required this.kurdish,
-    this.pronunciation,
     this.audioPath,
     this.example,
   });

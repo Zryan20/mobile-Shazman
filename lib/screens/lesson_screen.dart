@@ -37,6 +37,8 @@ class _LessonScreenState extends State<LessonScreen> {
   Map<String, dynamic>? _lessonData;
   List<Map<String, dynamic>> _vocabulary = [];
   List<Map<String, dynamic>> _exercises = [];
+  List<Map<String, dynamic>> _grammarNotes = [];
+  List<Map<String, dynamic>> _culturalNotes = [];
   bool _isLoading = true;
   String? _errorMessage;
 
@@ -88,6 +90,14 @@ class _LessonScreenState extends State<LessonScreen> {
                 ?.map((e) => Map<String, dynamic>.from(e))
                 .toList() ??
             [];
+        _grammarNotes = (data['grammarNotes'] as List<dynamic>?)
+                ?.map((e) => Map<String, dynamic>.from(e))
+                .toList() ??
+            [];
+        _culturalNotes = (data['culturalNotes'] as List<dynamic>?)
+                ?.map((e) => Map<String, dynamic>.from(e))
+                .toList() ??
+            [];
         _isLoading = false;
       });
     } catch (e) {
@@ -99,24 +109,89 @@ class _LessonScreenState extends State<LessonScreen> {
   }
 
   void _nextIntroPage() {
-    if (_currentIntroPage < _vocabulary.length - 1) {
-      setState(() {
-        _currentIntroPage++;
-      });
-    } else {
-      // Move to exercise phase
-      setState(() {
-        _currentPhase = LessonPhase.exercises;
-      });
-      _initExercise(0);
+    if (_currentPhase == LessonPhase.introduction) {
+      if (_currentIntroPage < _vocabulary.length - 1) {
+        setState(() {
+          _currentIntroPage++;
+        });
+      } else if (_grammarNotes.isNotEmpty) {
+        setState(() {
+          _currentPhase = LessonPhase.grammarNotes;
+          _currentIntroPage = 0; // Reuse for grammar index
+        });
+      } else if (_culturalNotes.isNotEmpty) {
+        setState(() {
+          _currentPhase = LessonPhase.culturalNotes;
+          _currentIntroPage = 0; // Reuse for cultural index
+        });
+      } else {
+        _startExercises();
+      }
+    } else if (_currentPhase == LessonPhase.grammarNotes) {
+      if (_currentIntroPage < _grammarNotes.length - 1) {
+        setState(() {
+          _currentIntroPage++;
+        });
+      } else if (_culturalNotes.isNotEmpty) {
+        setState(() {
+          _currentPhase = LessonPhase.culturalNotes;
+          _currentIntroPage = 0;
+        });
+      } else {
+        _startExercises();
+      }
+    } else if (_currentPhase == LessonPhase.culturalNotes) {
+      if (_currentIntroPage < _culturalNotes.length - 1) {
+        setState(() {
+          _currentIntroPage++;
+        });
+      } else {
+        _startExercises();
+      }
     }
   }
 
+  void _startExercises() {
+    setState(() {
+      _currentPhase = LessonPhase.exercises;
+    });
+    _initExercise(0);
+  }
+
   void _previousIntroPage() {
-    if (_currentIntroPage > 0) {
-      setState(() {
-        _currentIntroPage--;
-      });
+    if (_currentPhase == LessonPhase.introduction) {
+      if (_currentIntroPage > 0) {
+        setState(() {
+          _currentIntroPage--;
+        });
+      }
+    } else if (_currentPhase == LessonPhase.grammarNotes) {
+      if (_currentIntroPage > 0) {
+        setState(() {
+          _currentIntroPage--;
+        });
+      } else {
+        setState(() {
+          _currentPhase = LessonPhase.introduction;
+          _currentIntroPage = _vocabulary.length - 1;
+        });
+      }
+    } else if (_currentPhase == LessonPhase.culturalNotes) {
+      if (_currentIntroPage > 0) {
+        setState(() {
+          _currentIntroPage--;
+        });
+      } else if (_grammarNotes.isNotEmpty) {
+        setState(() {
+          _currentPhase = LessonPhase.grammarNotes;
+          _currentIntroPage = _grammarNotes.length - 1;
+        });
+      } else {
+        setState(() {
+          _currentPhase = LessonPhase.introduction;
+          _currentIntroPage = _vocabulary.length - 1;
+        });
+      }
     }
   }
 
@@ -277,7 +352,7 @@ class _LessonScreenState extends State<LessonScreen> {
               ),
               child: Column(
                 children: [
-                  const Text('Score',
+                  const Text('نمرە',
                       style: TextStyle(
                           fontSize: 14, color: AppColors.textSecondary)),
                   const SizedBox(height: 8),
@@ -290,7 +365,7 @@ class _LessonScreenState extends State<LessonScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '$_correctAnswers/${_exercises.length} correct',
+                    '$_correctAnswers/${_exercises.length} ڕاست',
                     style: const TextStyle(
                         fontSize: 12, color: AppColors.textSecondary),
                   ),
@@ -335,14 +410,14 @@ class _LessonScreenState extends State<LessonScreen> {
   Widget build(BuildContext context) {
     if (_isLoading) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Loading...')),
+        appBar: AppBar(title: const Text('باردەکرێت...')),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
 
     if (_errorMessage != null || _vocabulary.isEmpty) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Error')),
+        appBar: AppBar(title: const Text('هەڵە')),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -358,7 +433,7 @@ class _LessonScreenState extends State<LessonScreen> {
               ),
               const SizedBox(height: 24),
               PrimaryButton(
-                  text: 'Go Back', onPressed: () => Navigator.pop(context)),
+                  text: 'بگەڕێوە', onPressed: () => Navigator.pop(context)),
             ],
           ),
         ),
@@ -378,9 +453,8 @@ class _LessonScreenState extends State<LessonScreen> {
             icon: const Icon(Icons.close_rounded),
             onPressed: _showExitDialog,
           ),
-          title: Text(_lessonData?['titleKurdish'] ?? 'Lesson'),
           actions: [
-            if (_currentPhase == LessonPhase.introduction)
+            if (_currentPhase != LessonPhase.exercises)
               TextButton(
                 onPressed: _skipToExercises,
                 child: const Text('تێپەڕاندن', style: TextStyle(fontSize: 14)),
@@ -403,16 +477,57 @@ class _LessonScreenState extends State<LessonScreen> {
             ),
           ],
         ),
-        body: _currentPhase == LessonPhase.introduction
-            ? _buildIntroductionPhase()
-            : _buildExercisePhase(),
+        body: _currentPhase == LessonPhase.exercises
+            ? _buildExercisePhase()
+            : _buildIntroductionPhase(),
       ),
     );
   }
 
   Widget _buildIntroductionPhase() {
-    final vocab = _vocabulary[_currentIntroPage];
-    final progress = (_currentIntroPage + 1) / _vocabulary.length;
+    Widget content;
+    double progress;
+
+    if (_currentPhase == LessonPhase.introduction) {
+      final vocab = _vocabulary[_currentIntroPage];
+      progress = (_currentIntroPage + 1) / (_vocabulary.length + _grammarNotes.length + _culturalNotes.length);
+      content = VocabularyIntroCard(
+        englishWord: vocab['english'] as String,
+        kurdishTranslation: vocab['kurdish'] as String,
+        audioPath: vocab['audioPath'] as String?,
+        exampleSentence: vocab['exampleSentence'] as String?,
+        exampleTranslation: vocab['exampleTranslation'] as String?,
+        imageUrl: vocab['imageUrl'] as String?,
+        notes: vocab['notes'] as String?,
+        notesKurdish: vocab['notesKurdish'] as String?,
+      );
+    } else if (_currentPhase == LessonPhase.grammarNotes) {
+      final note = _grammarNotes[_currentIntroPage];
+      progress = (_vocabulary.length + _currentIntroPage + 1) / 
+                 (_vocabulary.length + _grammarNotes.length + _culturalNotes.length);
+      content = LessonNoteCard(
+        title: note['title'] as String,
+        titleKurdish: note['titleKurdish'] as String?,
+        content: note['content'] as String,
+        contentKurdish: note['contentKurdish'] as String?,
+        examples: note['examples'] != null ? List<String>.from(note['examples']) : null,
+        icon: Icons.menu_book_rounded,
+        color: AppColors.primary600,
+      );
+    } else {
+      final note = _culturalNotes[_currentIntroPage];
+      progress = (_vocabulary.length + _grammarNotes.length + _currentIntroPage + 1) / 
+                 (_vocabulary.length + _grammarNotes.length + _culturalNotes.length);
+      content = LessonNoteCard(
+        title: note['title'] as String,
+        titleKurdish: note['titleKurdish'] as String?,
+        content: note['content'] as String,
+        contentKurdish: note['contentKurdish'] as String?,
+        examples: note['examples'] != null ? List<String>.from(note['examples']) : null,
+        icon: Icons.public_rounded,
+        color: Colors.orange,
+      );
+    }
 
     return Column(
       children: [
@@ -427,16 +542,7 @@ class _LessonScreenState extends State<LessonScreen> {
         Expanded(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(24),
-            child: VocabularyIntroCard(
-              englishWord: vocab['english'] as String,
-              kurdishTranslation: vocab['kurdish'] as String,
-              pronunciation: vocab['pronunciation'] as String?,
-              audioPath: vocab['audioPath'] as String?,
-              exampleSentence: vocab['exampleSentence'] as String?,
-              exampleTranslation: vocab['exampleTranslation'] as String?,
-              imageUrl: vocab['imageUrl'] as String?,
-              partOfSpeech: vocab['partOfSpeech'] as String?,
-            ),
+            child: content,
           ),
         ),
 
@@ -457,7 +563,7 @@ class _LessonScreenState extends State<LessonScreen> {
             top: false,
             child: Row(
               children: [
-                if (_currentIntroPage > 0)
+                if (!(_currentPhase == LessonPhase.introduction && _currentIntroPage == 0))
                   Expanded(
                     child: OutlinedCustomButton(
                       text: 'پێشوو',
@@ -465,13 +571,15 @@ class _LessonScreenState extends State<LessonScreen> {
                       icon: Icons.arrow_back_rounded,
                     ),
                   ),
-                if (_currentIntroPage > 0) const SizedBox(width: 12),
+                if (!(_currentPhase == LessonPhase.introduction && _currentIntroPage == 0)) const SizedBox(width: 12),
                 Expanded(
                   flex: 2,
                   child: PrimaryButton(
-                    text: _currentIntroPage < _vocabulary.length - 1
-                        ? 'دواتر'
-                        : 'دەست بکە بە ڕاهێنان',
+                    text: (_currentPhase == LessonPhase.culturalNotes && _currentIntroPage == _culturalNotes.length - 1) ||
+                           (_currentPhase == LessonPhase.grammarNotes && _currentIntroPage == _grammarNotes.length - 1 && _culturalNotes.isEmpty) ||
+                           (_currentPhase == LessonPhase.introduction && _currentIntroPage == _vocabulary.length - 1 && _grammarNotes.isEmpty && _culturalNotes.isEmpty)
+                        ? 'دەست بکە بە ڕاهێنان'
+                        : 'دواتر',
                     onPressed: _nextIntroPage,
                     icon: Icons.arrow_forward_rounded,
                   ),
@@ -897,6 +1005,8 @@ class _LessonScreenState extends State<LessonScreen> {
 // Lesson phases enum
 enum LessonPhase {
   introduction,
+  grammarNotes,
+  culturalNotes,
   exercises,
 }
 
@@ -904,23 +1014,23 @@ enum LessonPhase {
 class VocabularyIntroCard extends StatelessWidget {
   final String englishWord;
   final String kurdishTranslation;
-  final String? pronunciation;
   final String? audioPath;
   final String? exampleSentence;
   final String? exampleTranslation;
   final String? imageUrl;
-  final String? partOfSpeech;
+  final String? notes;
+  final String? notesKurdish;
 
   const VocabularyIntroCard({
     super.key,
     required this.englishWord,
     required this.kurdishTranslation,
-    this.pronunciation,
     this.audioPath,
     this.exampleSentence,
     this.exampleTranslation,
     this.imageUrl,
-    this.partOfSpeech,
+    this.notes,
+    this.notesKurdish,
   });
 
   @override
@@ -1008,39 +1118,6 @@ class VocabularyIntroCard extends StatelessWidget {
             ],
           ],
         ),
-
-        const SizedBox(height: 8),
-
-        // Part of speech
-        if (partOfSpeech != null)
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            decoration: BoxDecoration(
-              color: AppColors.info.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Text(
-              partOfSpeech!,
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: AppColors.info,
-              ),
-            ),
-          ),
-
-        // Pronunciation
-        if (pronunciation != null) ...[
-          const SizedBox(height: 8),
-          Text(
-            '/$pronunciation/',
-            style: const TextStyle(
-              fontSize: 18,
-              color: AppColors.textSecondary,
-              fontStyle: FontStyle.italic,
-            ),
-          ),
-        ],
 
         const SizedBox(height: 32),
 
@@ -1132,34 +1209,63 @@ class VocabularyIntroCard extends StatelessWidget {
           ),
         ],
 
-        const SizedBox(height: 24),
-
-        // Tips or notes
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: AppColors.infoLight,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppColors.info.withValues(alpha: 0.3)),
-          ),
-          child: const Row(
-            children: [
-              Icon(Icons.lightbulb_rounded, color: AppColors.info, size: 20),
-              SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  'تکایە ئەم وشەیە باش لەبیر بگرە. لە ڕاهێنانەکاندا پێویستت پێیەتی!',
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: AppColors.info,
-                    height: 1.4,
-                  ),
+        if (notes != null || notesKurdish != null) ...[
+          const SizedBox(height: 24),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: AppColors.infoLight,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: AppColors.info.withValues(alpha: 0.3)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.lightbulb_rounded, color: AppColors.info, size: 20),
+                    const SizedBox(width: 12),
+                    Text(
+                      'Notes / تێبینییەکان',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.info.withValues(alpha: 0.8),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                const SizedBox(height: 12),
+                if (notes != null)
+                  Text(
+                    notes!,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: AppColors.textPrimary,
+                      height: 1.4,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                if (notes != null && notesKurdish != null)
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                    child: Divider(height: 1, color: AppColors.info),
+                  ),
+                if (notesKurdish != null)
+                  Text(
+                    notesKurdish!,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: AppColors.textPrimary,
+                      height: 1.4,
+                    ),
+                    textDirection: TextDirection.rtl,
+                  ),
+              ],
+            ),
           ),
-        ),
+        ],
       ],
     );
   }
@@ -1219,7 +1325,6 @@ class VocabularyIntroCard extends StatelessWidget {
             child: ClickableWord(
               englishWord: originalPhrase,
               kurdishTranslation: kurdishTranslation,
-              pronunciation: pronunciation,
               audioPath: audioPath,
               textStyle: const TextStyle(
                 fontSize: 18,
@@ -1259,7 +1364,6 @@ class VocabularyIntroCard extends StatelessWidget {
               child: ClickableWord(
                 englishWord: word,
                 kurdishTranslation: kurdishTranslation,
-                pronunciation: pronunciation,
                 audioPath: audioPath,
                 textStyle: const TextStyle(
                   fontSize: 18,
@@ -1296,5 +1400,160 @@ class VocabularyIntroCard extends StatelessWidget {
         ),
       );
     }
+  }
+}
+
+// New widget for Grammar and Cultural Notes
+class LessonNoteCard extends StatelessWidget {
+  final String title;
+  final String? titleKurdish;
+  final String content;
+  final String? contentKurdish;
+  final List<String>? examples;
+  final IconData icon;
+  final Color color;
+
+  const LessonNoteCard({
+    super.key,
+    required this.title,
+    this.titleKurdish,
+    required this.content,
+    this.contentKurdish,
+    this.examples,
+    required this.icon,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Header with Icon
+        Center(
+          child: Container(
+            width: 80,
+            height: 80,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.1),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, size: 40, color: color),
+          ),
+        ),
+        const SizedBox(height: 24),
+        
+        // Title
+        Center(
+          child: Column(
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              if (titleKurdish != null) ...[
+                const SizedBox(height: 4),
+                Text(
+                  titleKurdish!,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: color,
+                  ),
+                  textAlign: TextAlign.center,
+                  textDirection: TextDirection.rtl,
+                ),
+              ],
+            ],
+          ),
+        ),
+        const SizedBox(height: 32),
+
+        // Content
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: AppColors.border, width: 2),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.05),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                content,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: AppColors.textPrimary,
+                  height: 1.6,
+                ),
+              ),
+              if (contentKurdish != null) ...[
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  child: Divider(),
+                ),
+                Text(
+                  contentKurdish!,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: AppColors.textPrimary,
+                    height: 1.6,
+                  ),
+                  textDirection: TextDirection.rtl,
+                ),
+              ],
+            ],
+          ),
+        ),
+
+        // Examples
+        if (examples != null && examples!.isNotEmpty) ...[
+          const SizedBox(height: 32),
+          const Text(
+            'Examples / نموونەکان:',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: AppColors.textPrimary,
+            ),
+          ),
+          const SizedBox(height: 16),
+          ...examples!.map((example) => Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.05),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: color.withValues(alpha: 0.2)),
+              ),
+              child: Text(
+                example,
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+            ),
+          )),
+        ],
+      ],
+    );
   }
 }

@@ -1,7 +1,9 @@
 class Lesson {
   final String id;
   final String title;
+  final String titleKurdish;
   final String description;
+  final String descriptionKurdish;
   final int level; // 1-6 (A1-C2)
   final int unitNumber;
   final int lessonNumber;
@@ -15,7 +17,9 @@ class Lesson {
   const Lesson({
     required this.id,
     required this.title,
+    required this.titleKurdish,
     required this.description,
+    required this.descriptionKurdish,
     required this.level,
     required this.unitNumber,
     required this.lessonNumber,
@@ -31,7 +35,9 @@ class Lesson {
   Lesson copyWith({
     String? id,
     String? title,
+    String? titleKurdish,
     String? description,
+    String? descriptionKurdish,
     int? level,
     int? unitNumber,
     int? lessonNumber,
@@ -45,7 +51,9 @@ class Lesson {
     return Lesson(
       id: id ?? this.id,
       title: title ?? this.title,
+      titleKurdish: titleKurdish ?? this.titleKurdish,
       description: description ?? this.description,
+      descriptionKurdish: descriptionKurdish ?? this.descriptionKurdish,
       level: level ?? this.level,
       unitNumber: unitNumber ?? this.unitNumber,
       lessonNumber: lessonNumber ?? this.lessonNumber,
@@ -63,7 +71,9 @@ class Lesson {
     return {
       'id': id,
       'title': title,
+      'titleKurdish': titleKurdish,
       'description': description,
+      'descriptionKurdish': descriptionKurdish,
       'level': level,
       'unitNumber': unitNumber,
       'lessonNumber': lessonNumber,
@@ -80,8 +90,10 @@ class Lesson {
   factory Lesson.fromJson(Map<String, dynamic> json) {
     // Extract and validate required fields with Kurdish fallbacks
     final String id = (json['id'] as String?) ?? '';
-    final String title = (json['title'] as String?) ?? 'وانەی نامۆ'; // "Unknown Lesson"
-    final String description = (json['description'] as String?) ?? 'هیچ وەسفێک بەردەست نییە'; // "No description available"
+    final String title = (json['title'] as String?) ?? 'وانەی نامۆ';
+    final String titleKurdish = (json['titleKurdish'] as String?) ?? title;
+    final String description = (json['description'] as String?) ?? 'هیچ وەسفێک بەردەست نییە';
+    final String descriptionKurdish = (json['descriptionKurdish'] as String?) ?? description;
     final int level = (json['level'] as int?) ?? 1;
     final int unitNumber = (json['unitNumber'] as int?) ?? 1;
     final int lessonNumber = (json['lessonNumber'] as int?) ?? 1;
@@ -91,7 +103,9 @@ class Lesson {
     return Lesson(
       id: id,
       title: title,
+      titleKurdish: titleKurdish,
       description: description,
+      descriptionKurdish: descriptionKurdish,
       level: level,
       unitNumber: unitNumber,
       lessonNumber: lessonNumber,
@@ -177,7 +191,9 @@ class Lesson {
     return other is Lesson &&
         other.id == id &&
         other.title == title &&
+        other.titleKurdish == titleKurdish &&
         other.description == description &&
+        other.descriptionKurdish == descriptionKurdish &&
         other.level == level &&
         other.unitNumber == unitNumber &&
         other.lessonNumber == lessonNumber &&
@@ -193,7 +209,9 @@ class Lesson {
     return Object.hash(
       id,
       title,
+      titleKurdish,
       description,
+      descriptionKurdish,
       level,
       unitNumber,
       lessonNumber,

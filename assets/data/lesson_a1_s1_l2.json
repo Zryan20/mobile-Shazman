@@ -1,295 +1,118 @@
 {
   "id": "a1_s1_l2",
-  "title": "Numbers 1-20",
-  "titleKurdish": "ژمارەکان ١-٢٠",
-  "description": "Learn numbers from 1 to 20 and how to talk about age",
-  "descriptionKurdish": "فێری ژمارەکان ببە لە ١ تا ٢٠ و چۆنییەتی باسکردنی تەمەن",
+  "title": "Introductions",
+  "titleKurdish": "ناساندنی خۆت",
+  "description": "Learn how to say your name and meet new people",
+  "descriptionKurdish": "فێربە چۆن ناوی خۆت بڵێیت و چاوت بە کەسانی نوێ بکەوێت",
   "level": 1,
   "section": 1,
   "lessonNumber": 2,
-  "estimatedMinutes": 8,
-  "totalExercises": 10,
+  "estimatedMinutes": 6,
+  "totalExercises": 6,
   
   "vocabulary": [
     {
-      "english": "One",
-      "kurdish": "یەک",
-      "pronunciation": "wʌn",
-      "audioPath": "audio/a1/one.mp3",
-      "partOfSpeech": "number",
-      "exampleSentence": "I have one apple.",
-      "exampleTranslation": "من یەک سێوم هەیە.",
-      "imageUrl": null,
-      "notes": "1"
+      "english": "My name is",
+      "kurdish": "ناوم ... ە",
+      "audioPath": "audio/a1/my_name_is.mp3",
+      "exampleSentence": "My name is Ahmed.",
+      "exampleTranslation": "ناوم ئەحمەدە.",
+      "notes": "Introducing yourself",
+      "notesKurdish": "بۆ ناساندنی خۆت"
     },
     {
-      "english": "Two",
-      "kurdish": "دوو",
-      "pronunciation": "tuː",
-      "audioPath": "audio/a1/two.mp3",
-      "partOfSpeech": "number",
-      "exampleSentence": "Two cars are on the street.",
-      "exampleTranslation": "دوو ئۆتۆمبێل لەسەر شەقامەکەن.",
-      "imageUrl": null,
-      "notes": "2"
+      "english": "Nice to meet you",
+      "kurdish": "خۆشحاڵم بە ناسینت",
+      "audioPath": "audio/a1/nice_to_meet_you.mp3",
+      "exampleSentence": "Nice to meet you, Sara!",
+      "exampleTranslation": "خۆشحاڵم بە ناسینت، سارا!",
+      "notes": "Polite response",
+      "notesKurdish": "وەڵامێکی ڕێزدارانە"
     },
     {
-      "english": "Three",
-      "kurdish": "سێ",
-      "pronunciation": "θriː",
-      "audioPath": "audio/a1/three.mp3",
-      "partOfSpeech": "number",
-      "exampleSentence": "There are three books.",
-      "exampleTranslation": "سێ کتێب هەن.",
-      "imageUrl": null,
-      "notes": "3"
+      "english": "Good morning",
+      "kurdish": "بەیانی باش",
+      "audioPath": "audio/a1/good_morning.mp3",
+      "exampleSentence": "Good morning, teacher!",
+      "exampleTranslation": "بەیانی باش، مامۆستا!",
+      "notes": "Before noon",
+      "notesKurdish": "پێش نیوەڕۆ"
     },
     {
-      "english": "Five",
-      "kurdish": "پێنج",
-      "pronunciation": "faɪv",
-      "audioPath": "audio/a1/five.mp3",
-      "partOfSpeech": "number",
-      "exampleSentence": "I have five fingers.",
-      "exampleTranslation": "من پێنج پەنجەم هەیە.",
-      "imageUrl": null,
-      "notes": "5"
-    },
-    {
-      "english": "Ten",
-      "kurdish": "دە",
-      "pronunciation": "ten",
-      "audioPath": "audio/a1/ten.mp3",
-      "partOfSpeech": "number",
-      "exampleSentence": "Ten minutes left.",
-      "exampleTranslation": "دە خولەک ماوە.",
-      "imageUrl": null,
-      "notes": "10"
-    },
-    {
-      "english": "Twenty",
-      "kurdish": "بیست",
-      "pronunciation": "ˈtwenti",
-      "audioPath": "audio/a1/twenty.mp3",
-      "partOfSpeech": "number",
-      "exampleSentence": "He is twenty years old.",
-      "exampleTranslation": "ئەو تەمەنی بیست ساڵە.",
-      "imageUrl": null,
-      "notes": "20"
-    },
-    {
-      "english": "How old are you?",
-      "kurdish": "تەمەنت چەند ساڵە؟",
-      "pronunciation": "haʊ oʊld ɑːr juː",
-      "audioPath": "audio/a1/how_old_are_you.mp3",
-      "partOfSpeech": "phrase",
-      "exampleSentence": "How old are you, Ahmed?",
-      "exampleTranslation": "تەمەنت چەند ساڵە، ئەحمەد؟",
-      "imageUrl": null,
-      "notes": "Used to ask about age"
-    },
-    {
-      "english": "Years old",
-      "kurdish": "ساڵ",
-      "pronunciation": "jɪərz oʊld",
-      "audioPath": "audio/a1/years_old.mp3",
-      "partOfSpeech": "phrase",
-      "exampleSentence": "I am ten years old.",
-      "exampleTranslation": "من تەمەنم دە ساڵە.",
-      "imageUrl": null,
-      "notes": "Used when stating age"
+      "english": "Good evening",
+      "kurdish": "ئێوارە باش",
+      "audioPath": "audio/a1/good_evening.mp3",
+      "exampleSentence": "Good evening! How are you?",
+      "exampleTranslation": "ئێوارە باش! چۆنیت؟",
+      "notes": "After 6 PM",
+      "notesKurdish": "دوای ٦ی ئێوارە"
     }
   ],
   
   "exercises": [
     {
       "id": "ex_1",
-      "type": "multiple_choice",
-      "question": "What is 'Three' in Kurdish?",
-      "questionKurdish": "'Three' بە کوردی چییە؟",
-      "options": [
-        "سێ",
-        "دوو",
-        "چوار",
-        "یەک"
-      ],
-      "correctAnswer": "سێ",
-      "hint": "3",
-      "explanation": "'Three' means سێ in Kurdish.",
-      "explanationKurdish": "'Three' واتای سێیە بە کوردی."
+      "type": "sentence_builder",
+      "question": "Translate: ناوم ئەحمەدە",
+      "questionKurdish": "ئەم ڕستەیە بە ئینگلیزی دروست بکە",
+      "options": ["My", "name", "is", "Ahmed", "Hello", "Sara"],
+      "correctAnswer": "My name is Ahmed",
+      "explanation": "To introduce yourself, say 'My name is'.",
+      "explanationKurdish": "بۆ ناساندنی خۆت، بڵێ 'My name is'."
     },
     {
       "id": "ex_2",
-      "type": "sentence_builder",
-      "question": "Translate: من تەمەنم دە ساڵە",
-      "questionKurdish": "ئەم ڕستەیە بە ئینگلیزی دروست بکە",
-      "options": ["I", "am", "ten", "years", "old", "five", "is"],
-      "correctAnswer": "I am ten years old",
-      "explanation": "To state your age, say: I am [number] years old.",
-      "explanationKurdish": "بۆ گوتنی تەمەنت، بڵێ: I am ten years old."
+      "type": "multiple_choice",
+      "question": "Nice to _____ you!",
+      "questionKurdish": "تەواوی بکە: خۆشحاڵم بە ناسینت!",
+      "options": ["meet", "hello", "goodbye", "thanks"],
+      "correctAnswer": "meet",
+      "explanation": "'Meet' is used when getting to know someone.",
+      "explanationKurdish": "'Meet' بەکاردێت کاتێک کەسێک دەناسیت."
     },
     {
       "id": "ex_3",
       "type": "multiple_choice",
-      "question": "Which number is 'Five'?",
-      "questionKurdish": "کام ژمارە 'پێنج'ـە؟",
-      "options": [
-        "5",
-        "10",
-        "2",
-        "1"
-      ],
-      "correctAnswer": "5",
-      "hint": "Count the fingers on one hand",
-      "explanation": "Five is the number 5.",
-      "explanationKurdish": "Five ژمارە ٥ـە."
+      "question": "Good _____! (8:00 AM)",
+      "questionKurdish": "بەیانی _____! (کاتژمێر ٨ی بەیانی)",
+      "options": ["morning", "evening", "night", "afternoon"],
+      "correctAnswer": "morning",
+      "explanation": "Use 'morning' for early hours.",
+      "explanationKurdish": "بەیانی باش بۆ کاتەکانی سەرەتا بەکاردێت."
     },
     {
       "id": "ex_4",
-      "type": "multiple_choice",
-      "question": "How _____ are you?",
-      "questionKurdish": "تەواوی بکە: تەمەنت چەند ساڵە؟",
-      "options": [
-        "old",
-        "many",
-        "much",
-        "fine"
-      ],
-      "correctAnswer": "old",
-      "hint": "Asking about age",
-      "explanation": "We say 'How old are you?' to ask someone's age.",
-      "explanationKurdish": "دەڵێین 'How old are you?' بۆ پرسیارکردن لە تەمەنی کەسێک."
+      "type": "sentence_builder",
+      "question": "Translate: خۆشحاڵم بە ناسینت",
+      "questionKurdish": "ئەم ڕستەیە بە ئینگلیزی دروست بکە",
+      "options": ["Nice", "to", "meet", "you", "My", "name"],
+      "correctAnswer": "Nice to meet you",
+      "explanation": "A polite phrase for new introductions.",
+      "explanationKurdish": "دەستەواژەیەکی ڕێزدارانە بۆ ناساندنە نوێیەکان."
     },
     {
       "id": "ex_5",
-      "type": "sentence_builder",
-      "question": "Translate: تەمەنت چەند ساڵە؟",
-      "questionKurdish": "ئەم پرسیارە بە ئینگلیزی دروست بکە",
-      "options": ["How", "old", "are", "you?", "is", "where"],
-      "correctAnswer": "How old are you?",
-      "explanation": "This is the standard way to ask for age.",
-      "explanationKurdish": "ئەمە شێوازە باوەکەیە بۆ پرسیارکردن لە تەمەن."
+      "type": "multiple_choice",
+      "question": "Good _____! (7:00 PM)",
+      "questionKurdish": "ئێوارە _____! (کاتژمێر ٧ی ئێوارە)",
+      "options": ["evening", "morning", "night", "afternoon"],
+      "correctAnswer": "evening",
+      "explanation": "Use 'evening' for later hours.",
+      "explanationKurdish": "ئێوارە باش بۆ کاتەکانی دواتر بەکاردێت."
     },
     {
       "id": "ex_6",
-      "type": "multiple_choice",
-      "question": "What is 'Twenty'?",
-      "questionKurdish": "واتای 'Twenty' چییە؟",
-      "options": [
-        "بیست",
-        "دە",
-        "سی",
-        "دوازدە"
-      ],
-      "correctAnswer": "بیست",
-      "hint": "2 x 10",
-      "explanation": "Twenty means بیست.",
-      "explanationKurdish": "Twenty واتای بیستە."
-    },
-    {
-      "id": "ex_7",
-      "type": "multiple_choice",
-      "question": "One + One = ?",
-      "questionKurdish": "یەک کۆ یەک دەکاتە چەند؟",
-      "options": [
-        "Two",
-        "Three",
-        "One",
-        "Zero"
-      ],
-      "correctAnswer": "Two",
-      "hint": "1 + 1 = 2",
-      "explanation": "One plus one equals two.",
-      "explanationKurdish": "یەک کۆ یەک دەکاتە دوو."
-    },
-    {
-      "id": "ex_8",
       "type": "sentence_builder",
-      "question": "Translate: بیست ساڵ",
-      "questionKurdish": "ئەمە بە ئینگلیزی دروست بکە",
-      "options": ["Twenty", "years", "old", "Ten", "one"],
-      "correctAnswer": "Twenty years old",
-      "explanation": "We use 'years old' after the number.",
-      "explanationKurdish": "دەستەواژەی 'years old' بەکاردێنین لەدوای ژمارەکە."
-    },
-    {
-      "id": "ex_9",
-      "type": "multiple_choice",
-      "question": "Ten",
-      "questionKurdish": "ئەمە چەندە؟",
-      "options": [
-        "10",
-        "1",
-        "20",
-        "5"
-      ],
-      "correctAnswer": "10",
-      "audioPath": "audio/a1/ten.mp3",
-      "hint": "Number of fingers on both hands",
-      "explanation": "Ten is the number 10.",
-      "explanationKurdish": "Ten ژمارە ١٠ـە."
-    },
-    {
-      "id": "ex_10",
-      "type": "multiple_choice",
-      "question": "How do you say 'یەک' in English?",
-      "questionKurdish": "چۆن دەڵێیت 'یەک' بە ئینگلیزی؟",
-      "options": [
-        "One",
-        "Two",
-        "Ten",
-        "First"
-      ],
-      "correctAnswer": "One",
-      "hint": "The first number",
-      "explanation": "One means یەک in English.",
-      "explanationKurdish": "One واتای یەک دەکات بە ئینگلیزی."
+      "question": "Translate: بەیانی باش! ناوم ئەحمەدە.",
+      "questionKurdish": "ئەم ڕستەیە بە ئینگلیزی دروست بکە",
+      "options": ["Good", "morning!", "My", "name", "is", "Ahmed.", "Hello"],
+      "correctAnswer": "Good morning! My name is Ahmed.",
+      "explanation": "Combining a greeting and an introduction.",
+      "explanationKurdish": "کۆکردنەوەی سڵاوێک و ناساندنێک."
     }
   ],
-  
-  "grammarNotes": [
-    {
-      "title": "Numbers 1-20",
-      "titleKurdish": "ژمارەکان ١-٢٠",
-      "content": "English numbers are relatively easy. Note that 11-19 often end in 'teen' (like thirteen, fourteen).",
-      "contentKurdish": "ژمارەکان لە ئینگلیزیدا ئاسانن. سەرنج بدە کە ١١-١٩ زۆربەی کات بە 'teen' کۆتایی دێن.",
-      "examples": [
-        "Ten (دە)",
-        "Eleven (یازدە)",
-        "Twelve (دوازدە)",
-        "Thirteen (سێزدە)"
-      ]
-    },
-    {
-      "title": "Asking for Age",
-      "titleKurdish": "پرسیارکردن لە تەمەن",
-      "content": "The phrase 'How old are you?' is used to ask for someone's age. You answer with 'I am [number] years old'.",
-      "contentKurdish": "دەستەواژەی 'How old are you?' بەکاردێت بۆ پرسیارکردن لە تەمەن. وەڵامەکەی 'I am [number] years old'ـە.",
-      "examples": [
-        "How old is he? (تەمەنی چەندە؟)",
-        "He is twenty. (ئەو تەمەنی بیست ساڵە)"
-      ]
-    }
-  ],
-  
-  "culturalNotes": [
-    {
-      "title": "Politeness and Age",
-      "titleKurdish": "ڕێز و تەمەن",
-      "content": "In some cultures, it might be impolite to ask adults their age, especially if you don't know them well. However, for children and students, it's a very common question.",
-      "contentKurdish": "لە هەندێک کلتووردا، ڕەنگە بێڕێزی بێت تەمەن لە گەورەکان بپرسیت ئەگەر بە باشی نەیانناسیت. بەڵام بۆ منداڵان و قوتابیان پرسیارێکی زۆر باوە."
-    }
-  ],
-  
-  "tips": [
-    "Practice counting things around you in English",
-    "Remember that 'old' is used specifically for age in this context",
-    "Listen to the pronunciation of 'three' (th sound)"
-  ],
-  
-  "tipsKurdish": [
-    "مەشق بکە لەسەر ژماردنی شتەکانی دەوروبەرت بە ئینگلیزی",
-    "لەبیرت بێت 'old' بەکاردێت تایبەت بۆ تەمەن لەم بارەدا",
-    "گوێ لە گوتنی 'three' بگرە (دەنگی th)"
-  ]
+  "grammarNotes": [],
+  "culturalNotes": [],
+  "tips": ["Smile when meeting someone new"],
+  "tipsKurdish": ["پێبکەنە کاتێک کەسێکی نوێ دەناسیت"]
 }
