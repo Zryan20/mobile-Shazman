@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/foundation.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthService {
   // Singleton pattern
@@ -8,6 +10,7 @@ class AuthService {
   AuthService._internal();
 
   final firebase_auth.FirebaseAuth _auth = firebase_auth.FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   // Check if user is currently logged in
   Future<bool> isUserLoggedIn() async {
@@ -110,10 +113,90 @@ class AuthService {
     }
   }
 
+  // Sign in with Google
+  Future<AuthResult> signInWithGoogle() async {
+    try {
+      // Trigger the authentication flow
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
+      if (googleUser == null) {
+        return AuthResult.failure('چوونەژوورەوەی گووگڵ هەڵوەشایەوە');
+      }
+
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+      // Create a new credential
+      final credential = firebase_auth.GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      // Once signed in, return the UserCredential
+      final userCredential = await _auth.signInWithCredential(credential);
+      final user = userCredential.user;
+
+      if (user == null) {
+        return AuthResult.failure('هەڵەیەک ڕوویدا لە چوونەژوورەوەی گووگڵ');
+      }
+
+      final userData = {
+        'id': user.uid,
+        'email': user.email,
+        'name': user.displayName ?? _getNameFromEmail(user.email ?? ''),
+      };
+
+      return AuthResult.success('چوونەژوورەوەی گووگڵ سەرکەوتووبوو', userData);
+    } catch (e) {
+      debugPrint('❌ Google sign in error: $e');
+      return AuthResult.failure('هەڵەیەک ڕوویدا لە کاتی چوونەژوورەوە لەگەڵ گووگڵ');
+    }
+  }
+
+  // Sign in with Apple
+  Future<AuthResult> signInWithApple() async {
+    try {
+      final appleCredential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+      );
+
+      final firebase_auth.AuthCredential credential =
+          firebase_auth.OAuthProvider('apple.com').credential(
+        idToken: appleCredential.identityToken,
+        accessToken: appleCredential.authorizationCode,
+      );
+
+      final userCredential = await _auth.signInWithCredential(credential);
+      final user = userCredential.user;
+
+      if (user == null) {
+        return AuthResult.failure('هەڵەیەک ڕوویدا لە چوونەژوورەوەی ئەپڵ');
+      }
+
+      final userData = {
+        'id': user.uid,
+        'email': user.email,
+        'name': user.displayName ?? _getNameFromEmail(user.email ?? ''),
+      };
+
+      return AuthResult.success('چوونەژوورەوەی ئەپڵ سەرکەوتووبوو', userData);
+    } catch (e) {
+      debugPrint('❌ Apple sign in error: $e');
+      return AuthResult.failure('هەڵەیەک ڕوویدا لە کاتی چوونەژوورەوە لەگەڵ ئەپڵ');
+    }
+  }
+
+
   // Sign out current user
   Future<void> signOut() async {
     try {
       await _auth.signOut();
+      try {
+        await _googleSignIn.signOut();
+      } catch (_) {}
     } catch (e) {
       debugPrint('Sign out error: $e');
     }

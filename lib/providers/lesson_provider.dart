@@ -10,6 +10,7 @@ class LessonProvider extends ChangeNotifier {
   bool _isLoading = false;
   String? _errorMessage;
   int _currentLessonIndex = 0;
+  bool _developerMode = false;
   
   final LessonService _lessonService = LessonService();
   static const String _keyCompletedLessons = 'completed_lesson_ids';
@@ -19,6 +20,7 @@ class LessonProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
   int get currentLessonIndex => _currentLessonIndex;
+  bool get developerMode => _developerMode;
   
   Lesson? get currentLesson {
     if (_lessons.isEmpty || _currentLessonIndex >= _lessons.length) {
@@ -63,7 +65,7 @@ class LessonProvider extends ChangeNotifier {
         final isCompleted = completedIds.contains(lesson.id);
         return lesson.copyWith(
           isCompleted: isCompleted,
-          isLocked: !_shouldUnlockLesson(lesson, completedIds),
+          isLocked: !_developerMode && !_shouldUnlockLesson(lesson, completedIds),
         );
       }).toList();
     } catch (e) {
@@ -114,6 +116,22 @@ class LessonProvider extends ChangeNotifier {
     } catch (e) {
       debugPrint('Error completing lesson: $e');
     }
+  }
+  
+  Future<void> setDeveloperMode(bool enabled) async {
+    _developerMode = enabled;
+    if (enabled) {
+      _lessons = _lessons.map((lesson) => lesson.copyWith(isLocked: false)).toList();
+    } else {
+      final prefs = await SharedPreferences.getInstance();
+      final completedIds = prefs.getStringList(_keyCompletedLessons) ?? [];
+      _lessons = _lessons.map((lesson) {
+        return lesson.copyWith(
+          isLocked: !_shouldUnlockLesson(lesson, completedIds),
+        );
+      }).toList();
+    }
+    notifyListeners();
   }
   
   List<Lesson> getLessonsByLevel(int level) {
@@ -298,6 +316,21 @@ class LessonProvider extends ChangeNotifier {
         isCompleted: false,
         isLocked: true,
         tags: ['vocabulary', 'people'],
+      ),
+      const Lesson(
+        id: 'a1_s2_l11',
+        title: 'Countries 1',
+        titleKurdish: 'وڵاتەکان ١',
+        description: 'Common countries and languages',
+        descriptionKurdish: 'وڵاتە باوەکان و زمانەکان',
+        level: 1,
+        unitNumber: 2,
+        lessonNumber: 11,
+        xpReward: 15,
+        estimatedDuration: Duration(minutes: 8),
+        isCompleted: false,
+        isLocked: true,
+        tags: ['vocabulary', 'countries'],
       ),
       const Lesson(
         id: 'a1_s2_l12',

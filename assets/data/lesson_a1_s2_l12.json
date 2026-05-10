@@ -1,0 +1,95 @@
+{
+  "id": "a1_s2_l12",
+  "title": "Countries 2",
+  "titleKurdish": "وڵاتەکان ٢",
+  "description": "Talking about where you are from",
+  "descriptionKurdish": "باسکردنی ئەوەی خەڵکی کوێیت",
+  "level": 1,
+  "section": 2,
+  "lessonNumber": 12,
+  "estimatedMinutes": 8,
+  "totalExercises": 5,
+  
+  "vocabulary": [
+    {
+      "english": "From",
+      "kurdish": "خەڵکی / لە",
+      "audioPath": "audio/a1/from.mp3",
+      "exampleSentence": "I am from Erbil.",
+      "exampleTranslation": "من خەڵکی هەولێرم.",
+      "notes": "Indicates origin",
+      "notesKurdish": "ئاماژە بە بنەچە دەکات"
+    },
+    {
+      "english": "Where",
+      "kurdish": "لەکوێ",
+      "audioPath": "audio/a1/where.mp3",
+      "exampleSentence": "Where are you from?",
+      "exampleTranslation": "تۆ خەڵکی کوێیت؟",
+      "notes": "Question word for place",
+      "notesKurdish": "وشەی پرسیار بۆ شوێن"
+    },
+    {
+      "english": "Kurdish",
+      "kurdish": "کوردی",
+      "audioPath": "audio/a1/kurdish.mp3",
+      "exampleSentence": "I speak Kurdish.",
+      "exampleTranslation": "من بە کوردی قسە دەکەم.",
+      "notes": "Language and nationality",
+      "notesKurdish": "زمان و نەتەوە"
+    },
+    {
+      "english": "English",
+      "kurdish": "ئینگلیزی",
+      "audioPath": "audio/a1/english.mp3",
+      "exampleSentence": "I learn English.",
+      "exampleTranslation": "من فێری ئینگلیزی دەبم.",
+      "notes": "Language",
+      "notesKurdish": "زمان"
+    }
+  ],
+  
+  "exercises": [
+    {
+      "id": "ex_1",
+      "type": "typing",
+      "question": "Type the English word for 'ئینگلیزی':",
+      "questionKurdish": "وشە ئینگلیزییەکە بۆ 'ئینگلیزی' بنووسە:",
+      "correctAnswer": "English"
+    },
+    {
+      "id": "ex_2",
+      "type": "multiple_choice",
+      "question": "Translate: 'تۆ خەڵکی کوێیت؟'",
+      "questionKurdish": "ئەمە بە ئینگلیزی چی دەبێت؟",
+      "options": ["Where are you from?", "Who are you?", "How are you?", "What are you?"],
+      "correctAnswer": "Where are you from?"
+    },
+    {
+      "id": "ex_3",
+      "type": "typing",
+      "question": "Type 'کوردی' in English:",
+      "questionKurdish": "وشەی 'کوردی' بە ئینگلیزی بنووسە:",
+      "correctAnswer": "Kurdish"
+    },
+    {
+      "id": "ex_4",
+      "type": "sentence_builder",
+      "question": "Translate: من خەڵکی کوردستانم",
+      "questionKurdish": "ئەمە بە ئینگلیزی دروست بکە",
+      "options": ["I", "am", "from", "Kurdistan", "where", "English"],
+      "correctAnswer": "I am from Kurdistan"
+    },
+    {
+      "id": "ex_5",
+      "type": "typing",
+      "question": "Type 'Where' in Kurdish:",
+      "questionKurdish": "وشەی 'Where' بە کوردی بنووسە:",
+      "correctAnswer": "لەکوێ"
+    }
+  ],
+  "grammarNotes": [],
+  "culturalNotes": [],
+  "tips": ["Always capitalize names of languages"],
+  "tipsKurdish": ["هەمیشە ناوی زمانەکان بە پیتی گەورە بنووسە"]
+}

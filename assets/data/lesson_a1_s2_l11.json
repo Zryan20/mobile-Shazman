@@ -1,0 +1,95 @@
+{
+  "id": "a1_s2_l11",
+  "title": "Countries 1",
+  "titleKurdish": "وڵاتەکان ١",
+  "description": "Learn names of common countries",
+  "descriptionKurdish": "فێری ناوی وڵاتە باوەکان ببە",
+  "level": 1,
+  "section": 2,
+  "lessonNumber": 11,
+  "estimatedMinutes": 8,
+  "totalExercises": 5,
+  
+  "vocabulary": [
+    {
+      "english": "Kurdistan",
+      "kurdish": "کوردستان",
+      "audioPath": "audio/a1/kurdistan.mp3",
+      "exampleSentence": "I love Kurdistan.",
+      "exampleTranslation": "کوردستانم خۆش دەوێت.",
+      "notes": "Home land",
+      "notesKurdish": "نیشتیمان"
+    },
+    {
+      "english": "England",
+      "kurdish": "ئینگلتەرا",
+      "audioPath": "audio/a1/england.mp3",
+      "exampleSentence": "London is in England.",
+      "exampleTranslation": "لەندەن لە ئینگلتەرایە.",
+      "notes": "Part of the UK",
+      "notesKurdish": "بەشێکە لە شانشینی یەکگرتوو"
+    },
+    {
+      "english": "America",
+      "kurdish": "ئەمریکا",
+      "audioPath": "audio/a1/america.mp3",
+      "exampleSentence": "America is very large.",
+      "exampleTranslation": "ئەمریکا زۆر گەورەیە.",
+      "notes": "USA",
+      "notesKurdish": "ویلایەتە یەکگرتووەکان"
+    },
+    {
+      "english": "Germany",
+      "kurdish": "ئەڵمانیا",
+      "audioPath": "audio/a1/germany.mp3",
+      "exampleSentence": "Berlin is the capital of Germany.",
+      "exampleTranslation": "بەرلین پایتەختی ئەڵمانیایە.",
+      "notes": "In Europe",
+      "notesKurdish": "لە ئەوروپایە"
+    }
+  ],
+  
+  "exercises": [
+    {
+      "id": "ex_1",
+      "type": "typing",
+      "question": "Type the English word for 'ئەڵمانیا':",
+      "questionKurdish": "وشە ئینگلیزییەکە بۆ 'ئەڵمانیا' بنووسە:",
+      "correctAnswer": "Germany"
+    },
+    {
+      "id": "ex_2",
+      "type": "multiple_choice",
+      "question": "Where is London?",
+      "questionKurdish": "لەندەن لە کوێیە؟",
+      "options": ["America", "England", "Germany", "Kurdistan"],
+      "correctAnswer": "England"
+    },
+    {
+      "id": "ex_3",
+      "type": "typing",
+      "question": "Type 'ئەمریکا' in English:",
+      "questionKurdish": "وشەی 'ئەمریکا' بە ئینگلیزی بنووسە:",
+      "correctAnswer": "America"
+    },
+    {
+      "id": "ex_4",
+      "type": "sentence_builder",
+      "question": "Translate: من کوردستانم خۆش دەوێت",
+      "questionKurdish": "ئەمە بە ئینگلیزی دروست بکە",
+      "options": ["I", "love", "Kurdistan", "Germany", "England", "America"],
+      "correctAnswer": "I love Kurdistan"
+    },
+    {
+      "id": "ex_5",
+      "type": "typing",
+      "question": "Type 'England' in Kurdish:",
+      "questionKurdish": "وشەی 'England' بە کوردی بنووسە:",
+      "correctAnswer": "ئینگلتەرا"
+    }
+  ],
+  "grammarNotes": [],
+  "culturalNotes": [],
+  "tips": ["Country names usually start with a capital letter in English"],
+  "tipsKurdish": ["ناوی وڵاتەکان عادەتەن بە پیتێکی گەورە دەست پێ دەکەن لە ئینگلیزیدا"]
+}

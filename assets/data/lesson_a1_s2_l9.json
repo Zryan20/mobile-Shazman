@@ -1,0 +1,104 @@
+{
+  "id": "a1_s2_l9",
+  "title": "Friends & People 1",
+  "titleKurdish": "هاوڕێیان و کەسان ١",
+  "description": "Learn words for boy, girl, man, woman, and friend",
+  "descriptionKurdish": "فێری وشەکانی کوڕ، کچ، پیاو، ژن، و هاوڕێ ببە",
+  "level": 1,
+  "section": 2,
+  "lessonNumber": 9,
+  "estimatedMinutes": 7,
+  "totalExercises": 5,
+  
+  "vocabulary": [
+    {
+      "english": "Boy",
+      "kurdish": "کوڕ",
+      "audioPath": "audio/a1/boy.mp3",
+      "exampleSentence": "He is a good boy.",
+      "exampleTranslation": "ئەو کوڕێکی باشە.",
+      "notes": "Young male",
+      "notesKurdish": "نێری گەنج"
+    },
+    {
+      "english": "Girl",
+      "kurdish": "کچ",
+      "audioPath": "audio/a1/girl.mp3",
+      "exampleSentence": "She is a smart girl.",
+      "exampleTranslation": "ئەو کچێکی زیرەکیشە.",
+      "notes": "Young female",
+      "notesKurdish": "مێی گەنج"
+    },
+    {
+      "english": "Man",
+      "kurdish": "پیاو",
+      "audioPath": "audio/a1/man.mp3",
+      "exampleSentence": "The man is tall.",
+      "exampleTranslation": "پیاوەکە باڵا بەرزە.",
+      "notes": "Adult male",
+      "notesKurdish": "نێری پێگەیشتوو"
+    },
+    {
+      "english": "Woman",
+      "kurdish": "ژن",
+      "audioPath": "audio/a1/woman.mp3",
+      "exampleSentence": "The woman is kind.",
+      "exampleTranslation": "ژنەکە میهرەبانە.",
+      "notes": "Adult female",
+      "notesKurdish": "مێی پێگەیشتوو"
+    },
+    {
+      "english": "Friend",
+      "kurdish": "هاوڕێ",
+      "audioPath": "audio/a1/friend.mp3",
+      "exampleSentence": "You are my friend.",
+      "exampleTranslation": "تۆ هاوڕێی منی.",
+      "notes": "Someone you like spending time with",
+      "notesKurdish": "کەسێک کە حەزت لێیە کاتی لەگەڵ بەسەر بەریت"
+    }
+  ],
+  
+  "exercises": [
+    {
+      "id": "ex_1",
+      "type": "multiple_choice",
+      "question": "Adult female is called:",
+      "questionKurdish": "مێی پێگەیشتوو پێی دەوترێت:",
+      "options": ["Man", "Woman", "Boy", "Girl"],
+      "correctAnswer": "Woman"
+    },
+    {
+      "id": "ex_2",
+      "type": "typing",
+      "question": "Type the English word for 'هاوڕێ':",
+      "questionKurdish": "وشە ئینگلیزییەکە بۆ 'هاوڕێ' بنووسە:",
+      "correctAnswer": "Friend"
+    },
+    {
+      "id": "ex_3",
+      "type": "typing",
+      "question": "Type 'پیاو' in English:",
+      "questionKurdish": "وشەی 'پیاو' بە ئینگلیزی بنووسە:",
+      "correctAnswer": "Man"
+    },
+    {
+      "id": "ex_4",
+      "type": "multiple_choice",
+      "question": "Young male is called:",
+      "questionKurdish": "نێری گەنج پێی دەوترێت:",
+      "options": ["Girl", "Boy", "Woman", "Man"],
+      "correctAnswer": "Boy"
+    },
+    {
+      "id": "ex_5",
+      "type": "typing",
+      "question": "Type the English word for 'کچ':",
+      "questionKurdish": "وشە ئینگلیزییەکە بۆ 'کچ' بنووسە:",
+      "correctAnswer": "Girl"
+    }
+  ],
+  "grammarNotes": [],
+  "culturalNotes": [],
+  "tips": ["Greetings are different for men and women sometimes"],
+  "tipsKurdish": ["سڵاوکردن هەندێک جار جیاوازە بۆ پیاوان و ژنان"]
+}

@@ -316,7 +316,7 @@ class _LearningTab extends StatelessWidget {
                         final level = index + 1;
                         final levelName = _getLevelName(level);
                         final levelDescription = _getLevelDescription(level);
-                        final isUnlocked = level <= currentLevel ;
+                        final isUnlocked = progressProvider.isLevelUnlocked(level);
                         final isCompleted = level < currentLevel;
                         final isCurrent = level == currentLevel;
 
@@ -691,13 +691,13 @@ class _ProfileTab extends StatelessWidget {
                       _ProfileMenuItem(
                         icon: Icons.help_rounded,
                         title: AppTextsKurdish.helpSupport,
-                        onTap: () {},
+                        onTap: () => Navigator.pushNamed(context, AppRoutes.help),
                         isSmallScreen: isSmallScreen,
                       ),
                       _ProfileMenuItem(
                         icon: Icons.info_rounded,
                         title: AppTextsKurdish.about,
-                        onTap: () {},
+                        onTap: () => Navigator.pushNamed(context, AppRoutes.about),
                         isSmallScreen: isSmallScreen,
                       ),
                       SizedBox(height: isSmallScreen ? 12 : 20),

@@ -120,8 +120,9 @@ class _LearningPathScreenState extends State<LearningPathScreen> {
                             // A node is completed only if ALL lessons in it are completed
                             final isCompleted = lessonPair.every((l) => progressProvider.isLessonCompleted(l.id));
                             
-                            // A node is unlocked if it's the first node or the previous node's last lesson is completed
-                            final isUnlocked = absoluteFirstLessonIndex == 0 || 
+                            // A node is unlocked if it's the first node, or developer mode is on, or the previous node's last lesson is completed
+                            final isUnlocked = progressProvider.developerMode || 
+                                absoluteFirstLessonIndex == 0 || 
                                 progressProvider.isLessonCompleted(lessons[absoluteFirstLessonIndex - 1].id);
                             
                             // A node is current if it's unlocked but not all lessons are finished

@@ -1,0 +1,95 @@
+{
+  "id": "a1_s2_l8",
+  "title": "Family Members 2",
+  "titleKurdish": "ئەندامانی خێزان ٢",
+  "description": "Learn words for grandfather, grandmother, and cousins",
+  "descriptionKurdish": "فێری وشەکانی باپیری، نەنک، و ئامۆزا/پوورزا ببە",
+  "level": 1,
+  "section": 2,
+  "lessonNumber": 8,
+  "estimatedMinutes": 7,
+  "totalExercises": 5,
+  
+  "vocabulary": [
+    {
+      "english": "Grandfather",
+      "kurdish": "باپیر",
+      "audioPath": "audio/a1/grandfather.mp3",
+      "exampleSentence": "My grandfather is wise.",
+      "exampleTranslation": "باپیرم ژیرە.",
+      "notes": "Father's or mother's father",
+      "notesKurdish": "باوکی باوک یان دایک"
+    },
+    {
+      "english": "Grandmother",
+      "kurdish": "نەنک",
+      "audioPath": "audio/a1/grandmother.mp3",
+      "exampleSentence": "My grandmother tells stories.",
+      "exampleTranslation": "نەنکم چیرۆک دەگێڕێتەوە.",
+      "notes": "Father's or mother's mother",
+      "notesKurdish": "دایکی باوک یان دایک"
+    },
+    {
+      "english": "Son",
+      "kurdish": "کوڕ",
+      "audioPath": "audio/a1/son.mp3",
+      "exampleSentence": "He is my son.",
+      "exampleTranslation": "ئەو کوڕی منە.",
+      "notes": "Male child",
+      "notesKurdish": "منداڵی نێر"
+    },
+    {
+      "english": "Daughter",
+      "kurdish": "کچ",
+      "audioPath": "audio/a1/daughter.mp3",
+      "exampleSentence": "She is my daughter.",
+      "exampleTranslation": "ئەو کچی منە.",
+      "notes": "Female child",
+      "notesKurdish": "منداڵی مێ"
+    }
+  ],
+  
+  "exercises": [
+    {
+      "id": "ex_1",
+      "type": "typing",
+      "question": "Type the English word for 'باپیر':",
+      "questionKurdish": "وشە ئینگلیزییەکە بۆ 'باپیر' بنووسە:",
+      "correctAnswer": "Grandfather"
+    },
+    {
+      "id": "ex_2",
+      "type": "multiple_choice",
+      "question": "Female child is called:",
+      "questionKurdish": "منداڵی مێ پێی دەوترێت:",
+      "options": ["Son", "Daughter", "Grandmother", "Grandfather"],
+      "correctAnswer": "Daughter"
+    },
+    {
+      "id": "ex_3",
+      "type": "typing",
+      "question": "Type 'نەنک' in English:",
+      "questionKurdish": "وشەی 'نەنک' بە ئینگلیزی بنووسە:",
+      "correctAnswer": "Grandmother"
+    },
+    {
+      "id": "ex_4",
+      "type": "sentence_builder",
+      "question": "Translate: ئەو کچی منە",
+      "questionKurdish": "ئەمە بە ئینگلیزی دروست بکە",
+      "options": ["She", "is", "my", "daughter", "son", "mother"],
+      "correctAnswer": "She is my daughter"
+    },
+    {
+      "id": "ex_5",
+      "type": "typing",
+      "question": "Type the English word for 'کوڕ' (as a child):",
+      "questionKurdish": "وشە ئینگلیزییەکە بۆ 'کوڕ' (وەک منداڵ) بنووسە:",
+      "correctAnswer": "Son"
+    }
+  ],
+  "grammarNotes": [],
+  "culturalNotes": [],
+  "tips": ["Family is very important in Kurdish culture"],
+  "tipsKurdish": ["خێزان زۆر گرنگە لە کلتووری کوردیدا"]
+}

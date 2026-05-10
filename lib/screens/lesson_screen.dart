@@ -46,7 +46,16 @@ class _LessonScreenState extends State<LessonScreen> {
   List<String> _builtSentence = [];
   List<String> _shuffledBank = [];
 
+  // Typing exercise state
+  final TextEditingController _textController = TextEditingController();
+
   bool _isInit = true;
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
 
   @override
   void didChangeDependencies() {
@@ -210,15 +219,20 @@ class _LessonScreenState extends State<LessonScreen> {
   }
 
   void _checkAnswer() {
-    if (_isAnswered || _selectedAnswer == null) return;
+    if (_isAnswered || (_selectedAnswer == null && _textController.text.isEmpty)) return;
 
     final currentExercise = _exercises[_currentExerciseIndex];
+    final isTyping = currentExercise['type'] == 'typing';
+    
     final correctAnswer = currentExercise['correctAnswer'] as String;
-    final isCorrect = _selectedAnswer!.toLowerCase().trim() ==
+    final String userAnswer = isTyping ? _textController.text : (_selectedAnswer ?? '');
+    
+    final isCorrect = userAnswer.toLowerCase().trim() ==
         correctAnswer.toLowerCase().trim();
 
     setState(() {
       _isAnswered = true;
+      if (isTyping) _selectedAnswer = userAnswer; // Ensure button logic works
 
       if (isCorrect) {
         _correctAnswers++;
@@ -234,6 +248,7 @@ class _LessonScreenState extends State<LessonScreen> {
         _currentExerciseIndex++;
         _isAnswered = false;
         _selectedAnswer = null;
+        _textController.clear();
       });
       _initExercise(_currentExerciseIndex);
     } else {
@@ -253,6 +268,10 @@ class _LessonScreenState extends State<LessonScreen> {
         _builtSentence = [];
         _shuffledBank = bank..shuffle();
       });
+    }
+
+    if (exercise['type'] == 'typing') {
+      _textController.clear();
     }
 
     _checkAutoPlay();
@@ -704,6 +723,8 @@ class _LessonScreenState extends State<LessonScreen> {
                 const SizedBox(height: 32),
                 if (currentExercise['type'] == 'sentence_builder')
                   _buildSentenceBuilder()
+                else if (currentExercise['type'] == 'typing')
+                  _buildTypingExercise()
                 else if (currentExercise['options'] != null)
                   ...(currentExercise['options'] as List<dynamic>)
                       .map((option) {
@@ -841,7 +862,7 @@ class _LessonScreenState extends State<LessonScreen> {
         ),
         // Show "Check Answer" button when answer is selected but not checked
         // Show "Next" button when answer is checked
-        if (_selectedAnswer != null)
+        if (_selectedAnswer != null || (currentExercise['type'] == 'typing' && !_isAnswered))
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
@@ -870,7 +891,9 @@ class _LessonScreenState extends State<LessonScreen> {
                       )
                     : PrimaryButton(
                         text: 'وەڵامەکەت بپشکنە',
-                        onPressed: _checkAnswer,
+                        onPressed: (currentExercise['type'] == 'typing' && _textController.text.trim().isEmpty) 
+                          ? null 
+                          : _checkAnswer,
                         icon: Icons.check_circle_outline_rounded,
                       ),
               ),
@@ -886,6 +909,8 @@ class _LessonScreenState extends State<LessonScreen> {
         return AppTexts.multipleChoice;
       case 'fill_blank':
         return AppTexts.fillInTheBlank;
+      case 'typing':
+        return 'ونووسە'; // Typing/Write in Kurdish
       case 'matching':
         return AppTexts.matching;
       case 'listening':
@@ -905,6 +930,8 @@ class _LessonScreenState extends State<LessonScreen> {
         return Icons.volume_up_rounded;
       case 'fill_blank':
         return Icons.edit_note_rounded;
+      case 'typing':
+        return Icons.keyboard_rounded;
       case 'translation':
         return Icons.translate_rounded;
       case 'matching':
@@ -998,6 +1025,42 @@ class _LessonScreenState extends State<LessonScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildTypingExercise() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextField(
+          controller: _textController,
+          enabled: !_isAnswered,
+          autofocus: true,
+          decoration: InputDecoration(
+            hintText: 'وەڵامەکە لێرە بنووسە...',
+            filled: true,
+            fillColor: Colors.grey[100],
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: AppColors.border, width: 2),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: AppColors.border, width: 2),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: AppColors.primary600, width: 2),
+            ),
+          ),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+          onChanged: (value) {
+            setState(() {
+              // Trigger rebuild to update button state
+            });
+          },
+        ),
+      ],
     );
   }
 }

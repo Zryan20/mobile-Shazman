@@ -19,6 +19,9 @@ class ProgressProvider extends ChangeNotifier {
   // Track completed lesson IDs
   Set<String> _completedLessonIds = {};
   
+  // Developer mode flag
+  bool _developerMode = false;
+  
   // SharedPreferences keys
   static const String _keyCurrentLevel = 'current_level';
   static const String _keyCurrentLevelProgress = 'current_level_progress';
@@ -27,6 +30,7 @@ class ProgressProvider extends ChangeNotifier {
   static const String _keyCompletedLessons = 'completed_lessons';
   static const String _keyLastStudyDate = 'last_study_date';
   static const String _keyCompletedLessonIds = 'completed_lesson_ids';
+  static const String _keyDeveloperMode = 'developer_mode';
   
   // Getters
   int get currentLevel => _currentLevel;
@@ -36,6 +40,7 @@ class ProgressProvider extends ChangeNotifier {
   int get completedLessons => _completedLessons;
   DateTime? get lastStudyDate => _lastStudyDate;
   Set<String> get completedLessonIds => _completedLessonIds;
+  bool get developerMode => _developerMode;
   
   /// Load progress from SharedPreferences
   Future<void> loadProgress() async {
@@ -59,6 +64,9 @@ class ProgressProvider extends ChangeNotifier {
         _lastStudyDate = DateTime.parse(lastStudyDateString);
         _checkAndUpdateStreak();
       }
+      
+      // Load developer mode
+      _developerMode = prefs.getBool(_keyDeveloperMode) ?? false;
       
       notifyListeners();
       
@@ -101,6 +109,9 @@ class ProgressProvider extends ChangeNotifier {
         await prefs.setString(_keyLastStudyDate, _lastStudyDate!.toIso8601String());
       }
       
+      // Save developer mode
+      await prefs.setBool(_keyDeveloperMode, _developerMode);
+      
       if (kDebugMode) {
         print('💾 Progress saved successfully');
       }
@@ -136,6 +147,7 @@ class ProgressProvider extends ChangeNotifier {
       await prefs.remove(_keyCompletedLessons);
       await prefs.remove(_keyLastStudyDate);
       await prefs.remove(_keyCompletedLessonIds);
+      await prefs.remove(_keyDeveloperMode);
       
       _setDefaultValues();
       notifyListeners();
@@ -159,6 +171,7 @@ class ProgressProvider extends ChangeNotifier {
     _completedLessons = 0;
     _lastStudyDate = null;
     _completedLessonIds = {};
+    _developerMode = false;
   }
   
   /// Update level progress
@@ -173,6 +186,13 @@ class ProgressProvider extends ChangeNotifier {
     
     notifyListeners();
     saveProgress(); // Auto-save after update
+  }
+  
+  /// Set developer mode
+  Future<void> setDeveloperMode(bool enabled) async {
+    _developerMode = enabled;
+    notifyListeners();
+    await saveProgress();
   }
   
   /// Complete a lesson
@@ -306,6 +326,7 @@ class ProgressProvider extends ChangeNotifier {
   
   /// Check if level is unlocked
   bool isLevelUnlocked(int level) {
+    if (_developerMode) return true;
     return level <= _currentLevel + 1; // Current level + 1 next level
   }
   

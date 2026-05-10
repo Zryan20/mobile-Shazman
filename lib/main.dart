@@ -41,6 +41,10 @@ import 'screens/otp_verification_screen.dart';
 import 'screens/web_lock_screen.dart';
 import 'screens/edit_profile_screen.dart';
 import 'screens/notifications_screen.dart';
+import 'screens/help_screen.dart';
+import 'screens/about_screen.dart';
+import 'screens/privacy_policy_screen.dart';
+import 'screens/terms_of_service_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -366,6 +370,11 @@ class HozhanApp extends StatelessWidget {
               AppRoutes.premium: (context) => const PremiumScreen(),
               AppRoutes.editProfile: (context) => const EditProfileScreen(),
               AppRoutes.notifications: (context) => const NotificationsScreen(),
+              AppRoutes.help: (context) => const HelpScreen(),
+              AppRoutes.contactUs: (context) => const HelpScreen(),
+              AppRoutes.about: (context) => const AboutScreen(),
+              AppRoutes.privacyPolicy: (context) => const PrivacyPolicyScreen(),
+              AppRoutes.termsOfService: (context) => const TermsOfServiceScreen(),
             },
             onUnknownRoute: (settings) {
               return MaterialPageRoute(

@@ -274,7 +274,16 @@ class ProfileScreen extends StatelessWidget {
                   title: AppTextsKurdish.about,
                   subtitle: 'دەربارەی ${AppTextsKurdish.appName}',
                   onTap: () {
-                    Navigator.pushNamed(context, AppRoutes.about);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('کردنەوەی پەڕەی دەربارە...')),
+                    );
+                    try {
+                      Navigator.pushNamed(context, AppRoutes.about);
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Error: $e')),
+                      );
+                    }
                   },
                 ),
 

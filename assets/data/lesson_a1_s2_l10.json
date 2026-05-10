@@ -1,0 +1,95 @@
+{
+  "id": "a1_s2_l10",
+  "title": "Friends & People 2",
+  "titleKurdish": "هاوڕێیان و کەسان ٢",
+  "description": "Learn pronouns like He, She, They",
+  "descriptionKurdish": "فێری جێناوەکان ببە وەک ئەو (نێر)، ئەو (مێ)، ئەوان",
+  "level": 1,
+  "section": 2,
+  "lessonNumber": 10,
+  "estimatedMinutes": 7,
+  "totalExercises": 5,
+  
+  "vocabulary": [
+    {
+      "english": "He",
+      "kurdish": "ئەو (نێر)",
+      "audioPath": "audio/a1/he.mp3",
+      "exampleSentence": "He is my brother.",
+      "exampleTranslation": "ئەو برای منە.",
+      "notes": "Used for males",
+      "notesKurdish": "بۆ نێر بەکاردێت"
+    },
+    {
+      "english": "She",
+      "kurdish": "ئەو (مێ)",
+      "audioPath": "audio/a1/she.mp3",
+      "exampleSentence": "She is my sister.",
+      "exampleTranslation": "ئەو خوشکی منە.",
+      "notes": "Used for females",
+      "notesKurdish": "بۆ مێ بەکاردێت"
+    },
+    {
+      "english": "They",
+      "kurdish": "ئەوان",
+      "audioPath": "audio/a1/they.mp3",
+      "exampleSentence": "They are my friends.",
+      "exampleTranslation": "ئەوان هاوڕێی منن.",
+      "notes": "Used for a group",
+      "notesKurdish": "بۆ گروپێک بەکاردێت"
+    },
+    {
+      "english": "We",
+      "kurdish": "ئێمە",
+      "audioPath": "audio/a1/we.mp3",
+      "exampleSentence": "We are happy.",
+      "exampleTranslation": "ئێمە دڵخۆشین.",
+      "notes": "Used for self and others",
+      "notesKurdish": "بۆ خۆت و کەسانی تر"
+    }
+  ],
+  
+  "exercises": [
+    {
+      "id": "ex_1",
+      "type": "typing",
+      "question": "Type the English word for 'ئەو (نێر)':",
+      "questionKurdish": "وشە ئینگلیزییەکە بۆ 'ئەو (نێر)' بنووسە:",
+      "correctAnswer": "He"
+    },
+    {
+      "id": "ex_2",
+      "type": "multiple_choice",
+      "question": "Which pronoun is for a group of people?",
+      "questionKurdish": "کام جێناو بۆ کۆمەڵێک کەسە؟",
+      "options": ["He", "She", "They", "I"],
+      "correctAnswer": "They"
+    },
+    {
+      "id": "ex_3",
+      "type": "typing",
+      "question": "Type 'ئەو (مێ)' in English:",
+      "questionKurdish": "وشەی 'ئەو (مێ)' بە ئینگلیزی بنووسە:",
+      "correctAnswer": "She"
+    },
+    {
+      "id": "ex_4",
+      "type": "sentence_builder",
+      "question": "Translate: ئێمە هاوڕێین",
+      "questionKurdish": "ئەمە بە ئینگلیزی دروست بکە",
+      "options": ["We", "are", "friends", "They", "He", "She"],
+      "correctAnswer": "We are friends"
+    },
+    {
+      "id": "ex_5",
+      "type": "typing",
+      "question": "Type the English word for 'ئێمە':",
+      "questionKurdish": "وشە ئینگلیزییەکە بۆ 'ئێمە' بنووسە:",
+      "correctAnswer": "We"
+    }
+  ],
+  "grammarNotes": [],
+  "culturalNotes": [],
+  "tips": ["English pronouns distinguish gender in the third person singular"],
+  "tipsKurdish": ["جێناوە ئینگلیزییەکان جیاوازی ڕەگەز دەکەن لە کەسی سێیەمی تاکدا"]
+}

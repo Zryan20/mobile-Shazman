@@ -9,6 +9,7 @@ import '../providers/settings_provider.dart';
 import '../services/backend_service.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_texts_kurdish.dart';
+import '../utils/app_routes.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -139,7 +140,7 @@ class SettingsScreen extends StatelessWidget {
                 title: 'ناوەندی یارمەتی',
                 subtitle: 'یارمەتی و پشتگیری وەربگرە',
                 onTap: () {
-                  // Navigator.pushNamed(context, AppRoutes.help);
+                  Navigator.pushNamed(context, AppRoutes.help);
                 },
               ),
               
@@ -148,7 +149,7 @@ class SettingsScreen extends StatelessWidget {
                 title: 'ڕاپۆرتی کێشە',
                 subtitle: 'باگ یان کێشە ڕاپۆرت بکە',
                 onTap: () {
-                  // Navigator.pushNamed(context, AppRoutes.contactUs);
+                  Navigator.pushNamed(context, AppRoutes.contactUs);
                 },
               ),
               
@@ -157,7 +158,7 @@ class SettingsScreen extends StatelessWidget {
                 title: 'ناردنی ڕەخنە',
                 subtitle: 'بیرۆکەکانت هاوبەش بکە',
                 onTap: () {
-                  // Navigator.pushNamed(context, AppRoutes.contactUs);
+                  Navigator.pushNamed(context, AppRoutes.contactUs);
                 },
               ),
               
@@ -167,11 +168,20 @@ class SettingsScreen extends StatelessWidget {
               _buildSectionHeader('یاسایی'),
               
               _SettingsTile(
+                icon: Icons.info_outline_rounded,
+                title: 'دەربارەی هۆژان',
+                subtitle: 'زانیاری زیاتر دەربارەی ئەپەکە',
+                onTap: () {
+                  Navigator.pushNamed(context, AppRoutes.about);
+                },
+              ),
+              
+              _SettingsTile(
                 icon: Icons.description_rounded,
                 title: 'مەرجەکانی خزمەتگوزاری',
                 subtitle: 'مەرجەکانمان بخوێنەرەوە',
                 onTap: () {
-                  // Navigator.pushNamed(context, AppRoutes.termsOfService);
+                  Navigator.pushNamed(context, AppRoutes.termsOfService);
                 },
               ),
               
@@ -180,7 +190,7 @@ class SettingsScreen extends StatelessWidget {
                 title: 'سیاسەتی تایبەتێتی',
                 subtitle: 'چۆن زانیارییەکانت دەپارێزین',
                 onTap: () {
-                  // Navigator.pushNamed(context, AppRoutes.privacyPolicy);
+                  Navigator.pushNamed(context, AppRoutes.privacyPolicy);
                 },
               ),
               
@@ -197,6 +207,26 @@ class SettingsScreen extends StatelessWidget {
                   _showDeleteAccountDialog(context);
                 },
                 isDestructive: true,
+              ),
+              
+              const Divider(height: 32),
+              
+              // Developer Section
+              _buildSectionHeader('پەرەپێدەر'),
+              
+              Consumer2<ProgressProvider, LessonProvider>(
+                builder: (context, progressProvider, lessonProvider, _) {
+                  return _SettingsSwitchTile(
+                    icon: Icons.code_rounded,
+                    title: 'کردنەوەی هەموو وانەکان',
+                    subtitle: 'دەستکاریکردنی وانەکان بۆ تاقیکردنەوە',
+                    value: progressProvider.developerMode,
+                    onChanged: (value) {
+                      progressProvider.setDeveloperMode(value);
+                      lessonProvider.setDeveloperMode(value);
+                    },
+                  );
+                },
               ),
               
               const SizedBox(height: 32),

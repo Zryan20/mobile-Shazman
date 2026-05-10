@@ -99,6 +99,128 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  Future<void> _signInWithGoogle() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final authService = context.read<AuthService>();
+      final result = await authService.signInWithGoogle();
+
+      if (!mounted) return;
+
+      if (result.isSuccess) {
+        final userProvider = context.read<UserProvider>();
+        final backendService = context.read<BackendService>();
+
+        userProvider.setUserFromData(result.userData!);
+
+        // Initialize user in Firestore
+        try {
+          await backendService.initializeUser(
+            email: result.userData!['email'],
+            displayName: result.userData!['name'],
+          );
+        } catch (e) {
+          debugPrint(
+              '❌ BackendService initialization failed during Google login: $e');
+        }
+
+        Navigator.pushReplacementNamed(context, AppRoutes.home);
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('بە سەرکەوتوویی لە ڕێگەی گووگڵ چوویتە ژوورەوە'),
+            backgroundColor: AppColors.success,
+          ),
+        );
+      } else if (result.message != 'چوونەژوورەوەی گووگڵ هەڵوەشایەوە') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(result.message),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(AppTextsKurdish.somethingWentWrong),
+          backgroundColor: AppColors.error,
+        ),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _signInWithApple() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final authService = context.read<AuthService>();
+      final result = await authService.signInWithApple();
+
+      if (!mounted) return;
+
+      if (result.isSuccess) {
+        final userProvider = context.read<UserProvider>();
+        final backendService = context.read<BackendService>();
+
+        userProvider.setUserFromData(result.userData!);
+
+        // Initialize user in Firestore
+        try {
+          await backendService.initializeUser(
+            email: result.userData!['email'],
+            displayName: result.userData!['name'],
+          );
+        } catch (e) {
+          debugPrint(
+              '❌ BackendService initialization failed during Apple login: $e');
+        }
+
+        Navigator.pushReplacementNamed(context, AppRoutes.home);
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('بە سەرکەوتوویی لە ڕێگەی ئەپڵ چوویتە ژوورەوە'),
+            backgroundColor: AppColors.success,
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(result.message),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(AppTextsKurdish.somethingWentWrong),
+          backgroundColor: AppColors.error,
+        ),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -261,12 +383,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: double.infinity,
                   child: OutlinedCustomButton(
                     text: AppTextsKurdish.continueWithGoogle,
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content: Text('هەژماری گووگڵ بەم زووانە دێت!')),
-                      );
-                    },
+                    onPressed: _isLoading ? null : _signInWithGoogle,
                     icon: Icons.g_mobiledata_rounded,
                   ),
                 ),
@@ -275,12 +392,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: double.infinity,
                   child: OutlinedCustomButton(
                     text: AppTextsKurdish.continueWithApple,
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content: Text('ئەپڵ ئایدی بەم زووانە دێت!')),
-                      );
-                    },
+                    onPressed: _isLoading ? null : _signInWithApple,
                     icon: Icons.apple_rounded,
                   ),
                 ),

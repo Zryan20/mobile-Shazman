@@ -1,0 +1,103 @@
+{
+  "id": "a1_s2_l7",
+  "title": "Family Members 1",
+  "titleKurdish": "ئەندامانی خێزان ١",
+  "description": "Learn words for father, mother, brother, and sister",
+  "descriptionKurdish": "فێری وشەکانی باوک، دایک، برا، و خوشک ببە",
+  "level": 1,
+  "section": 2,
+  "lessonNumber": 7,
+  "estimatedMinutes": 7,
+  "totalExercises": 6,
+  
+  "vocabulary": [
+    {
+      "english": "Father",
+      "kurdish": "باوک",
+      "audioPath": "audio/a1/father.mp3",
+      "exampleSentence": "My father is a teacher.",
+      "exampleTranslation": "باوکم مامۆستایە.",
+      "notes": "Often used as 'Dad'",
+      "notesKurdish": "زۆرجار وەک 'بابە' بەکاردێت"
+    },
+    {
+      "english": "Mother",
+      "kurdish": "دایک",
+      "audioPath": "audio/a1/mother.mp3",
+      "exampleSentence": "My mother is at home.",
+      "exampleTranslation": "دایکم لە ماڵەوەیە.",
+      "notes": "Often used as 'Mom'",
+      "notesKurdish": "زۆرجار وەک 'دایە' بەکاردێت"
+    },
+    {
+      "english": "Brother",
+      "kurdish": "برا",
+      "audioPath": "audio/a1/brother.mp3",
+      "exampleSentence": "I have one brother.",
+      "exampleTranslation": "من یەک برام هەیە.",
+      "notes": "Male sibling",
+      "notesKurdish": "خوشک و برای نێر"
+    },
+    {
+      "english": "Sister",
+      "kurdish": "خوشک",
+      "audioPath": "audio/a1/sister.mp3",
+      "exampleSentence": "My sister is young.",
+      "exampleTranslation": "خوشکەکەم گەنجە.",
+      "notes": "Female sibling",
+      "notesKurdish": "خوشک و برای مێ"
+    }
+  ],
+  
+  "exercises": [
+    {
+      "id": "ex_1",
+      "type": "multiple_choice",
+      "question": "How do you say 'باوک' in English?",
+      "questionKurdish": "چۆن دەڵێیت 'باوک' بە ئینگلیزی؟",
+      "options": ["Father", "Mother", "Brother", "Sister"],
+      "correctAnswer": "Father"
+    },
+    {
+      "id": "ex_2",
+      "type": "typing",
+      "question": "Type the English word for 'دایک':",
+      "questionKurdish": "وشە ئینگلیزییەکە بۆ 'دایک' بنووسە:",
+      "correctAnswer": "Mother"
+    },
+    {
+      "id": "ex_3",
+      "type": "sentence_builder",
+      "question": "Translate: من برام هەیە",
+      "questionKurdish": "ئەمە بە ئینگلیزی دروست بکە",
+      "options": ["I", "have", "a", "brother", "sister", "father"],
+      "correctAnswer": "I have a brother"
+    },
+    {
+      "id": "ex_4",
+      "type": "typing",
+      "question": "Type 'Sister' in Kurdish:",
+      "questionKurdish": "وشەی 'Sister' بە کوردی بنووسە:",
+      "correctAnswer": "خوشک"
+    },
+    {
+      "id": "ex_5",
+      "type": "multiple_choice",
+      "question": "Male sibling is called:",
+      "questionKurdish": "خوشک و برای نێر پێی دەوترێت:",
+      "options": ["Sister", "Brother", "Mother", "Father"],
+      "correctAnswer": "Brother"
+    },
+    {
+      "id": "ex_6",
+      "type": "typing",
+      "question": "Type the English word for 'برا':",
+      "questionKurdish": "وشە ئینگلیزییەکە بۆ 'برا' بنووسە:",
+      "correctAnswer": "Brother"
+    }
+  ],
+  "grammarNotes": [],
+  "culturalNotes": [],
+  "tips": ["Learn these basic family words first"],
+  "tipsKurdish": ["سەرەتا ئەم وشە بنەڕەتییانەی خێزان فێربە"]
+}
