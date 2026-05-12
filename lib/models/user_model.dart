@@ -6,6 +6,8 @@ class User {
   final DateTime createdAt;
   final DateTime? lastLoginAt;
   final UserPreferences? preferences;
+  final bool isPremium;
+  final DateTime? premiumUntil;
   
   const User({
     required this.id,
@@ -15,6 +17,8 @@ class User {
     required this.createdAt,
     this.lastLoginAt,
     this.preferences,
+    this.isPremium = false,
+    this.premiumUntil,
   });
   
   // Create copy with modified fields
@@ -26,6 +30,8 @@ class User {
     DateTime? createdAt,
     DateTime? lastLoginAt,
     UserPreferences? preferences,
+    bool? isPremium,
+    DateTime? premiumUntil,
   }) {
     return User(
       id: id ?? this.id,
@@ -35,6 +41,8 @@ class User {
       createdAt: createdAt ?? this.createdAt,
       lastLoginAt: lastLoginAt ?? this.lastLoginAt,
       preferences: preferences ?? this.preferences,
+      isPremium: isPremium ?? this.isPremium,
+      premiumUntil: premiumUntil ?? this.premiumUntil,
     );
   }
   
@@ -48,6 +56,8 @@ class User {
       'createdAt': createdAt.toIso8601String(),
       'lastLoginAt': lastLoginAt?.toIso8601String(),
       'preferences': preferences?.toJson(),
+      'isPremium': isPremium,
+      'premiumUntil': premiumUntil?.toIso8601String(),
     };
   }
   
@@ -65,7 +75,18 @@ class User {
       preferences: json['preferences'] != null
           ? UserPreferences.fromJson(json['preferences'] as Map<String, dynamic>)
           : null,
+      isPremium: json['isPremium'] as bool? ?? false,
+      premiumUntil: json['premiumUntil'] != null
+          ? DateTime.parse(json['premiumUntil'] as String)
+          : null,
     );
+  }
+  
+  // Check if premium is active
+  bool get isPremiumActive {
+    if (!isPremium) return false;
+    if (premiumUntil == null) return true; // Lifetime premium
+    return premiumUntil!.isAfter(DateTime.now());
   }
   
   // Get first name
@@ -109,6 +130,8 @@ class User {
       createdAt,
       lastLoginAt,
       preferences,
+      isPremium,
+      premiumUntil,
     );
   }
   

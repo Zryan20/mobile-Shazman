@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
         final userProvider = context.read<UserProvider>();
         final backendService = context.read<BackendService>();
 
-        userProvider.setUserFromData(result.userData!);
+        await userProvider.setUserFromData(result.userData!);
 
         // Initialize user in Firestore
         try {
@@ -114,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
         final userProvider = context.read<UserProvider>();
         final backendService = context.read<BackendService>();
 
-        userProvider.setUserFromData(result.userData!);
+        await userProvider.setUserFromData(result.userData!);
 
         // Initialize user in Firestore
         try {
@@ -175,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
         final userProvider = context.read<UserProvider>();
         final backendService = context.read<BackendService>();
 
-        userProvider.setUserFromData(result.userData!);
+        await userProvider.setUserFromData(result.userData!);
 
         // Initialize user in Firestore
         try {

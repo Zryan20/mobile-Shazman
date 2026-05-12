@@ -9,8 +9,10 @@ class AboutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
         title: const Text('دەربارەی ئەپ'),
         backgroundColor: AppColors.primary600,
@@ -31,11 +33,13 @@ class AboutScreen extends StatelessWidget {
                 width: 120,
                 height: 120,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: isDark ? AppColors.surfaceDark : Colors.white,
                   borderRadius: BorderRadius.circular(30),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.primary600.withValues(alpha: 0.15),
+                      color: isDark 
+                          ? Colors.black.withOpacity(0.3) 
+                          : AppColors.primary600.withValues(alpha: 0.15),
                       blurRadius: 20,
                       offset: const Offset(0, 8),
                     ),
@@ -55,27 +59,27 @@ class AboutScreen extends StatelessWidget {
             const SizedBox(height: 24),
             
             // App Name & Version
-            const Text(
+            Text(
               AppTextsKurdish.appName,
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
+                color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
               ),
             ),
             const SizedBox(height: 8),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: AppColors.primary100,
+                color: isDark ? AppColors.primary600.withOpacity(0.2) : AppColors.primary100,
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: const Text(
+              child: Text(
                 'وەشان ${AppTextsKurdish.appVersion}',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.primary600,
+                  color: isDark ? AppColors.primary400 : AppColors.primary600,
                 ),
               ),
             ),
@@ -83,15 +87,15 @@ class AboutScreen extends StatelessWidget {
             const SizedBox(height: 32),
             
             // Description
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 32),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32),
               child: Text(
                 'هۆژان ئەپێکی پێشکەوتووە بۆ فێربوونی زمانی ئینگلیزی، بەکارهێنانی ئاسانە و یارمەتیت دەدات بە شێوەیەکی خێرا و سەرنجڕاکێش زمانەکە فێرببیت.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 15,
                   height: 1.6,
-                  color: AppColors.textSecondary,
+                  color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
                 ),
               ),
             ),
@@ -106,10 +110,10 @@ class AboutScreen extends StatelessWidget {
                 children: [
                   Text(
                     'پەیوەندی و بەستەرەکان'.toUpperCase(),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w700,
-                      color: AppColors.primary600,
+                      color: isDark ? AppColors.primary400 : AppColors.primary600,
                       letterSpacing: 0.3,
                     ),
                   ),
@@ -141,11 +145,11 @@ class AboutScreen extends StatelessWidget {
             const SizedBox(height: 40),
             
             // Copyright
-            const Text(
+            Text(
               '© ${2026} هەموو مافەکانی پارێزراوە بۆ هۆژان',
               style: TextStyle(
                 fontSize: 12,
-                color: AppColors.textTertiary,
+                color: isDark ? AppColors.textTertiaryDark : AppColors.textTertiaryLight,
               ),
             ),
             const SizedBox(height: 32),
@@ -182,6 +186,8 @@ class _InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Material(
@@ -192,9 +198,9 @@ class _InfoCard extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: isDark ? AppColors.surfaceDark : Colors.white,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppColors.neutral200),
+              border: Border.all(color: isDark ? AppColors.borderDark : AppColors.neutral200),
             ),
             child: Row(
               children: [
@@ -202,10 +208,10 @@ class _InfoCard extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: AppColors.primary100,
+                    color: isDark ? AppColors.primary600.withOpacity(0.2) : AppColors.primary100,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Icon(icon, color: AppColors.primary600, size: 20),
+                  child: Icon(icon, color: isDark ? AppColors.primary400 : AppColors.primary600, size: 20),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
@@ -214,27 +220,27 @@ class _InfoCard extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
-                          color: AppColors.textPrimary,
+                          color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                         ),
                       ),
                       const SizedBox(height: 2),
                       Text(
                         subtitle,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 13,
-                          color: AppColors.textSecondary,
+                          color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
                         ),
                       ),
                     ],
                   ),
                 ),
-                const Icon(
+                Icon(
                   Icons.arrow_forward_ios_rounded,
                   size: 16,
-                  color: AppColors.neutral400,
+                  color: isDark ? AppColors.textTertiaryDark : AppColors.neutral400,
                 ),
               ],
             ),

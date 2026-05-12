@@ -40,6 +40,8 @@ class BackendService {
           },
           'premium': {
             'isActive': false,
+            'isPremium': false,
+            'premiumUntil': null,
             'planType': null,
             'purchaseDate': null,
             'expiryDate': null,
@@ -114,7 +116,10 @@ class BackendService {
         return {
           'currentHearts': heartsData?['current'] ?? 5,
           'lastLossTime': lastLossTime,
-          'isPremium': premiumData?['isActive'] ?? false,
+          'isPremium': (premiumData?['isActive'] ?? false) || (premiumData?['isPremium'] ?? false),
+          'premiumUntil': premiumData?['premiumUntil'] != null 
+              ? (premiumData?['premiumUntil'] as Timestamp).toDate() 
+              : null,
         };
       }
     } catch (e) {
@@ -164,6 +169,7 @@ class BackendService {
     try {
       await _firestore.collection('users').doc(_userId).update({
         'premium.isActive': true,
+        'premium.isPremium': true,
         'premium.planType': planType,
         'premium.transactionId': transactionId,
         'premium.paymentGateway': paymentGateway,
@@ -185,7 +191,10 @@ class BackendService {
         final data = doc.data()!;
         final premiumData = data['premium'] as Map<String, dynamic>?;
         return {
-          'isActive': premiumData?['isActive'] ?? false,
+          'isActive': (premiumData?['isActive'] ?? false) || (premiumData?['isPremium'] ?? false),
+          'premiumUntil': premiumData?['premiumUntil'] != null 
+              ? (premiumData?['premiumUntil'] as Timestamp).toDate() 
+              : null,
         };
       }
     } catch (e) {

@@ -91,9 +91,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     final user = context.watch<UserProvider>().currentUser;
     final initials = user?.initials ?? 'U';
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor:
+          isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
         title: const Text('دەستکاریکردنی پرۆفایل'),
         backgroundColor: AppColors.primary600,
@@ -219,9 +221,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             Transform.translate(
               offset: const Offset(0, -20),
               child: Container(
-                decoration: const BoxDecoration(
-                  color: AppColors.backgroundLight,
-                  borderRadius: BorderRadius.only(
+                decoration: BoxDecoration(
+                  color: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(24),
                     topRight: Radius.circular(24),
                   ),
@@ -233,12 +235,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Section title
-                      const Text(
+                      Text(
                         'زانیارییە کەسییەکان',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.textPrimary,
+                          color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -330,15 +332,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     String? helperText,
     String? Function(String?)? validator,
   }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w600,
-            color: AppColors.textSecondary,
+            color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
           ),
         ),
         const SizedBox(height: 8),
@@ -348,38 +352,49 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           validator: validator,
           style: TextStyle(
             fontSize: 15,
-            color: readOnly ? AppColors.textSecondary : AppColors.textPrimary,
+            color: readOnly 
+                ? (isDark ? AppColors.textTertiaryDark : AppColors.textSecondaryLight) 
+                : (isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight),
           ),
           decoration: InputDecoration(
             hintText: hint,
+            hintStyle: TextStyle(
+              color: isDark ? AppColors.textTertiaryDark : AppColors.textTertiaryLight,
+            ),
             prefixIcon: Icon(
               icon,
-              color: readOnly ? AppColors.neutral400 : AppColors.primary600,
+              color: readOnly 
+                  ? (isDark ? AppColors.textTertiaryDark : AppColors.neutral400) 
+                  : (isDark ? AppColors.primary400 : AppColors.primary600),
               size: 20,
             ),
             filled: true,
-            fillColor: readOnly ? AppColors.neutral100 : Colors.white,
+            fillColor: isDark 
+                ? (readOnly ? AppColors.backgroundDark : AppColors.surfaceDark) 
+                : (readOnly ? AppColors.neutral100 : Colors.white),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: AppColors.neutral300),
+              borderSide: BorderSide(color: isDark ? AppColors.borderDark : AppColors.neutral300),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: AppColors.neutral200),
+              borderSide: BorderSide(color: isDark ? AppColors.borderDark : AppColors.neutral200),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide:
-                  const BorderSide(color: AppColors.primary600, width: 2),
+              borderSide: BorderSide(
+                color: isDark ? AppColors.primary400 : AppColors.primary600, 
+                width: 2,
+              ),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: const BorderSide(color: AppColors.error),
             ),
             helperText: helperText,
-            helperStyle: const TextStyle(
+            helperStyle: TextStyle(
               fontSize: 12,
-              color: AppColors.textSecondary,
+              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
             ),
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 16, vertical: 14),

@@ -33,16 +33,34 @@ class LessonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveAccentColor = accentColor ?? AppColors.primary600;
+    final brightness = Theme.of(context).brightness;
+    final isDark = brightness == Brightness.dark;
+    final effectiveAccentColor =
+        accentColor ?? (isDark ? AppColors.primary400 : AppColors.primary600);
+    
+    // Theme-aware colors
+    final cardColor = isLocked 
+        ? (isDark ? AppColors.surfaceDark : Colors.grey[50]) 
+        : (isDark ? AppColors.cardDark : Colors.white);
+    
+    final titleColor = isLocked
+        ? AppColors.getTextTertiary(brightness)
+        : AppColors.getTextPrimary(brightness);
+        
+    final subtitleColor = isLocked
+        ? AppColors.getTextTertiary(brightness)
+        : AppColors.getTextSecondary(brightness);
+        
+    final progressBgColor = isDark ? AppColors.surfaceDark : AppColors.neutral100;
     
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
-        color: isLocked ? Colors.grey[50] : Colors.white,
+        color: cardColor,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isLocked ? 0.05 : 0.08),
+            color: Colors.black.withOpacity(isDark ? 0.2 : (isLocked ? 0.05 : 0.08)),
             blurRadius: 15,
             offset: const Offset(0, 8),
           ),
@@ -77,7 +95,7 @@ class LessonCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        _buildLeadingWidget(effectiveAccentColor),
+                        _buildLeadingWidget(context, effectiveAccentColor),
                         const SizedBox(width: 16),
                         Expanded(
                           child: Column(
@@ -88,9 +106,7 @@ class LessonCard extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w800,
-                                  color: isLocked
-                                      ? AppColors.neutral400
-                                      : AppColors.textPrimary,
+                                  color: titleColor,
                                   letterSpacing: -0.5,
                                 ),
                               ),
@@ -100,9 +116,7 @@ class LessonCard extends StatelessWidget {
                                   subtitle!,
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: isLocked
-                                        ? AppColors.neutral400
-                                        : AppColors.textSecondary,
+                                    color: subtitleColor,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -110,7 +124,7 @@ class LessonCard extends StatelessWidget {
                             ],
                           ),
                         ),
-                        _buildStatusIcon(effectiveAccentColor),
+                        _buildStatusIcon(context, effectiveAccentColor),
                       ],
                     ),
                     if (showProgress && !isLocked && !isCompleted) ...[
@@ -122,7 +136,7 @@ class LessonCard extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                               child: LinearProgressIndicator(
                                 value: progress,
-                                backgroundColor: AppColors.neutral100,
+                                backgroundColor: progressBgColor,
                                 valueColor: AlwaysStoppedAnimation<Color>(effectiveAccentColor),
                                 minHeight: 10,
                               ),
@@ -150,18 +164,21 @@ class LessonCard extends StatelessWidget {
     );
   }
   
-  Widget _buildLeadingWidget(Color accentColor) {
+  Widget _buildLeadingWidget(BuildContext context, Color accentColor) {
+    final brightness = Theme.of(context).brightness;
+    final isDark = brightness == Brightness.dark;
+    
     if (isLocked) {
       return Container(
         width: 56,
         height: 56,
         decoration: BoxDecoration(
-          color: AppColors.neutral200,
+          color: isDark ? AppColors.surfaceDark : AppColors.neutral200,
           borderRadius: BorderRadius.circular(18),
         ),
-        child: const Icon(
+        child: Icon(
           Icons.lock_outline_rounded,
-          color: AppColors.neutral400,
+          color: isDark ? AppColors.textTertiaryDark : AppColors.neutral400,
           size: 28,
         ),
       );
@@ -207,18 +224,21 @@ class LessonCard extends StatelessWidget {
     );
   }
   
-  Widget _buildStatusIcon(Color accentColor) {
+  Widget _buildStatusIcon(BuildContext context, Color accentColor) {
+    final brightness = Theme.of(context).brightness;
+    final isDark = brightness == Brightness.dark;
+    
     if (isLocked) {
       return Container(
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: AppColors.neutral200,
+          color: isDark ? AppColors.surfaceDark : AppColors.neutral200,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: const Icon(
+        child: Icon(
           Icons.lock_rounded,
           size: 20,
-          color: AppColors.neutral500,
+          color: isDark ? AppColors.textTertiaryDark : AppColors.neutral500,
         ),
       );
     }

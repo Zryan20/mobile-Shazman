@@ -115,10 +115,18 @@ class HozhanApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<BackendService>.value(value: backendService),
-        ChangeNotifierProvider<HeartsProvider>.value(value: heartsProvider),
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProxyProvider<UserProvider, HeartsProvider>(
+          create: (_) => heartsProvider,
+          update: (_, userProvider, hearts) {
+            hearts!.setUserProvider(userProvider);
+            return hearts;
+          },
+        ),
         ChangeNotifierProvider(create: (_) => LessonProvider()),
-        ChangeNotifierProvider(create: (_) => ProgressProvider(backendService: backendService)),
+        ChangeNotifierProvider(
+            create: (_) =>
+                ProgressProvider(backendService: backendService)),
         ChangeNotifierProvider(create: (_) => SettingsProvider()),
         Provider(create: (_) => AuthService()),
       ],

@@ -1,0 +1,131 @@
+{
+  "id": "a1_s1_review",
+  "title": "Unit 1 Review",
+  "titleKurdish": "پێداچوونەوەی یەکەی ١",
+  "description": "Review greetings, numbers, and classroom objects",
+  "descriptionKurdish": "پێداچوونەوەی سڵاوکردن، ژمارەکان، و کەلوپەلی پۆل",
+  "level": 1,
+  "section": 1,
+  "lessonNumber": 100,
+  "estimatedMinutes": 10,
+  "totalExercises": 12,
+  
+  "vocabulary": [
+    {
+      "english": "Review",
+      "kurdish": "پێداچوونەوە",
+      "audioPath": null,
+      "exampleSentence": "Let's review Unit 1.",
+      "exampleTranslation": "با پێداچوونەوە بۆ یەکەی ١ بکەین.",
+      "notes": "Unit Review",
+      "notesKurdish": "پێداچوونەوەی یەکە"
+    }
+  ],
+  
+  "exercises": [
+    {
+      "id": "rev1_ex_1",
+      "type": "multiple_choice",
+      "question": "How do you say 'Thank you' in Kurdish?",
+      "questionKurdish": "چۆن دەڵێیت 'Thank you' بە کوردی؟",
+      "options": ["سوپاس", "سڵاو", "تکایە", "ببورە"],
+      "correctAnswer": "سوپاس"
+    },
+    {
+      "id": "rev1_ex_2",
+      "type": "multiple_choice",
+      "question": "Which number is 'Seven'?",
+      "questionKurdish": "کام ژمارەیە 'Seven'؟",
+      "options": ["5", "7", "9", "10"],
+      "correctAnswer": "7"
+    },
+    {
+      "id": "rev1_ex_3",
+      "type": "typing",
+      "question": "Write 'تکایە' in English.",
+      "questionKurdish": "بنووسە 'تکایە' بە ئینگلیزی.",
+      "correctAnswer": "Please"
+    },
+    {
+      "id": "rev1_ex_4",
+      "type": "multiple_choice",
+      "question": "A classroom object for writing is a:",
+      "questionKurdish": "کەلوپەلێکی پۆل بۆ نووسین بریتییە لە:",
+      "options": ["Book", "Pen", "Chair", "Window"],
+      "correctAnswer": "Pen"
+    },
+    {
+      "id": "rev1_ex_5",
+      "type": "sentence_builder",
+      "question": "Translate: ناوم ئالانە.",
+      "questionKurdish": "ئەمە بە ئینگلیزی دروست بکە",
+      "options": ["My", "name", "is", "Alan.", "Hello", "Alan"],
+      "correctAnswer": "My name is Alan."
+    },
+    {
+      "id": "rev1_ex_6",
+      "type": "multiple_choice",
+      "question": "How many is 'Twelve'?",
+      "questionKurdish": "ژمارە 'Twelve' چەندە؟",
+      "options": ["2", "12", "20", "22"],
+      "correctAnswer": "12"
+    },
+    {
+      "id": "rev1_ex_7",
+      "type": "multiple_choice",
+      "question": "What does a teacher say when they want you to look at the book?",
+      "questionKurdish": "مامۆستا چی دەڵێت کاتێک دەیەوێت سەیری کتێبەکە بکەیت؟",
+      "options": ["Open your book", "Close the door", "Stand up", "Sit down"],
+      "correctAnswer": "Open your book"
+    },
+    {
+      "id": "rev1_ex_8",
+      "type": "typing",
+      "question": "How do you say 'Hello' in Kurdish?",
+      "questionKurdish": "چۆن دەڵێیت 'Hello' بە کوردی؟",
+      "correctAnswer": "سڵاو"
+    },
+    {
+      "id": "rev1_ex_9",
+      "type": "multiple_choice",
+      "question": "Which one is NOT a number?",
+      "questionKurdish": "کامیان ژمارە نییە؟",
+      "options": ["Five", "Eight", "Apple", "Ten"],
+      "correctAnswer": "Apple"
+    },
+    {
+      "id": "rev1_ex_10",
+      "type": "sentence_builder",
+      "question": "Translate: من تەمەنم بیست ساڵە.",
+      "questionKurdish": "ئەمە بە ئینگلیزی دروست بکە",
+      "options": ["I", "am", "twenty", "years", "old.", "is", "ten"],
+      "correctAnswer": "I am twenty years old."
+    },
+    {
+      "id": "rev1_ex_11",
+      "type": "multiple_choice",
+      "question": "Goodbye means:",
+      "questionKurdish": "واتای Goodbye چییە؟",
+      "options": ["سڵاو", "خۆشحاڵم", "خواحافیز", "سوپاس"],
+      "correctAnswer": "خواحافیز"
+    },
+    {
+      "id": "rev1_ex_12",
+      "type": "typing",
+      "question": "Write the number '15' in English words.",
+      "questionKurdish": "ژمارە '15' بە وشەی ئینگلیزی بنووسە.",
+      "correctAnswer": "Fifteen"
+    }
+  ],
+  "grammarNotes": [
+    {
+      "title": "Unit 1 Summary",
+      "titleKurdish": "کورتەی یەکەی ١",
+      "content": "You have learned greetings, numbers 1-20, and common classroom items.",
+      "contentKurdish": "فێری سڵاوکردن، ژمارەکانی ١-٢٠، و کەلوپەلە باوەکانی ناو پۆل بوویت."
+    }
+  ],
+  "culturalNotes": [],
+  "tips": ["Keep practicing your numbers every day!"],
+  "tipsKurdish": ["ڕۆژانە بەردەوام بە لە ڕاهێنان لەسەر ژمارەکان!"]
+}

@@ -305,7 +305,7 @@ class _LearningTab extends StatelessWidget {
                         style: TextStyle(
                           fontSize: isSmallScreen ? 20 : 22,
                           fontWeight: FontWeight.w900,
-                          color: AppColors.textPrimary,
+                          color: AppColors.getTextPrimary(Theme.of(context).brightness),
                         ),
                       ),
 
@@ -773,12 +773,17 @@ class _StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
     return Container(
       padding: EdgeInsets.all(isSmallScreen ? 12 : (isMediumScreen ? 14 : 16)),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: isDark ? AppColors.surfaceDark : color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(isSmallScreen ? 12 : 16),
-        border: Border.all(color: color.withOpacity(0.2)),
+        border: Border.all(
+          color: isDark ? color.withOpacity(0.3) : color.withOpacity(0.2),
+          width: 1,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -788,7 +793,7 @@ class _StatCard extends StatelessWidget {
               Icon(icon,
                   color: color,
                   size: isSmallScreen ? 16 : (isMediumScreen ? 18 : 20)),
-              SizedBox(width: isSmallScreen ? 4 : (isMediumScreen ? 6 : 8)),
+              const SizedBox(width: 8),
               Flexible(
                 child: Text(
                   title,
@@ -803,12 +808,13 @@ class _StatCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: isSmallScreen ? 6 : 8),
+          const SizedBox(height: 8),
           Text(
             value,
             style: TextStyle(
               fontSize: isSmallScreen ? 20 : (isMediumScreen ? 22 : 24),
               fontWeight: FontWeight.bold,
+              color: isDark ? Colors.white : AppColors.textPrimaryLight,
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -817,7 +823,7 @@ class _StatCard extends StatelessWidget {
             subtitle,
             style: TextStyle(
               fontSize: isSmallScreen ? 10 : (isMediumScreen ? 11 : 12),
-              color: Colors.grey[600],
+              color: isDark ? AppColors.textSecondaryDark : Colors.grey[600],
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -846,35 +852,53 @@ class _ProfileMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       margin: EdgeInsets.only(bottom: isSmallScreen ? 6 : 8),
       child: ListTile(
+        tileColor: isDark ? AppColors.surfaceDark : Colors.grey[100],
         contentPadding: EdgeInsets.symmetric(
           horizontal: isSmallScreen ? 12 : 16,
           vertical: isSmallScreen ? 4 : 8,
         ),
-        leading: Icon(
-          icon,
-          color: isDestructive ? Colors.red : AppColors.primary600,
-          size: isSmallScreen ? 20 : 24,
+        leading: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: isDestructive
+                ? Colors.red.withOpacity(0.1)
+                : (isDark ? AppColors.primary400 : AppColors.primary600)
+                    .withOpacity(0.1),
+            shape: BoxShape.circle,
+          ),
+          child: Icon(
+            icon,
+            color: isDestructive
+                ? Colors.red
+                : (isDark ? AppColors.primary400 : AppColors.primary600),
+            size: isSmallScreen ? 20 : 24,
+          ),
         ),
         title: Text(
           title,
           style: TextStyle(
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
             fontSize: isSmallScreen ? 14 : 16,
-            color: isDestructive ? Colors.red : null,
+            color: isDestructive
+                ? Colors.red
+                : (isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight),
           ),
         ),
         trailing: Icon(
           Icons.arrow_forward_ios_rounded,
           size: isSmallScreen ? 14 : 16,
+          color: isDark ? AppColors.textTertiaryDark : AppColors.neutral400,
         ),
         onTap: onTap,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(isSmallScreen ? 10 : 12),
+          borderRadius: BorderRadius.circular(isSmallScreen ? 12 : 16),
         ),
-        minVerticalPadding: 0,
       ),
     );
   }

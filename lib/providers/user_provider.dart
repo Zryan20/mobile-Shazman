@@ -12,6 +12,7 @@ class UserProvider extends ChangeNotifier {
   User? get currentUser => _currentUser;
   bool get isLoading => _isLoading;
   bool get isLoggedIn => _currentUser != null;
+  bool get isPremium => _currentUser?.isPremiumActive ?? false;
 
   // Set loading state
   void _setLoading(bool loading) {
@@ -28,13 +29,17 @@ class UserProvider extends ChangeNotifier {
       final userData = await authService.getCurrentUserData();
 
       if (userData != null) {
+        final backendService = BackendService();
+        final premiumData = await backendService.checkPremiumStatus();
+        
         _currentUser = User(
           id: userData['id'],
           name: userData['name'],
           email: userData['email'],
           profileImageUrl: null,
-          createdAt: DateTime
-              .now(), // Firebase doesn't provide this easily on user object
+          createdAt: DateTime.now(),
+          isPremium: premiumData['isActive'] ?? false,
+          premiumUntil: premiumData['premiumUntil'],
         );
       } else {
         _currentUser = null;
@@ -48,13 +53,18 @@ class UserProvider extends ChangeNotifier {
   }
 
   // Set current user from existing data (avoids redundant auth calls)
-  void setUserFromData(Map<String, dynamic> userData) {
+  Future<void> setUserFromData(Map<String, dynamic> userData) async {
+    final backendService = BackendService();
+    final premiumData = await backendService.checkPremiumStatus();
+    
     _currentUser = User(
       id: userData['id'],
       name: userData['name'],
       email: userData['email'],
       profileImageUrl: null,
       createdAt: DateTime.now(),
+      isPremium: premiumData['isActive'] ?? false,
+      premiumUntil: premiumData['premiumUntil'],
     );
     notifyListeners();
   }
@@ -68,7 +78,7 @@ class UserProvider extends ChangeNotifier {
       final result = await authService.signInWithEmail(email, password);
 
       if (result.isSuccess && result.userData != null) {
-        setUserFromData(result.userData!);
+        await setUserFromData(result.userData!);
         return true;
       }
       return false;
@@ -89,7 +99,7 @@ class UserProvider extends ChangeNotifier {
       final result = await authService.signUpWithEmail(name, email, password);
 
       if (result.isSuccess && result.userData != null) {
-        setUserFromData(result.userData!);
+        await setUserFromData(result.userData!);
         return true;
       }
       return false;

@@ -194,7 +194,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen>
 
       final currentUser = FirebaseAuth.instance.currentUser;
       if (currentUser != null) {
-        userProvider.setUserFromData({
+        await userProvider.setUserFromData({
           'id': currentUser.uid,
           'email': currentUser.email,
           'name': currentUser.displayName ?? '',

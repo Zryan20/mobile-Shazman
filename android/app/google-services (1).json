@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "79610966616",
+    "project_id": "mobile-shazman",
+    "storage_bucket": "mobile-shazman.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79610966616:android:cdbc0ca71c7edc0a4e502d",
+        "android_client_info": {
+          "package_name": "com.example.shazman"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "79610966616-6gf87fnijms2ouvtpkpsj786fhtl8p3t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.shazman",
+            "certificate_hash": "f5248024227ccc79c99608f3ece3509e2a565f84"
+          }
+        },
+        {
+          "client_id": "79610966616-v3v1h7u52nq7ptsgm05jjsmv12u7tujc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJVRvHt_W3orjkafkzLWukAU3_1077oY8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "79610966616-v3v1h7u52nq7ptsgm05jjsmv12u7tujc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "79610966616-2ronqmctaroa2ob0m01gpu0q0vh6lk92.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.shazman"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

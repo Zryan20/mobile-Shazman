@@ -9,8 +9,10 @@ class HelpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
         title: const Text(AppTextsKurdish.helpCenter),
         backgroundColor: AppColors.primary600,
@@ -82,10 +84,10 @@ class HelpScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 AppTextsKurdish.contactUs.toUpperCase(),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
-                  color: AppColors.primary600,
+                  color: isDark ? AppColors.primary400 : AppColors.primary600,
                   letterSpacing: 0.3,
                 ),
               ),
@@ -120,10 +122,10 @@ class HelpScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 AppTextsKurdish.faq.toUpperCase(),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
-                  color: AppColors.primary600,
+                  color: isDark ? AppColors.primary400 : AppColors.primary600,
                   letterSpacing: 0.3,
                 ),
               ),
@@ -187,6 +189,8 @@ class _ContactCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       child: Material(
@@ -197,10 +201,10 @@ class _ContactCard extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: isDark ? AppColors.surfaceDark : Colors.white,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppColors.neutral200),
-              boxShadow: const [
+              border: Border.all(color: isDark ? AppColors.borderDark : AppColors.neutral200),
+              boxShadow: isDark ? null : const [
                 BoxShadow(
                   color: AppColors.shadowLight,
                   blurRadius: 10,
@@ -226,27 +230,27 @@ class _ContactCard extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
-                          color: AppColors.textPrimary,
+                          color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         subtitle,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 13,
-                          color: AppColors.textSecondary,
+                          color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
                         ),
                       ),
                     ],
                   ),
                 ),
-                const Icon(
+                Icon(
                   Icons.arrow_forward_ios_rounded,
                   size: 16,
-                  color: AppColors.neutral400,
+                  color: isDark ? AppColors.textTertiaryDark : AppColors.neutral400,
                 ),
               ],
             ),
@@ -275,13 +279,15 @@ class _FaqAccordionState extends State<_FaqAccordion> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: isDark ? AppColors.surfaceDark : Colors.white,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColors.neutral200),
+          border: Border.all(color: isDark ? AppColors.borderDark : AppColors.neutral200),
         ),
         child: Theme(
           data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
@@ -291,11 +297,13 @@ class _FaqAccordionState extends State<_FaqAccordion> {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: _isExpanded ? FontWeight.w600 : FontWeight.w500,
-                color: _isExpanded ? AppColors.primary600 : AppColors.textPrimary,
+                color: _isExpanded 
+                    ? (isDark ? AppColors.primary400 : AppColors.primary600) 
+                    : (isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight),
               ),
             ),
-            iconColor: AppColors.primary600,
-            collapsedIconColor: AppColors.neutral400,
+            iconColor: isDark ? AppColors.primary400 : AppColors.primary600,
+            collapsedIconColor: isDark ? AppColors.textTertiaryDark : AppColors.neutral400,
             onExpansionChanged: (expanded) {
               setState(() {
                 _isExpanded = expanded;
@@ -305,10 +313,10 @@ class _FaqAccordionState extends State<_FaqAccordion> {
             children: [
               Text(
                 widget.answer,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
                   height: 1.5,
-                  color: AppColors.textSecondary,
+                  color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
                 ),
               ),
             ],

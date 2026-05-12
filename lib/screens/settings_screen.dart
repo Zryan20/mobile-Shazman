@@ -232,27 +232,32 @@ class SettingsScreen extends StatelessWidget {
               const SizedBox(height: 32),
               
               // App Version
-              const Center(
-                child: Column(
-                  children: [
-                    Text(
-                      AppTextsKurdish.appName,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.textSecondary,
-                      ),
+              Builder(
+                builder: (context) {
+                  final brightness = Theme.of(context).brightness;
+                  return Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          AppTextsKurdish.appName,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.getTextSecondary(brightness),
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'وەشان ${AppTextsKurdish.appVersion}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: AppColors.getTextTertiary(brightness),
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 4),
-                    Text(
-                      'وەشان ${AppTextsKurdish.appVersion}',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: AppColors.textTertiary,
-                      ),
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
               
               const SizedBox(height: 32),
@@ -264,17 +269,22 @@ class SettingsScreen extends StatelessWidget {
   }
   
   Widget _buildSectionHeader(String title, {bool isDestructive = false}) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-      child: Text(
-        title.toUpperCase(),
-        style: TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.bold,
-          color: isDestructive ? AppColors.error : AppColors.textSecondary,
-          letterSpacing: 0.5,
-        ),
-      ),
+    return Builder(
+      builder: (context) {
+        final brightness = Theme.of(context).brightness;
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+          child: Text(
+            title.toUpperCase(),
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              color: isDestructive ? AppColors.error : AppColors.getTextSecondary(brightness),
+              letterSpacing: 0.5,
+            ),
+          ),
+        );
+      },
     );
   }
   
@@ -460,6 +470,8 @@ class _SettingsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+    final secondaryColor = AppColors.getTextSecondary(brightness);
     return ListTile(
       leading: Container(
         width: 40,
@@ -485,16 +497,16 @@ class _SettingsTile extends StatelessWidget {
       ),
       subtitle: Text(
         subtitle,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 12,
-          color: AppColors.textSecondary,
+          color: secondaryColor,
         ),
       ),
       trailing: onTap != null
-          ? const Icon(
+          ? Icon(
               Icons.arrow_forward_ios_rounded,
               size: 16,
-              color: AppColors.textSecondary,
+              color: secondaryColor,
             )
           : null,
       onTap: onTap,
@@ -519,6 +531,7 @@ class _SettingsSwitchTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
     return ListTile(
       leading: Container(
         width: 40,
@@ -541,9 +554,9 @@ class _SettingsSwitchTile extends StatelessWidget {
       ),
       subtitle: Text(
         subtitle,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 12,
-          color: AppColors.textSecondary,
+          color: AppColors.getTextSecondary(brightness),
         ),
       ),
       trailing: Switch(

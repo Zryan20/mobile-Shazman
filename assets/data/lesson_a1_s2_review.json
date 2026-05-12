@@ -1,0 +1,131 @@
+{
+  "id": "a1_s2_review",
+  "title": "Unit 2 Review",
+  "titleKurdish": "پێداچوونەوەی یەکەی ٢",
+  "description": "Review family, people, and countries",
+  "descriptionKurdish": "پێداچوونەوەی خێزان، کەسان، و وڵاتەکان",
+  "level": 1,
+  "section": 2,
+  "lessonNumber": 101,
+  "estimatedMinutes": 10,
+  "totalExercises": 12,
+  
+  "vocabulary": [
+    {
+      "english": "Nationality",
+      "kurdish": "نەتەوە",
+      "audioPath": null,
+      "exampleSentence": "What is your nationality?",
+      "exampleTranslation": "نەتەوەت چییە؟",
+      "notes": "Where you are from",
+      "notesKurdish": "خەڵکی کوێیت"
+    }
+  ],
+  
+  "exercises": [
+    {
+      "id": "rev2_ex_1",
+      "type": "multiple_choice",
+      "question": "Who is your father's wife?",
+      "questionKurdish": "هاوسەری باوکت کێیە؟",
+      "options": ["Sister", "Mother", "Brother", "Friend"],
+      "correctAnswer": "Mother"
+    },
+    {
+      "id": "rev2_ex_2",
+      "type": "multiple_choice",
+      "question": "Which country is 'Kurdistan'?",
+      "questionKurdish": "کامیان وڵاتی 'کوردستان'ە؟",
+      "options": ["کوردستان", "بەریتانیا", "ئەمریکا", "فەڕەنسا"],
+      "correctAnswer": "کوردستان"
+    },
+    {
+      "id": "rev2_ex_3",
+      "type": "typing",
+      "question": "Write 'خوشک' in English.",
+      "questionKurdish": "بنووسە 'خوشک' بە ئینگلیزی.",
+      "correctAnswer": "Sister"
+    },
+    {
+      "id": "rev2_ex_4",
+      "type": "multiple_choice",
+      "question": "A male friend is a:",
+      "questionKurdish": "هاوڕێیەکی نێر بریتییە لە:",
+      "options": ["Woman", "Boy", "Girl", "Mother"],
+      "correctAnswer": "Boy"
+    },
+    {
+      "id": "rev2_ex_5",
+      "type": "sentence_builder",
+      "question": "Translate: ئەو برای منە.",
+      "questionKurdish": "ئەمە بە ئینگلیزی دروست بکە",
+      "options": ["He", "is", "my", "brother.", "She", "friend"],
+      "correctAnswer": "He is my brother."
+    },
+    {
+      "id": "rev2_ex_6",
+      "type": "multiple_choice",
+      "question": "Where is the Eiffel Tower?",
+      "questionKurdish": "بورجی ئیفێل لە کوێیە؟",
+      "options": ["Iraq", "France", "Spain", "Germany"],
+      "correctAnswer": "France"
+    },
+    {
+      "id": "rev2_ex_7",
+      "type": "multiple_choice",
+      "question": "I am from Kurdistan. I am _____.",
+      "questionKurdish": "من خەڵکی کوردستانم. من _____.",
+      "options": ["English", "Kurdish", "American", "Spanish"],
+      "correctAnswer": "Kurdish"
+    },
+    {
+      "id": "rev2_ex_8",
+      "type": "typing",
+      "question": "How do you say 'Brother' in Kurdish?",
+      "questionKurdish": "چۆن دەڵێیت 'Brother' بە کوردی؟",
+      "correctAnswer": "برا"
+    },
+    {
+      "id": "rev2_ex_9",
+      "type": "multiple_choice",
+      "question": "Which one is a person?",
+      "questionKurdish": "کامیان مرۆڤە؟",
+      "options": ["Apple", "Man", "Book", "Pen"],
+      "correctAnswer": "Man"
+    },
+    {
+      "id": "rev2_ex_10",
+      "type": "sentence_builder",
+      "question": "Translate: ئەوان خەڵکی بەریتانیان.",
+      "questionKurdish": "ئەمە بە ئینگلیزی دروست بکە",
+      "options": ["They", "are", "from", "Britain.", "We", "Kurd"],
+      "correctAnswer": "They are from Britain."
+    },
+    {
+      "id": "rev2_ex_11",
+      "type": "multiple_choice",
+      "question": "Friend means:",
+      "questionKurdish": "واتای Friend چییە؟",
+      "options": ["باوک", "دایک", "هاوڕێ", "خوشک"],
+      "correctAnswer": "هاوڕێ"
+    },
+    {
+      "id": "rev2_ex_12",
+      "type": "typing",
+      "question": "Write 'من هاوڕێی تۆم' in English.",
+      "questionKurdish": "بنووسە 'من هاوڕێی تۆم' بە ئینگلیزی.",
+      "correctAnswer": "I am your friend"
+    }
+  ],
+  "grammarNotes": [
+    {
+      "title": "Unit 2 Summary",
+      "titleKurdish": "کورتەی یەکەی ٢",
+      "content": "You have learned about family members, people, and countries/nationalities.",
+      "contentKurdish": "فێری ئەندامانی خێزان، کەسان، و وڵات/نەتەوەکان بوویت."
+    }
+  ],
+  "culturalNotes": [],
+  "tips": ["Practice introducing your friends in English!"],
+  "tipsKurdish": ["ڕاهێنان بکە لەسەر ناساندنی هاوڕێکانت بە ئینگلیزی!"]
+}

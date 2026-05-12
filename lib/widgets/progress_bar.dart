@@ -27,9 +27,10 @@ class CustomProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final effectiveProgress = progress.clamp(0.0, 1.0);
     final effectiveProgressColor = progressColor ?? AppColors.primary600;
-    final effectiveBackgroundColor = backgroundColor ?? AppColors.neutral200;
+    final effectiveBackgroundColor = backgroundColor ?? (isDark ? AppColors.surfaceDark : AppColors.neutral200);
     final effectiveBorderRadius = borderRadius ?? BorderRadius.circular(height / 2);
     
     return Column(
@@ -85,10 +86,10 @@ class CustomProgressBar extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             '${(effectiveProgress * 100).toInt()}%',
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: AppColors.textSecondary,
+              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
             ),
           ),
         ],
@@ -120,9 +121,10 @@ class CircularProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final effectiveProgress = progress.clamp(0.0, 1.0);
-    final effectiveProgressColor = progressColor ?? AppColors.primary600;
-    final effectiveBackgroundColor = backgroundColor ?? AppColors.neutral200;
+    final effectiveProgressColor = progressColor ?? (isDark ? AppColors.primary400 : AppColors.primary600);
+    final effectiveBackgroundColor = backgroundColor ?? (isDark ? AppColors.surfaceDark : AppColors.neutral200);
     
     return SizedBox(
       width: size,
@@ -162,7 +164,7 @@ class CircularProgressBar extends StatelessWidget {
               style: TextStyle(
                 fontSize: size * 0.2,
                 fontWeight: FontWeight.bold,
-                color: effectiveProgressColor,
+                color: isDark ? AppColors.textPrimaryDark : effectiveProgressColor,
               ),
             ),
         ],
@@ -240,6 +242,9 @@ class LabeledProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final effectiveProgressColor = progressColor ?? (isDark ? AppColors.primary400 : AppColors.primary600);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -248,10 +253,10 @@ class LabeledProgressBar extends StatelessWidget {
           children: [
             Text(
               label,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+                color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
               ),
             ),
             if (showPercentage)
@@ -260,7 +265,7 @@ class LabeledProgressBar extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
-                  color: progressColor ?? AppColors.primary600,
+                  color: effectiveProgressColor,
                 ),
               ),
           ],
@@ -271,7 +276,7 @@ class LabeledProgressBar extends StatelessWidget {
         CustomProgressBar(
           progress: progress,
           height: height,
-          progressColor: progressColor,
+          progressColor: effectiveProgressColor,
           backgroundColor: backgroundColor,
           showPercentage: false,
         ),
@@ -337,6 +342,7 @@ class XPProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final progress = requiredXP > 0 ? currentXP / requiredXP : 0.0;
     
     return Column(
@@ -355,20 +361,20 @@ class XPProgressBar extends StatelessWidget {
                 const SizedBox(width: 4),
                 Text(
                   'Level $currentLevel',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
+                    color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                   ),
                 ),
               ],
             ),
             Text(
               '$currentXP / $requiredXP XP',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
-                color: AppColors.textSecondary,
+                color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
               ),
             ),
           ],
@@ -408,6 +414,7 @@ class StreakProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final progress = goalStreak > 0 ? currentStreak / goalStreak : 0.0;
     
     return Column(
@@ -426,20 +433,20 @@ class StreakProgressBar extends StatelessWidget {
                 const SizedBox(width: 4),
                 Text(
                   '$currentStreak day streak',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
+                    color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                   ),
                 ),
               ],
             ),
             Text(
               'Goal: $goalStreak days',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
-                color: AppColors.textSecondary,
+                color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
               ),
             ),
           ],

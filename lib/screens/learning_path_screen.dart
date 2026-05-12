@@ -39,8 +39,9 @@ class _LearningPathScreenState extends State<LearningPathScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: isDark ? const Color(0xFF0F172A) : Colors.grey[50],
       body: Consumer2<LessonProvider, ProgressProvider>(
         builder: (context, lessonProvider, progressProvider, child) {
           final lessons = lessonProvider.getLessonsByLevel(widget.level);
@@ -174,12 +175,48 @@ class _LearningPathScreenState extends State<LearningPathScreen> {
                               ],
                             );
                           }),
-                          
-                          // Section completion celebration
-                          if (section['lessons'].every((l) => 
-                              progressProvider.isLessonCompleted(l.id)))
-                            _SectionCompleteWidget(),
-                          
+
+                          // Connecting line leading to Unit Review
+                          _ConnectingLine(
+                            isCompleted: section['lessons'].every(
+                                (l) => progressProvider.isLessonCompleted(l.id)),
+                            isUnlocked: section['lessons'].every(
+                                (l) => progressProvider.isLessonCompleted(l.id)),
+                          ),
+
+                          // Unit Review Node — always shown, locked until unit done
+                          _UnitReviewNode(
+                            sectionNumber: section['number'],
+                            isUnlocked: progressProvider.developerMode ||
+                                section['lessons'].every(
+                                    (l) => progressProvider.isLessonCompleted(l.id)),
+                            isCompleted: false, // future: track review completion separately
+                            onTap: (progressProvider.developerMode ||
+                                    section['lessons'].every(
+                                        (l) => progressProvider.isLessonCompleted(l.id)))
+                                ? () {
+                                    if (section['number'] <= 2) {
+                                      final reviewId = 'a1_s${section['number']}_review';
+                                      Navigator.pushNamed(
+                                        context,
+                                        AppRoutes.lesson,
+                                        arguments: {'lessonId': reviewId},
+                                      );
+                                    } else {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'پێداچوونەوەی بەشی ${section['number']} - بەزووی دێت!',
+                                          ),
+                                          backgroundColor: const Color(0xFF7C3AED),
+                                          behavior: SnackBarBehavior.floating,
+                                        ),
+                                      );
+                                    }
+                                  }
+                                : null,
+                          ),
+
                           if (!isLastSection) const SizedBox(height: 40),
                         ],
                       );
@@ -250,19 +287,21 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
+        color: isDark ? AppColors.surfaceDark : Colors.white,
         gradient: LinearGradient(
-          colors: [
-            AppColors.primary600.withOpacity(0.1),
-            AppColors.primary700.withOpacity(0.05),
-          ],
+          colors: isDark 
+              ? [AppColors.primary600.withOpacity(0.2), AppColors.primary700.withOpacity(0.1)]
+              : [AppColors.primary600.withOpacity(0.1), AppColors.primary700.withOpacity(0.05)],
         ),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.primary600.withOpacity(0.2),
+          color: isDark ? AppColors.borderDark : AppColors.primary600.withOpacity(0.2),
           width: 2,
         ),
       ),
@@ -303,7 +342,7 @@ class _SectionHeader extends StatelessWidget {
                   subtitle,
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.grey[600],
+                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                   ),
                 ),
               ],
@@ -382,7 +421,7 @@ class _LessonNode extends StatelessWidget {
                     child: CircularProgressIndicator(
                       value: progressValue,
                       strokeWidth: 6,
-                      backgroundColor: Colors.grey[200],
+                      backgroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.12),
                       valueColor: AlwaysStoppedAnimation<Color>(
                         progressValue >= 1.0 ? Colors.green : AppColors.primary500,
                       ),
@@ -401,16 +440,18 @@ class _LessonNode extends StatelessWidget {
                           ? [Colors.green[400]!, Colors.green[600]!]
                           : isUnlocked
                               ? [AppColors.primary500, AppColors.primary700]
-                              : [Colors.grey[300]!, Colors.grey[400]!],
+                              : Theme.of(context).brightness == Brightness.dark
+                                  ? [const Color(0xFF334155), const Color(0xFF475569)]
+                                  : [Colors.grey[300]!, Colors.grey[400]!],
                     ),
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                       width: 4,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Colors.black.withOpacity(0.18),
                         blurRadius: 10,
                         offset: const Offset(0, 4),
                       ),
@@ -442,7 +483,9 @@ class _LessonNode extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: isCurrent ? FontWeight.bold : FontWeight.w600,
-                  color: isUnlocked ? Colors.black87 : Colors.grey,
+                  color: isUnlocked
+                      ? Theme.of(context).colorScheme.onSurface
+                      : Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
                 ),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
@@ -516,7 +559,9 @@ class _ConnectingLine extends StatelessWidget {
               ? [Colors.green[400]!, Colors.green[600]!]
               : isUnlocked
                   ? [AppColors.primary500, AppColors.primary700]
-                  : [Colors.grey[300]!, Colors.grey[400]!],
+                  : Theme.of(context).brightness == Brightness.dark
+                      ? [const Color(0xFF334155), const Color(0xFF475569)]
+                      : [Colors.grey[300]!, Colors.grey[400]!],
         ),
         borderRadius: BorderRadius.circular(2),
       ),
@@ -524,42 +569,155 @@ class _ConnectingLine extends StatelessWidget {
   }
 }
 
-// Section Complete Widget
-class _SectionCompleteWidget extends StatelessWidget {
+// Unit Review Node Widget
+class _UnitReviewNode extends StatelessWidget {
+  final int sectionNumber;
+  final bool isUnlocked;
+  final bool isCompleted;
+  final VoidCallback? onTap;
+
+  const _UnitReviewNode({
+    required this.sectionNumber,
+    required this.isUnlocked,
+    required this.isCompleted,
+    this.onTap,
+  });
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.amber[300]!, Colors.orange[400]!],
-        ),
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.orange.withOpacity(0.3),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: const Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    const nodeSize = 90.0;
+
+    // Colors: purple/gold when unlocked, grey when locked
+    final List<Color> activeColors = isCompleted
+        ? [const Color(0xFFF59E0B), const Color(0xFFD97706)]
+        : isUnlocked
+            ? [const Color(0xFF7C3AED), const Color(0xFF5B21B6)]
+            : isDark 
+                ? [const Color(0xFF334155), const Color(0xFF475569)]
+                : [Colors.grey[300]!, Colors.grey[400]!];
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
         children: [
-          Icon(
-            Icons.emoji_events_rounded,
-            color: Colors.white,
-            size: 32,
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              // Outer glow when unlocked
+              if (isUnlocked)
+                Container(
+                  width: nodeSize + 24,
+                  height: nodeSize + 24,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: (isCompleted
+                                ? const Color(0xFFF59E0B)
+                                : const Color(0xFF7C3AED))
+                            .withValues(alpha: 0.25),
+                        blurRadius: 22,
+                        spreadRadius: 6,
+                      ),
+                    ],
+                  ),
+                ),
+
+              // Dashed border ring (simulated with a slightly larger circle)
+              Container(
+                width: nodeSize + 8,
+                height: nodeSize + 8,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: isUnlocked
+                        ? (isCompleted
+                            ? const Color(0xFFF59E0B)
+                            : const Color(0xFF7C3AED))
+                        : Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
+                    width: 2.5,
+                  ),
+                ),
+              ),
+
+              // Main circle
+              Container(
+                width: nodeSize,
+                height: nodeSize,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: activeColors,
+                  ),
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Theme.of(context).colorScheme.surface, width: 4),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.15),
+                      blurRadius: 12,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: Icon(
+                  isCompleted
+                      ? Icons.workspace_premium_rounded
+                      : isUnlocked
+                          ? Icons.auto_stories_rounded
+                          : Icons.lock_rounded,
+                  color: Colors.white,
+                  size: 38,
+                ),
+              ),
+            ],
           ),
-          SizedBox(width: 12),
-          Flexible(
+
+          const SizedBox(height: 12),
+
+          // Label
+          Container(
+            constraints: const BoxConstraints(maxWidth: 140),
             child: Text(
-              'بەشەکە تەواو کرا!',
+              'پێداچوونەوەی یەکەم $sectionNumber',
+              textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 13,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: isUnlocked
+                    ? (isCompleted
+                        ? const Color(0xFFD97706)
+                        : const Color(0xFF7C3AED))
+                    : Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+
+          // Status badge
+          Container(
+            margin: const EdgeInsets.only(top: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+            decoration: BoxDecoration(
+              color: isUnlocked
+                  ? (isCompleted
+                      ? const Color(0xFFF59E0B)
+                      : const Color(0xFF7C3AED))
+                  : Theme.of(context).colorScheme.onSurface.withOpacity(0.12),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(
+              isCompleted
+                  ? 'تەواو بوو ✓'
+                  : isUnlocked
+                      ? 'دەستپێبکە'
+                      : 'قفل کراوە',
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+                color: isUnlocked ? Colors.white : Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
               ),
             ),
           ),

@@ -9,8 +9,10 @@ class NotificationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
         title: const Text('ئاگادارکردنەوەکان'),
         backgroundColor: AppColors.primary600,
@@ -226,7 +228,7 @@ class NotificationsScreen extends StatelessWidget {
                     '* هەندێک ئاگادارکردنەوە پشت دەبەستن بە ڕێکخستنی ئامێرەکەت',
                     style: TextStyle(
                       fontSize: 12,
-                      color: Colors.grey[500],
+                      color: isDark ? AppColors.textTertiaryDark : Colors.grey[500],
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -250,6 +252,8 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 8, 20, 6),
       child: Text(
@@ -257,7 +261,9 @@ class _SectionHeader extends StatelessWidget {
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w700,
-          color: enabled ? AppColors.primary600 : AppColors.neutral400,
+          color: enabled 
+              ? (isDark ? AppColors.primary400 : AppColors.primary600) 
+              : AppColors.neutral400,
           letterSpacing: 0.3,
         ),
       ),
@@ -287,6 +293,7 @@ class _NotifTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final effectiveColor = masterEnabled ? iconColor : AppColors.neutral300;
 
     return Padding(
@@ -296,9 +303,9 @@ class _NotifTile extends StatelessWidget {
         duration: const Duration(milliseconds: 250),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: isDark ? AppColors.surfaceDark : Colors.white,
             borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: AppColors.neutral200),
+            border: Border.all(color: isDark ? AppColors.borderDark : AppColors.neutral200),
           ),
           child: ListTile(
             contentPadding:
@@ -314,23 +321,23 @@ class _NotifTile extends StatelessWidget {
             ),
             title: Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+                color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
               ),
             ),
             subtitle: Text(
               subtitle,
               style: TextStyle(
                 fontSize: 12,
-                color: Colors.grey[500],
+                color: isDark ? AppColors.textSecondaryDark : Colors.grey[500],
               ),
             ),
             trailing: Switch(
               value: value,
               onChanged: onChanged,
-              activeColor: AppColors.primary600,
+              activeColor: isDark ? AppColors.primary400 : AppColors.primary600,
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
           ),

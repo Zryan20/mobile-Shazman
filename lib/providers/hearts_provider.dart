@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import '../services/backend_service.dart';
+import 'user_provider.dart';
 
 class HeartsProvider extends ChangeNotifier {
   // Heart system constants
@@ -16,6 +17,7 @@ class HeartsProvider extends ChangeNotifier {
   bool _isPremium = false; // Hozhan+ status
   Timer? _heartRecoveryTimer;
   BackendService? _backendService;
+  UserProvider? _userProvider;
 
   // SharedPreferences keys
   static const String _keyCurrentHearts = 'current_hearts';
@@ -25,8 +27,8 @@ class HeartsProvider extends ChangeNotifier {
   // Getters
   int get currentHearts => _currentHearts;
   int get maxHearts => MAX_HEARTS;
-  bool get hasHearts => _isPremium || _currentHearts > 0;
-  bool get isPremium => _isPremium;
+  bool get hasHearts => isPremium || _currentHearts > 0;
+  bool get isPremium => _isPremium || (_userProvider?.isPremium ?? false);
   DateTime? get lastHeartLossTime => _lastHeartLossTime;
 
   /// Get hearts percentage (for UI)
@@ -37,7 +39,7 @@ class HeartsProvider extends ChangeNotifier {
 
   /// Get time until next heart recovery
   Duration? get timeUntilNextHeart {
-    if (_isPremium ||
+    if (isPremium ||
         _currentHearts >= MAX_HEARTS ||
         _lastHeartLossTime == null) {
       return null;
@@ -75,6 +77,12 @@ class HeartsProvider extends ChangeNotifier {
   /// Set backend service for syncing
   void setBackendService(BackendService service) {
     _backendService = service;
+  }
+
+  /// Set user provider for premium status
+  void setUserProvider(UserProvider provider) {
+    _userProvider = provider;
+    notifyListeners();
   }
 
   /// Load hearts data from storage and sync with backend
@@ -158,10 +166,40 @@ class HeartsProvider extends ChangeNotifier {
     }
   }
 
+  /// Consume a heart (alias for loseHeart, used for premium awareness)
+  void consumeHeart() {
+    if (isPremium) return; // If Hozhan+, do nothing.
+    
+    if (_currentHearts > 0) {
+      _currentHearts--;
+      _lastHeartLossTime = DateTime.now();
+      _saveHearts();
+      
+      // Sync with backend
+      if (_backendService != null) {
+        _backendService!.loseHeart(
+          newHeartCount: _currentHearts,
+          lossTime: _lastHeartLossTime!,
+        );
+      }
+      
+      notifyListeners();
+      
+      if (kDebugMode) {
+        print('💔 Heart consumed! Remaining: $_currentHearts/$MAX_HEARTS');
+      }
+      
+      // Start recovery timer if not already running
+      if (_heartRecoveryTimer == null || !_heartRecoveryTimer!.isActive) {
+        _startHeartRecoveryTimer();
+      }
+    }
+  }
+
   /// Lose a heart (when user makes a mistake)
   Future<bool> loseHeart() async {
     // Premium users never lose hearts
-    if (_isPremium) {
+    if (isPremium) {
       if (kDebugMode) {
         print('💎 Premium user - heart not lost');
       }
@@ -213,7 +251,7 @@ class HeartsProvider extends ChangeNotifier {
 
   /// Recover one heart
   Future<void> recoverHeart() async {
-    if (_isPremium || _currentHearts >= MAX_HEARTS) {
+    if (isPremium || _currentHearts >= MAX_HEARTS) {
       return;
     }
 
@@ -254,7 +292,7 @@ class HeartsProvider extends ChangeNotifier {
 
   /// Check and recover hearts based on time elapsed
   Future<void> _checkHeartRecovery() async {
-    if (_isPremium ||
+    if (isPremium ||
         _currentHearts >= MAX_HEARTS ||
         _lastHeartLossTime == null) {
       return;
@@ -292,7 +330,7 @@ class HeartsProvider extends ChangeNotifier {
   void _startHeartRecoveryTimer() {
     _heartRecoveryTimer?.cancel();
 
-    if (_isPremium || _currentHearts >= MAX_HEARTS) {
+    if (isPremium || _currentHearts >= MAX_HEARTS) {
       return;
     }
 
@@ -320,7 +358,7 @@ class HeartsProvider extends ChangeNotifier {
 
   /// Refill all hearts (e.g., watch ad, purchase refill)
   Future<void> refillHearts() async {
-    if (_isPremium) {
+    if (isPremium) {
       if (kDebugMode) {
         print('💎 Premium user already has unlimited hearts');
       }
@@ -448,8 +486,8 @@ class HeartsProvider extends ChangeNotifier {
   }
 
   /// Get hearts status message
-  String getHeartsStatusMessage() {
-    if (_isPremium) {
+  String get heartsStatusMessage {
+    if (isPremium) {
       return 'دڵی بێسنوور - Hozhan+';
     }
 
@@ -485,8 +523,8 @@ class HeartsProvider extends ChangeNotifier {
   }
 
   /// Get hearts display for UI (with emojis)
-  String getHeartsDisplay() {
-    if (_isPremium) {
+  String get heartsDisplay {
+    if (isPremium) {
       return '💎 ∞';
     }
 
@@ -497,12 +535,12 @@ class HeartsProvider extends ChangeNotifier {
 
   /// Check if user can start lesson
   bool canStartLesson() {
-    return _isPremium || _currentHearts > 0;
+    return isPremium || _currentHearts > 0;
   }
 
   /// Get warning message when hearts are low
   String? getLowHeartsWarning() {
-    if (_isPremium || _currentHearts >= 3) {
+    if (isPremium || _currentHearts >= 3) {
       return null;
     }
 

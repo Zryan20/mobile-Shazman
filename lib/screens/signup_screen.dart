@@ -84,7 +84,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           final userProvider = context.read<UserProvider>();
           final backendService = context.read<BackendService>();
 
-          userProvider.setUserFromData(result.userData!);
+          await userProvider.setUserFromData(result.userData!);
           debugPrint('✅ UserProvider user state updated (OTP bypassed)');
 
           // Initialize user in Firestore
@@ -150,7 +150,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         final userProvider = context.read<UserProvider>();
         final backendService = context.read<BackendService>();
 
-        userProvider.setUserFromData(result.userData!);
+        await userProvider.setUserFromData(result.userData!);
 
         // Initialize user in Firestore
         try {
@@ -212,7 +212,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         final userProvider = context.read<UserProvider>();
         final backendService = context.read<BackendService>();
 
-        userProvider.setUserFromData(result.userData!);
+        await userProvider.setUserFromData(result.userData!);
 
         // Initialize user in Firestore
         try {

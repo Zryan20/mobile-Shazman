@@ -327,7 +327,7 @@ class ProgressProvider extends ChangeNotifier {
   /// Check if level is unlocked
   bool isLevelUnlocked(int level) {
     if (_developerMode) return true;
-    return level <= _currentLevel + 1; // Current level + 1 next level
+    return level <= _currentLevel; // Only levels the user has reached
   }
   
   /// Check if level is completed

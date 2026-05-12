@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>79610966616-2ronqmctaroa2ob0m01gpu0q0vh6lk92.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.79610966616-2ronqmctaroa2ob0m01gpu0q0vh6lk92</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>79610966616-6gf87fnijms2ouvtpkpsj786fhtl8p3t.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC7malp_okZK_CiFBS42YI3IW4FCV6gl2A</string>
+	<key>GCM_SENDER_ID</key>
+	<string>79610966616</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.shazman</string>
+	<key>PROJECT_ID</key>
+	<string>mobile-shazman</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mobile-shazman.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:79610966616:ios:7435100a4379b5234e502d</string>
+</dict>
+</plist>
